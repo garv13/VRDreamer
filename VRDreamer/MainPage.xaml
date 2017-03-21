@@ -7,7 +7,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
 
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="img" Source="{Binding Image}" Height="100" Width="100" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="title" Text="{Binding Title}"  FontSize="20" Foreground="White" Grid.Row="0" Grid.Column="1" TextWrapping="WrapWholeWords" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="id" Visibility="Collapsed" Text="{Binding Id}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <GridView         
+                        HorizontalAlignment="Stretch"
+                        x:Name="StoreListView"
+                        Foreground="{Binding color}"
+                        VerticalAlignment="Stretch"
+                        ItemsSource="{Binding}"                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
+                        SelectionMode="None"          
+                        IsSwipeEnabled="false"
+                        IsItemClickEnabled="True"
+                        ItemClick="StoreListView_ItemClick"
+                        ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Visibility="Visible"
+                      >
+        </GridView>
     </Grid>
 </Page>
