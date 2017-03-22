@@ -8,15 +8,19 @@ namespace VRDreamer
 {
     class User
     {
-        public string Name { get; set; }
+        public string Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Email { get; set; }
 
         public string Password { get; set; }
 
-        public string Id { get; set; }
+        public float wallet { get; set; }
 
-        public int Wallet { get; set; }
-
-        public string Purchase_History { get; set; }
+        public string Purchases { get; set; }
 
     }
 }
