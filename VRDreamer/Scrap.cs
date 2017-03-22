@@ -9,7 +9,7 @@ namespace VRDreamer
     class Scrap
     {
         public string Id { get; set; }
-        public List<Pointer> Point_List { get; set; }
+        public string Point_List { get; set; }
 
         public string UserId { get; set; }
 

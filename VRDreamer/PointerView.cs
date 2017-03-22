@@ -10,7 +10,7 @@ namespace VRDreamer
     class PointerView
     {
 
-        public int Serial { get; set; }
+        public string Serial { get; set; }
         public string Title { get; set; }
         public StorageFile File { get; set; }
         public string Desc { get; set; }
