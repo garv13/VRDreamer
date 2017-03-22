@@ -33,13 +33,13 @@ namespace VRDreamer
         private MobileServiceCollection<Tour,Tour> items2;
         private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
         private MobileServiceCollection<Diary,Diary> items3;
-        MainPage_Listing m = new MainPage_Listing();
+        Purchsed m = new Purchsed();
         User u = new User();
         string purchases = " ";
         List<string> Scrap_Purchases = new List<string>();
         List<string> Tour_Purchases = new List<string>();
         List<string> Diary_Purchases = new List<string>();
-        List<MainPage_Listing> mpList = new List<MainPage_Listing>();
+        List<Purchsed> mpList = new List<Purchsed>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -56,7 +56,7 @@ namespace VRDreamer
 
                 foreach (string id in Scrap_Purchases)
                 {
-                    m = new MainPage_Listing();
+                    m = new Purchsed();
                     items1 = await Table1.Where(Scrap
                            => Scrap.Id == id).ToCollectionAsync();
 
@@ -64,7 +64,7 @@ namespace VRDreamer
                     m.Title = items1[0].Title;
                     m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
                     m.Type = "S";
-                    m.color = (Color)ColorConverter.ConvertFromString("#FFDFD991");
+                   //m.color = (Color)ColorConverter.ConvertFromString("#FFDFD991");
 
                 }
 
@@ -78,6 +78,16 @@ namespace VRDreamer
         private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void NextBar_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void ColorSelect_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
         }
     }
 }
