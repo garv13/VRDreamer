@@ -50,9 +50,9 @@ namespace VRDreamer
         {
             try
             {
-                items = await Table.Where(User
-                            => User.Name == username).ToCollectionAsync(); // get the username from login page
-                purchases = items[0].Purchase_History;// split the string to get all the ids
+                //items = await Table.Where(User
+                //            => User.Name == username).ToCollectionAsync(); // get the username from login page
+                //purchases = items[0].Purchase_History;// split the string to get all the ids
 
                 foreach (string id in Scrap_Purchases)
                 {

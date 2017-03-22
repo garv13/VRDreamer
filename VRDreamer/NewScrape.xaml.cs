@@ -35,11 +35,12 @@ namespace VRDreamer
         OrientationSensor or;
         Compass c;
         DisplayRequest _displayRequest;
-        
+        List<Pointer> li;
         Geoposition pos;
-        
+        int i = 0;
         public NewScrape()
         {
+            li = new List<Pointer>();
             or = OrientationSensor.GetDefault();
             c = Compass.GetDefault();
             try
@@ -72,7 +73,7 @@ namespace VRDreamer
 
                     // Carry out the operation.
                     pos = await geolocator.GetGeopositionAsync();
-                    but.Content = "Mark this location";
+                    Tags.Text = "0 Point(s) Tagged";
                     break;
             }
         }
@@ -132,30 +133,7 @@ namespace VRDreamer
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string myData = "";
-            myData += pos.Coordinate.Latitude.ToString()+"," + pos.Coordinate.Latitude.ToString() + "," + c.GetCurrentReading().HeadingMagneticNorth.ToString() + ",";
-            OrientationSensorReading reading2 = or.GetCurrentReading();
-            SensorQuaternion q = reading2.Quaternion;   // get a reference to the object to avoid re-creating it for each access
-            double ysqr = q.Y * q.Y;
-            // roll (x-axis rotation)
-            double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
-            double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
-
-            // pitch (y-axis rotati)
-            double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
-            t2 = t2 > 1.0 ? 1.0 : t2;
-            t2 = t2 < -1.0 ? -1.0 : t2;
-            double pitch = Math.Asin(t2);
-            pitch = pitch * 180 / Math.PI;
-
-            if (pitch < 0)
-                pitch += 360;
-            myData += pitch.ToString();
-            Frame.Navigate(typeof(ScrapeForm), myData);
-        }
-
+       
         private async Task CleanupCameraAsync()
         {
             if (_mediaCapture != null)
@@ -178,6 +156,39 @@ namespace VRDreamer
                 });
             }
 
+        }
+
+        private void PreviewControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            i++;
+            Pointer po = new Pointer();
+            if (pos != null)
+            {
+                po.lat = pos.Coordinate.Latitude;
+                po.lon = pos.Coordinate.Latitude;
+                po.Yaw = c.GetCurrentReading().HeadingMagneticNorth;
+               
+                OrientationSensorReading reading2 = or.GetCurrentReading();
+                SensorQuaternion q = reading2.Quaternion;   // get a reference to the object to avoid re-creating it for each access
+                double ysqr = q.Y * q.Y;
+                // roll (x-axis rotation)
+                double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
+                double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
+
+                // pitch (y-axis rotati)
+                double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
+                t2 = t2 > 1.0 ? 1.0 : t2;
+                t2 = t2 < -1.0 ? -1.0 : t2;
+                double pitch = Math.Asin(t2);
+                pitch = pitch * 180 / Math.PI;
+
+                if (pitch < 0)
+                    pitch += 360;
+                po.Pitch = pitch;
+
+                li.Add(po);
+                Tags.Text = i.ToString() + " Point(s) Tagged";
+            }
         }
     }
 }

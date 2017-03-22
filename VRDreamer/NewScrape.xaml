@@ -8,18 +8,25 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-       
-            
-                <Button x:Name="but" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Content="Finding your Location" Click="Button_Click" Background="#33918D8D"/>
-                <CaptureElement Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*"/>
+
+        </Grid.RowDefinitions>
+        <Border Background="#FF1F1F1F" >
+        <TextBlock Foreground="White" Text="Finding your location... Please Wait" x:Name="Tags" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+        </Border>
+
+        <CaptureElement Tapped="PreviewControl_Tapped" Grid.Row="1"  Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             
        
     </Grid>
     <Page.BottomAppBar>
-        <AppBar x:Name="Appbar" IsOpen="False" Visibility="Visible" IsSticky="True">
+        <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark">
             <StackPanel Orientation="Horizontal">
-                <AppBarButton Name="NextBar" Icon="Add" Label="Add new Scrap"   />
-                <AppBarButton Name="ColorSelect" Icon="Find" Label="Search in Store"/>
+                <AppBarButton Name="NextBar" Icon="Accept" Label="Done"   />
+                
             </StackPanel>
         </AppBar>
     </Page.BottomAppBar>

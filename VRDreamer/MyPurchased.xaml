@@ -196,7 +196,7 @@
         
     </Grid>
     <Page.BottomAppBar>
-        <AppBar x:Name="Appbar" IsOpen="False" Visibility="Visible" IsSticky="True">
+        <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
             <StackPanel Orientation="Horizontal">
                 <AppBarButton Name="NextBar" Icon="Add" Label="Add new Scrap" Click="NextBar_Click"   />
                 <AppBarButton Name="ColorSelect" Icon="Find" Label="Search in Store" Click="ColorSelect_Click"/>
