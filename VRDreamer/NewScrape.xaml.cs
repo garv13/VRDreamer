@@ -160,10 +160,11 @@ namespace VRDreamer
 
         private void PreviewControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            i++;
+           
             Pointer po = new Pointer();
             if (pos != null)
             {
+                i++;
                 po.lat = pos.Coordinate.Latitude;
                 po.lon = pos.Coordinate.Latitude;
                 po.Yaw = c.GetCurrentReading().HeadingMagneticNorth;

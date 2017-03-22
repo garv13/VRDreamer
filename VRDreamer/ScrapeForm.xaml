@@ -32,7 +32,7 @@
                         IsSwipeEnabled="false"
                   VerticalAlignment="Center"
                  HorizontalAlignment="Center"
-                  MinWidth="800"
+                  MinWidth="500"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate  ScrollViewer.VerticalScrollBarVisibility="Auto">

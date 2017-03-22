@@ -32,33 +32,33 @@ namespace VRDreamer
         {
             this.InitializeComponent();
             li = new List<PointerView>();
-            PointerView p = new PointerView();
-            p.Desc = "";
-            p.Serial = "1";
-            p.Title = "";
-            li.Add(p);
-             p = new PointerView();
-            p.Desc = "";
-            p.Serial = "2";
-            p.Title = "";
-            li.Add(p);
-             p = new PointerView();
-            p.Desc = "";
-            p.Serial = "3";
-            p.Title = "";
-            li.Add(p);
-             p = new PointerView();
-            p.Desc = "";
-            p.Serial = "4";
-            p.Title = "";
-            li.Add(p);
-             p = new PointerView();
-            p.Desc = "";
-            p.Serial = "5";
-            p.Title = "";
-            li.Add(p);
+            //PointerView p = new PointerView();
+            //p.Desc = "";
+            //p.Serial = "1";
+            //p.Title = "";
+            //li.Add(p);
+            // p = new PointerView();
+            //p.Desc = "";
+            //p.Serial = "2";
+            //p.Title = "";
+            //li.Add(p);
+            // p = new PointerView();
+            //p.Desc = "";
+            //p.Serial = "3";
+            //p.Title = "";
+            //li.Add(p);
+            // p = new PointerView();
+            //p.Desc = "";
+            //p.Serial = "4";
+            //p.Title = "";
+            //li.Add(p);
+            // p = new PointerView();
+            //p.Desc = "";
+            //p.Serial = "5";
+            //p.Title = "";
+            //li.Add(p);
 
-            ListPointer.ItemsSource = li;
+            //ListPointer.ItemsSource = li;
 
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -67,8 +67,11 @@ namespace VRDreamer
             int i = 0;
             foreach (Pointer p in list)
             {
-
+                PointerView po = new PointerView();
+                po.Serial = i.ToString();
+                li.Add(po);
             }
+            ListPointer.ItemsSource = li;
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -76,7 +79,7 @@ namespace VRDreamer
             var lol2 = lol.Parent as Grid;
             var lol3 = lol2.Children[4] as TextBlock;
             int i = int.Parse(lol3.Text);
-            i--;
+            
             
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
