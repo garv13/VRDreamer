@@ -58,13 +58,17 @@
 
     <Grid Background="#292929">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.06*"/>
+            <RowDefinition Height="0.1*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="My Purchases" Foreground="#CCCCCC" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+        <TextBlock Text="My Purchases" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
 
-        <Pivot Grid.Row="1" Background="#292929" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-            <PivotItem Header="Diaries" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Pivot Grid.Row="1" Background="#292929" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" >
+            <PivotItem VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <PivotItem.Header>
+                    <TextBlock Text="Diaries" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
                 <Grid Background="#292929">
                     <Grid.RowDefinitions>
                        
@@ -107,7 +111,11 @@
                     </Grid>
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Tours">
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Text="Tours" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
                 <Grid Background="#292929">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.06*"/>
@@ -151,7 +159,11 @@
                 </Grid>
             </PivotItem>
 
-            <PivotItem Header="Scrapes">
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Text="Scrapes" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
                 <Grid Background="#292929">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.06*"/>
