@@ -10,6 +10,7 @@ namespace VRDreamer
     {
         public string Id { get; set; }
         public double lat { get; set; }
+        public string UserId { get; set; }
 
         public string Media_Type { get; set; }
         public string Desc { get; set; }

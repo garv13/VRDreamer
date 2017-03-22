@@ -8,6 +8,19 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+       
+            
+                <Button x:Name="but" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Content="Finding your Location" Click="Button_Click" Background="#33918D8D"/>
+                <CaptureElement Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            
+       
     </Grid>
+    <Page.BottomAppBar>
+        <AppBar x:Name="Appbar" IsOpen="False" Visibility="Visible" IsSticky="True">
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton Name="NextBar" Icon="Add" Label="Add new Scrap"   />
+                <AppBarButton Name="ColorSelect" Icon="Find" Label="Search in Store"/>
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
 </Page>
