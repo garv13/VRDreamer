@@ -73,12 +73,12 @@ namespace VRDreamer
                 foreach (string id in Tour_Purchases)
                 {
                     m = new Purchsed();
-                    items2 = await Table2.Where(Scrap
-                           => Scrap.Id == id).ToCollectionAsync();
+                    items2 = await Table2.Where(Tour
+                           =>Tour.Id == id).ToCollectionAsync();
 
                     m.Id = items2[0].Id;
                     m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url)); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
                     m.Type = "T";
                     Tlist.Add(m);
                 }
@@ -90,7 +90,7 @@ namespace VRDreamer
 
                     m.Id = items3[0].Id;
                     m.Title = items3[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); 
                     m.Type = "D";
                     Dlist.Add(m);
                 }
@@ -102,11 +102,6 @@ namespace VRDreamer
             {
 
             }
-        }
-
-        private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-           
         }
 
         private void NextBar_Click(object sender, RoutedEventArgs e)

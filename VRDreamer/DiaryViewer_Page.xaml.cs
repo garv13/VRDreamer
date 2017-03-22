@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,52 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class DiaryViewer_Page : Page
     {
+        private IMobileServiceTable<Tour> Table2 = App.MobileService.GetTable<Tour>();
+        private MobileServiceCollection<Tour, Tour> items2;
+        private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
+        private MobileServiceCollection<Diary, Diary> items3;
+
+        Purchsed m = new Purchsed();
+        List<Purchsed> Tlist = new List<Purchsed>();
+
         public DiaryViewer_Page()
         {
             this.InitializeComponent();
+        }
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string id = e.Parameter as string;
+
+            try
+            {
+                items3 = await Table3.Where(Diary
+                         => Diary.Id == id).ToCollectionAsync();
+                foreach (Tour item in items3[0].Tour_List)
+                {
+                    items2 = await Table2.Where(Tour
+                   => Tour.Id == item.Id).ToCollectionAsync();
+                }
+                foreach (Tour tourItem in items2)
+                {
+                    m = new Purchsed();
+                    m.Id = items2[0].Id;
+                    m.Title = items2[0].Title;
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
+                    m.Type = "T";
+                    Tlist.Add(m);
+                }
+                DiaryView.DataContext = Tlist;
+            }
+
+            catch(Exception)
+            {
+
+            }
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }
