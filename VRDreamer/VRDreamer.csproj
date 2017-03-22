@@ -97,6 +97,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Diary.cs" />
+    <Compile Include="DiaryViewer_Page.xaml.cs">
+      <DependentUpon>DiaryViewer_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyPurchased.xaml.cs">
       <DependentUpon>MyPurchased.xaml</DependentUpon>
     </Compile>
@@ -114,6 +117,9 @@
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tour.cs" />
+    <Compile Include="TourViewer_Page.xaml.cs">
+      <DependentUpon>TourViewer_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
     <Compile Include="ViewScrape.xaml.cs">
       <DependentUpon>ViewScrape.xaml</DependentUpon>
@@ -140,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DiaryViewer_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyPurchased.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -153,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Store.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TourViewer_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

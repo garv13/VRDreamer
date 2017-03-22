@@ -24,7 +24,7 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public string username = " ";
+        public string userid = " ";
         private IMobileServiceTable<User> Table = App.MobileService.GetTable<User>();
         private MobileServiceCollection<User, User> items;
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
@@ -39,7 +39,10 @@ namespace VRDreamer
         List<string> Scrap_Purchases = new List<string>();
         List<string> Tour_Purchases = new List<string>();
         List<string> Diary_Purchases = new List<string>();
-        List<Purchsed> mpList = new List<Purchsed>();
+        List<Purchsed> Slist = new List<Purchsed>();
+        List<Purchsed> Tlist = new List<Purchsed>();
+        List<Purchsed> Dlist = new List<Purchsed>();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -50,9 +53,9 @@ namespace VRDreamer
         {
             try
             {
-                //items = await Table.Where(User
-                //            => User.Name == username).ToCollectionAsync(); // get the username from login page
-                //purchases = items[0].Purchase_History;// split the string to get all the ids
+                items = await Table.Where(User
+                            => User.Id == userid).ToCollectionAsync(); // get the username from login page
+                purchases = items[0].Purchases;// split the string to get all the ids
 
                 foreach (string id in Scrap_Purchases)
                 {
@@ -64,10 +67,36 @@ namespace VRDreamer
                     m.Title = items1[0].Title;
                     m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
                     m.Type = "S";
-                   //m.color = (Color)ColorConverter.ConvertFromString("#FFDFD991");
-
+                    Slist.Add(m);
                 }
 
+                foreach (string id in Tour_Purchases)
+                {
+                    m = new Purchsed();
+                    items2 = await Table2.Where(Scrap
+                           => Scrap.Id == id).ToCollectionAsync();
+
+                    m.Id = items2[0].Id;
+                    m.Title = items2[0].Title;
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url)); // some static iage for scrap
+                    m.Type = "T";
+                    Tlist.Add(m);
+                }
+                foreach (string id in Diary_Purchases)
+                {
+                    m = new Purchsed();
+                    items3 = await Table3.Where(Diary
+                           => Diary.Id == id).ToCollectionAsync();
+
+                    m.Id = items3[0].Id;
+                    m.Title = items3[0].Title;
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); // some static iage for scrap
+                    m.Type = "D";
+                    Dlist.Add(m);
+                }
+                DiaryView.DataContext = Dlist;
+                TourView.DataContext = Tlist;
+                ScarpeView.DataContext = Slist;
             }
             catch (Exception)
             {
@@ -77,7 +106,7 @@ namespace VRDreamer
 
         private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+           
         }
 
         private void NextBar_Click(object sender, RoutedEventArgs e)
@@ -88,6 +117,41 @@ namespace VRDreamer
         private void ColorSelect_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Store));
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Grid g = new Grid();
+            g = sender as Grid;
+            FrameworkElement type = null;
+            FrameworkElement id = null;
+            foreach (FrameworkElement child in g.Children)
+            {
+                if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
+                {
+                    Border b = child as Border;
+
+                    id = b.Child as FrameworkElement;
+                }
+
+
+                if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
+                {
+                    Border b = child as Border;
+
+                    type = b.Child as FrameworkElement;
+                }
+            }
+
+            TextBlock t = id as TextBlock;
+            TextBlock t2 = type as TextBlock;
+
+            if (t2.Text == "S")
+                Frame.Navigate(typeof(ViewScrape), t.Text);
+            else if (t2.Text == "D")
+                Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
+            else if (t2.Text == "T")
+                Frame.Navigate(typeof(TourViewer_Page), t.Text);
         }
     }
 }
