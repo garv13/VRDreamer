@@ -190,5 +190,10 @@ namespace VRDreamer
                 Tags.Text = i.ToString() + " Point(s) Tagged";
             }
         }
+
+        private void NextBar_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ScrapeForm), li);
+        }
     }
 }
