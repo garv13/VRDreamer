@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace VRDreamer
 {
-    class Scrap
+    class PointerView
     {
-        public string Id { get; set; }
-        public string Point_List { get; set; }
 
-        public string UserId { get; set; }
-
-        public bool store { get; set; }
-
+        public string Serial { get; set; }
         public string Title { get; set; }
-
-
+        public StorageFile File { get; set; }
+        public string Desc { get; set; }
     }
 }

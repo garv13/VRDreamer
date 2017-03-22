@@ -25,7 +25,7 @@
     <Page.BottomAppBar>
         <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark">
             <StackPanel Orientation="Horizontal">
-                <AppBarButton Name="NextBar" Icon="Accept" Label="Done"   />
+                <AppBarButton Name="NextBar" Icon="Accept" Label="Done" Click="NextBar_Click"   />
                 
             </StackPanel>
         </AppBar>

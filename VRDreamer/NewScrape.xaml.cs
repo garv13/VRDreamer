@@ -160,10 +160,11 @@ namespace VRDreamer
 
         private void PreviewControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            i++;
+           
             Pointer po = new Pointer();
             if (pos != null)
             {
+                i++;
                 po.lat = pos.Coordinate.Latitude;
                 po.lon = pos.Coordinate.Latitude;
                 po.Yaw = c.GetCurrentReading().HeadingMagneticNorth;
@@ -189,6 +190,11 @@ namespace VRDreamer
                 li.Add(po);
                 Tags.Text = i.ToString() + " Point(s) Tagged";
             }
+        }
+
+        private void NextBar_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ScrapeForm), li);
         }
     }
 }

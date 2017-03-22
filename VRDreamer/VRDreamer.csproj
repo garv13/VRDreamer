@@ -107,6 +107,7 @@
       <DependentUpon>NewScrape.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pointer.cs" />
+    <Compile Include="PointerView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrap.cs" />
     <Compile Include="Purchsed.cs" />
