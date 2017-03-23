@@ -43,19 +43,20 @@ namespace VRDreamer
             {
                 items3 = await Table3.Where(Diary
                          => Diary.Id == id).ToCollectionAsync();
-                foreach (Tour item in items3[0].Tour_List)
+                string[] ids = items3[0].Tour_List.Split(',');
+                foreach (string nid in ids)
                 {
-                    items2 = await Table2.Where(Tour
-                   => Tour.Id == item.Id).ToCollectionAsync();
-                }
-                foreach (Tour tourItem in items2)
-                {
-                    m = new Purchsed();
-                    m.Id = items2[0].Id;
-                    m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
-                    m.Type = "T";
-                    Tlist.Add(m);
+                    if (nid != "")
+                    {
+                        items2 = await Table2.Where(Tour
+                       => Tour.Id == nid).ToCollectionAsync();
+                        m = new Purchsed();
+                        m.Id = items2[0].Id;
+                        m.Title = items2[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
+                        m.Type = "T";
+                        Tlist.Add(m);
+                    }
                 }
                 DiaryView.DataContext = Tlist;
             }

@@ -48,10 +48,11 @@ namespace VRDreamer
             foreach(Scrap si in items1)
             {
                 s = new StoreListing();
-                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
+                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // some static iage for scrap
                 s.Price = "Price: " + "Free";
                 s.Title = si.Title;
                 s.Id = si.Id;
+                s.MyId = si.Point_List;
                 s.Type = "S";
                 Slist.Add(s);
             }
@@ -62,6 +63,7 @@ namespace VRDreamer
                 s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
                 s.Price = "Price: " + si.Price.ToString();
                 s.Title = si.Title;
+                s.MyId = si.Scrap_List;
                 s.Id = si.Id;
                 s.Type = "T";
                 Tlist.Add(s);
@@ -74,6 +76,7 @@ namespace VRDreamer
                 s.Price = "Price: " + si.Price.ToString();
                 s.Title = si.Title;
                 s.Id = si.Id;
+                s.MyId = si.Tour_List;
                 s.Type = "D";
                 Dlist.Add(s);
             }
@@ -105,14 +108,14 @@ namespace VRDreamer
             if (sent.Type == "S")
                 Frame.Navigate(typeof(ViewScrape), sent.Id);
             else if (sent.Type == "D")
-                Frame.Navigate(typeof(Diary_Store_View_Page), sent.Type);
+                Frame.Navigate(typeof(Diary_Store_View_Page), sent);
             else if (sent.Type == "T")
-                Frame.Navigate(typeof(Tour_Store_View_Page), sent.Type);
+                Frame.Navigate(typeof(Tour_Store_View_Page), sent);
         }
 
 
-        //private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
         //    Grid g = new Grid();
         //    g = sender as Grid;
         //    FrameworkElement type = null;
@@ -144,6 +147,6 @@ namespace VRDreamer
         //        Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
         //    else if (t2.Text == "T")
         //        Frame.Navigate(typeof(TourViewer_Page), t.Text);
-        //}
+        }
     }
 }

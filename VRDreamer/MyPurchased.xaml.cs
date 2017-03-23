@@ -24,7 +24,7 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public string userid = " ";
+        public string userid = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
         private IMobileServiceTable<User> Table = App.MobileService.GetTable<User>();
         private MobileServiceCollection<User, User> items;
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();

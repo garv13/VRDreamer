@@ -43,17 +43,15 @@ namespace VRDreamer
             {
                 items3 = await Table3.Where(Tour
                          => Tour.Id == id).ToCollectionAsync();
-                foreach (Scrap item in items3[0].Scrap_List)
+                string[] ids = items3[0].Scrap_List.Split(',');
+                foreach (string item in ids)
                 {
                     items2 = await Table2.Where(Scrap
-                   => Scrap.Id == item.Id).ToCollectionAsync();
-                }
-                foreach (Scrap tourItem in items2)
-                {
+                   => Scrap.Id == item).ToCollectionAsync();
                     m = new Purchsed();
                     m.Id = items2[0].Id;
                     m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("image from asset store")); // static image
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // static image
                     m.Type = "S";
                     Tlist.Add(m);
                 }

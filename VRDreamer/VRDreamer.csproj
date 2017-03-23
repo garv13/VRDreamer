@@ -140,6 +140,7 @@
     <None Include="VRDreamer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\augmented-reality-for-blog.jpg" />
     <Content Include="Assets\search-icon-hi.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

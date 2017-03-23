@@ -13,6 +13,7 @@ namespace VRDreamer
 
         public string Price { get; set; }
 
+        public string MyId { get; set; }
         public BitmapImage Image { get; set; }
 
         public string Id { get; set; }

@@ -44,7 +44,7 @@ namespace VRDreamer
             Title.Text = rec.Title;
             Cover.Source = rec.Image;
             FullCost.Text = "Tour Price: " + rec.Price;
-            string[] ids = rec.Id.Split(',');
+            string[] ids = rec.MyId.Split(',');
             try
             {
                 foreach (string nid in ids)
@@ -55,7 +55,9 @@ namespace VRDreamer
                         items = await Table.Where(Scrap
                              => Scrap.Id == nid).ToCollectionAsync();
                         rec.Id = items[0].Id;
-                     //   rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("sample image from asset store")); // image fromasset store
+                        rec.Title = items[0].Title;
+                        rec.MyId = items[0].Point_List;
+                        rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // image fromasset store
                         sl.Add(rec);
                     }
                 }

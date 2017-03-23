@@ -8,7 +8,7 @@ namespace VRDreamer
 {
     class Tour
     {
-        public List<Scrap> Scrap_List { get; set; }
+        public string Scrap_List { get; set; }
 
         public int Price { get; set; }
         public string Id { get; set; }

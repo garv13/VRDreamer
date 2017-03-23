@@ -45,7 +45,7 @@ namespace VRDreamer
             Title.Text = rec.Title;
             Cover.Source = rec.Image;
             FullCost.Text = "Diary Price: " + rec.Price;
-            string[] ids = rec.Id.Split(',');
+            string[] ids = rec.MyId.Split(',');
             try
             {
                 foreach (string nid in ids)
