@@ -57,7 +57,7 @@ namespace VRDreamer
                         rec.Id = items[0].Id;
                         rec.Title = items[0].Title;
                         rec.MyId = items[0].Point_List;
-                        rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // image fromasset store
+                        rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // image fromasset store
                         sl.Add(rec);
                     }
                 }
@@ -68,44 +68,38 @@ namespace VRDreamer
 
             }
         }
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
-
-        private void MainPage_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        private void Canvas_Button_Click(object sender, RoutedEventArgs e)
-        {
-          //  Frame.Navigate(typeof(CanvasPage));
-        }
-
-        private void Store_Button_Click(object sender, RoutedEventArgs e)
-        {
-           // Frame.Navigate(typeof(StorePage));
-        }
-
-        private void Notes_Botton_Click(object sender, RoutedEventArgs e)
-        {
-           // Frame.Navigate(typeof(MyNotesPage));
+            Frame.Navigate(typeof(Create_Diary_Tour));
         }
 
         private void About_Button_Click(object sender, RoutedEventArgs e)
         {
-           // Frame.Navigate(typeof(AboutPage));
+            Frame.Navigate(typeof(About));
         }
 
-        private void SignOut_Button_Click(object sender, RoutedEventArgs e)
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
         {
-           // Frame.Navigate(typeof(SignUp));
+            Frame.Navigate(typeof(Store));
         }
 
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            // buy button
         }
     }
 }

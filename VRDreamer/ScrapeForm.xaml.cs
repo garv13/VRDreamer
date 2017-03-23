@@ -126,5 +126,35 @@ namespace VRDreamer
             s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
             await App.MobileService.GetTable<Scrap>().InsertAsync(s);
         }
+
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Create_Diary_Tour));
+        }
+
+        private void About_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
+        }
+
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
     }
 }

@@ -9,8 +9,9 @@
 
     <Page.Resources>
         <ResourceDictionary >
-
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SplitViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10" Tapped="Grid_Tapped">
                     <Grid.RowDefinitions>
@@ -34,20 +35,44 @@
 
         </ResourceDictionary>
     </Page.Resources>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="150" >
+        <SplitView.Pane>
+            <StackPanel >
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
 
-    <Grid Background="#292929">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="My Dairy" Foreground="White" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+                <RadioButton x:Name="Purchase_Button" Tag="" IsChecked="True" Style="{StaticResource SplitViewNavButtonStyle}" Content="My Purchases"
+                        Click="Purchase_Button_Click"/>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.05*"/>
-                <RowDefinition Height="0.95*"/>
-            </Grid.RowDefinitions>
-            <GridView         
+                <RadioButton x:Name="Scrap_Button" Tag="" Content="Create Scrape" Style="{StaticResource SplitViewNavButtonStyle}"
+                        Click="Scrap_Button_Click"/>
+
+                <RadioButton x:Name="Store_Button" Tag="" Content="Store"
+                         Style="{StaticResource SplitViewNavButtonStyle}" Click="Store_Button_Click"/>
+
+                <RadioButton x:Name="Create_Diary_Botton" Tag="" Content="Create Diary/Tour"  Style="{StaticResource SplitViewNavButtonStyle}"
+                Click="Create_Diary_Botton_Click"/>
+
+                <RadioButton x:Name="About_Button" Tag=""  Content="About" Style="{StaticResource SplitViewNavButtonStyle}"
+                         Click="About_Button_Click"/>
+
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid Background="#292929">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="My Dairy" Foreground="White" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.95*"/>
+                    </Grid.RowDefinitions>
+                    <GridView         
                      Grid.Row="1"
                         HorizontalAlignment="Stretch"
                         x:Name="DiaryView"
@@ -64,7 +89,9 @@
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Visibility="Visible"
                       >
-                </GridView>
+                    </GridView>
+                </Grid>
             </Grid>
-        </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>

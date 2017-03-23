@@ -65,7 +65,7 @@ namespace VRDreamer
 
                     m.Id = items1[0].Id;
                     m.Title = items1[0].Title;
-                 //   m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
                     m.Type = "S";
                     Slist.Add(m);
                 }
@@ -104,7 +104,7 @@ namespace VRDreamer
 
                     m.Id = sr.Id;
                     m.Title = sr.Title;
-                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
                     m.Type = "S";
                     Slist.Add(m);
                 }
@@ -187,6 +187,36 @@ namespace VRDreamer
                 Frame.Navigate(typeof(DiaryViewer_Page), id);
             else if (type == "T")
                 Frame.Navigate(typeof(TourViewer_Page), id);
+        }
+
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Create_Diary_Tour));
+        }
+
+        private void About_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
+        }
+
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
     }
 }

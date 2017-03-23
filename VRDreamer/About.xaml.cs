@@ -1,11 +1,11 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,52 +21,20 @@ namespace VRDreamer
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Diary_Store_View_Page : Page
+    public sealed partial class About : Page
     {
-
-
-        List<StoreListing> sl = new List<StoreListing>();
-
-        private StoreListing rec;
-        private Tour n;
-        private IMobileServiceTable<Tour> Table = App.MobileService.GetTable<Tour>();
-        private MobileServiceCollection<Tour,Tour> items;
-        public Diary_Store_View_Page()
+        public About()
         {
             this.InitializeComponent();
+            Loaded += About_Loaded;
+
         }
 
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        private async void About_Loaded(object sender, RoutedEventArgs e)
         {
-            rec = new StoreListing();
-
-            rec = e.Parameter as StoreListing;
-            Title.Text = rec.Title;
-            Cover.Source = rec.Image;
-            FullCost.Text = "Diary Price: " + rec.Price;
-            string[] ids = rec.MyId.Split(',');
-            try
-            {
-                foreach (string nid in ids)
-                {
-                    if (nid != "")
-                    {
-                        rec = new StoreListing();
-                        items = await Table.Where(Tour
-                             => Tour.Id == nid).ToCollectionAsync();
-                        rec.Id = items[0].Id;
-                        rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items[0].Cover_Url)); // image fromasset store
-                        sl.Add(rec);
-                    }
-                }
-                StoreListView.DataContext = sl;
-            }
-            catch (Exception)
-            {
-
-            }
+            await(new MessageDialog("Will be updated soon")).ShowAsync();
         }
+
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Create_Diary_Tour));
@@ -96,11 +64,5 @@ namespace VRDreamer
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

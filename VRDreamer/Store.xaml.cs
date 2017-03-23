@@ -48,7 +48,7 @@ namespace VRDreamer
             foreach(Scrap si in items1)
             {
                 s = new StoreListing();
-                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // some static iage for scrap
+                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
                 s.Price = "Price: " + "Free";
                 s.Title = si.Title;
                 s.Id = si.Id;
@@ -147,6 +147,36 @@ namespace VRDreamer
         //        Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
         //    else if (t2.Text == "T")
         //        Frame.Navigate(typeof(TourViewer_Page), t.Text);
+        }
+
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Create_Diary_Tour));
+        }
+
+        private void About_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
+        }
+
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
     }
 }

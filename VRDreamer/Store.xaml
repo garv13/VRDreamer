@@ -9,7 +9,9 @@
 
     <Page.Resources>
         <ResourceDictionary >
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SplitViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10" Tapped="Grid_Tapped">
@@ -58,40 +60,65 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="#292929">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Store" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="150" >
+        <SplitView.Pane>
+            <StackPanel >
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
 
-        <Pivot Grid.Row="1" Background="#292929" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" >
-            <PivotItem VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <PivotItem.Header>
-                    <TextBlock Text="Diaries" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <RadioButton x:Name="Purchase_Button" Tag="" Style="{StaticResource SplitViewNavButtonStyle}" Content="My Purchases"
+                        Click="Purchase_Button_Click"/>
 
-                </PivotItem.Header>
-                <Grid Background="#292929">
-                    <Grid.RowDefinitions>
+                <RadioButton x:Name="Scrap_Button" Tag="" Content="Create Scrape" Style="{StaticResource SplitViewNavButtonStyle}"
+                        Click="Scrap_Button_Click"/>
 
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <RadioButton x:Name="Store_Button" Tag="" Content="Store" IsChecked="True"
+                         Style="{StaticResource SplitViewNavButtonStyle}" Click="Store_Button_Click"/>
 
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
+                <RadioButton x:Name="Create_Diary_Botton" Tag="" Content="Create Diary/Tour"  Style="{StaticResource SplitViewNavButtonStyle}"
+                Click="Create_Diary_Botton_Click"/>
+
+                <RadioButton x:Name="About_Button" Tag=""  Content="About" Style="{StaticResource SplitViewNavButtonStyle}"
+                         Click="About_Button_Click"/>
+
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid Background="#292929">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Store" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+
+                <Pivot Grid.Row="1" Background="#292929" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" >
+                    <PivotItem VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <PivotItem.Header>
+                            <TextBlock Text="Diaries" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                        </PivotItem.Header>
+                        <Grid Background="#292929">
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.9*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.9*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                </Grid.ColumnDefinitions>
 
 
-                        <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch" Click="SearchButton_Click">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                        </Button>
-                        <GridView         
+                                <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch" Click="SearchButton_Click">
+                                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                                </Button>
+                                <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
                         HorizontalAlignment="Stretch"
@@ -110,35 +137,35 @@
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Visibility="Visible"
                       >
-                        </GridView>
-                    </Grid>
-                </Grid>
-            </PivotItem>
-            <PivotItem >
-                <PivotItem.Header>
-                    <TextBlock Text="Tours" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                </GridView>
+                            </Grid>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem >
+                        <PivotItem.Header>
+                            <TextBlock Text="Tours" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-                </PivotItem.Header>
-                <Grid Background="#292929">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
+                        </PivotItem.Header>
+                        <Grid Background="#292929">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.9*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.9*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                </Grid.ColumnDefinitions>
 
 
-                        <Button x:Name="SearchButton2"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton2_Click">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                        </Button>
-                        <GridView         
+                                <Button x:Name="SearchButton2"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton2_Click">
+                                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                                </Button>
+                                <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
                         HorizontalAlignment="Stretch"
@@ -157,35 +184,35 @@
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Visibility="Visible"
                       >
-                        </GridView>
-                    </Grid>
-                </Grid>
-            </PivotItem>
+                                </GridView>
+                            </Grid>
+                        </Grid>
+                    </PivotItem>
 
-            <PivotItem >
-                <PivotItem.Header>
-                    <TextBlock Text="Scrapes" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <PivotItem >
+                        <PivotItem.Header>
+                            <TextBlock Text="Scrapes" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-                </PivotItem.Header>
-                <Grid Background="#292929">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
+                        </PivotItem.Header>
+                        <Grid Background="#292929">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.9*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.9*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <Button x:Name="SearchButton3"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton3_Click">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                        </Button>
+                                <Button x:Name="SearchButton3"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton3_Click">
+                                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                                </Button>
 
-                        <GridView         
+                                <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
                         HorizontalAlignment="Stretch"
@@ -204,12 +231,14 @@
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Visibility="Visible"
                       >
-                        </GridView>
-                    </Grid>
-                </Grid>
-            </PivotItem>
-        </Pivot>
+                                </GridView>
+                            </Grid>
+                        </Grid>
+                    </PivotItem>
+                </Pivot>
 
 
-    </Grid>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
