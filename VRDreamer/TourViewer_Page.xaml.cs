@@ -46,14 +46,17 @@ namespace VRDreamer
                 string[] ids = items3[0].Scrap_List.Split(',');
                 foreach (string item in ids)
                 {
-                    items2 = await Table2.Where(Scrap
-                   => Scrap.Id == item).ToCollectionAsync();
-                    m = new Purchsed();
-                    m.Id = items2[0].Id;
-                    m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // static image
-                    m.Type = "S";
-                    Tlist.Add(m);
+                    if (item != "")
+                    {
+                        items2 = await Table2.Where(Scrap
+                       => Scrap.Id == item).ToCollectionAsync();
+                        m = new Purchsed();
+                        m.Id = items2[0].Id;
+                        m.Title = items2[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // static image
+                        m.Type = "S";
+                        Tlist.Add(m);
+                    }
                 }
                 TourView.DataContext = Tlist;
             }
@@ -68,30 +71,27 @@ namespace VRDreamer
         {
             Grid g = new Grid();
             g = sender as Grid;
-            FrameworkElement type = null;
-            FrameworkElement id = null;
+            string type = null;
+            string id = null;
             foreach (FrameworkElement child in g.Children)
             {
                 if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
                 {
-                    Border b = child as Border;
+                   TextBlock b = child as TextBlock;
 
-                    id = b.Child as FrameworkElement;
+                    id = b.Text;
                 }
 
 
                 if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
                 {
-                    Border b = child as Border;
+                    TextBlock b = child as TextBlock;
 
-                    type = b.Child as FrameworkElement;
+                    type = b.Text;
                 }
             }
 
-            TextBlock t = id as TextBlock;
-            TextBlock t2 = type as TextBlock;
-
-            Frame.Navigate(typeof(ViewScrape), t.Text);
+            Frame.Navigate(typeof(ViewScrape), id);
         }
     }
 }

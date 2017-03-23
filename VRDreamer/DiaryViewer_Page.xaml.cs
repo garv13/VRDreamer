@@ -71,30 +71,27 @@ namespace VRDreamer
         {
             Grid g = new Grid();
             g = sender as Grid;
-            FrameworkElement type = null;
-            FrameworkElement id = null;
+            string type = null;
+            string id = null;
             foreach (FrameworkElement child in g.Children)
             {
                 if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
                 {
-                    Border b = child as Border;
+                    TextBlock b = child as TextBlock;
 
-                    id = b.Child as FrameworkElement;
+                    id = b.Text;
                 }
 
 
                 if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
                 {
-                    Border b = child as Border;
+                    TextBlock b = child as TextBlock;
 
-                    type = b.Child as FrameworkElement;
+                    type = b.Text;
                 }
             }
 
-            TextBlock t = id as TextBlock;
-            TextBlock t2 = type as TextBlock;
-
-            Frame.Navigate(typeof(TourViewer_Page), t.Text);
+            Frame.Navigate(typeof(TourViewer_Page), id);
         }
     }
 }
