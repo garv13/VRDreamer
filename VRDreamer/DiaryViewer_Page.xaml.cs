@@ -68,7 +68,32 @@ namespace VRDreamer
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Grid g = new Grid();
+            g = sender as Grid;
+            FrameworkElement type = null;
+            FrameworkElement id = null;
+            foreach (FrameworkElement child in g.Children)
+            {
+                if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
+                {
+                    Border b = child as Border;
 
+                    id = b.Child as FrameworkElement;
+                }
+
+
+                if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
+                {
+                    Border b = child as Border;
+
+                    type = b.Child as FrameworkElement;
+                }
+            }
+
+            TextBlock t = id as TextBlock;
+            TextBlock t2 = type as TextBlock;
+
+            Frame.Navigate(typeof(TourViewer_Page), t.Text);
         }
     }
 }

@@ -117,6 +117,7 @@
     <Compile Include="Store.xaml.cs">
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StoreListing.cs" />
     <Compile Include="Tour.cs" />
     <Compile Include="TourViewer_Page.xaml.cs">
       <DependentUpon>TourViewer_Page.xaml</DependentUpon>
@@ -133,6 +134,7 @@
     <None Include="VRDreamer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\search-icon-hi.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

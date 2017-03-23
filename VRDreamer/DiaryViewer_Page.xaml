@@ -42,30 +42,13 @@
         </Grid.RowDefinitions>
         <TextBlock Text="My Dairy" Foreground="White" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
 
-
-        <Grid Background="#292929">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.05*"/>
+                <RowDefinition Height="0.95*"/>
             </Grid.RowDefinitions>
-
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.1*"/>
-                    <RowDefinition Height="0.9*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.9*"/>
-                    <ColumnDefinition Width="0.2*"/>
-                </Grid.ColumnDefinitions>
-
-
-                <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch">
-                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                </Button>
-                <GridView         
+            <GridView         
                      Grid.Row="1"
-                    Grid.ColumnSpan="2"
                         HorizontalAlignment="Stretch"
                         x:Name="DiaryView"
                         VerticalAlignment="Stretch"
@@ -84,5 +67,4 @@
                 </GridView>
             </Grid>
         </Grid>
-    </Grid>
 </Page>
