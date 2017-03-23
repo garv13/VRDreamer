@@ -78,18 +78,13 @@
                    
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
+                            <RowDefinition Height="0.05*"/>
+                            <RowDefinition Height="0.95*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.1*"/>
                         </Grid.ColumnDefinitions>
-
-
-                        <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                        </Button>
                         <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -125,18 +120,13 @@
                     <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
+                            <RowDefinition Height="0.05*"/>
+                            <RowDefinition Height="0.95*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.9*"/>
                             <ColumnDefinition Width="0.1*"/>
                         </Grid.ColumnDefinitions>
-
-
-                        <Button x:Name="SearchButton2"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,20">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
-                        </Button>
                         <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -172,8 +162,8 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.1*"/>
-                            <RowDefinition Height="0.9*"/>
+                            <RowDefinition Height="0.05*"/>
+                            <RowDefinition Height="0.95*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.9*"/>
@@ -189,7 +179,7 @@
                         x:Name="ScarpeView"
                         VerticalAlignment="Stretch"
                         ItemsSource="{Binding}"                       
-                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate2}"
+                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
                         SelectionMode="None"          
                         IsSwipeEnabled="false"
                         IsItemClickEnabled="True"

@@ -7,7 +7,209 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary >
+
+
+            <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10" Tapped="Grid_Tapped">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="img" Source="{Binding Image}" Height="100" Width="100" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="title" Text="{Binding Title}"  FontSize="20" Foreground="White" Grid.Row="0" Grid.Column="1" TextWrapping="WrapWholeWords" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="authName" Text="{Binding Name}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="price" Text="{Binding Price}" FontSize="15" Foreground="White" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="id" Visibility="Collapsed" Text="{Binding Id}" FontSize="15" Foreground="White" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Type" Visibility="Collapsed" Text="{Binding Type}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
+
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Standard3100x260ItemTemplate2" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="img"  Height="100" Width="100" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/BooksCollections.png"/>
+                    <TextBlock x:Name="title" Text="{Binding Name}"  FontSize="20" Foreground="White" Grid.Row="0" Grid.Column="1" TextWrapping="WrapWholeWords" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="authName" Text="{Binding CreatedBy}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
+                    <TextBlock x:Name="id" Visibility="Collapsed" Text="{Binding Id}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
+
+                </Grid>
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="#292929">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Store" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+
+        <Pivot Grid.Row="1" Background="#292929" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" >
+            <PivotItem VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <PivotItem.Header>
+                    <TextBlock Text="Diaries" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
+                <Grid Background="#292929">
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.9*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch" Click="SearchButton_Click">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                        </Button>
+                        <GridView         
+                     Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        x:Name="DiaryView"
+                        VerticalAlignment="Stretch"
+                        ItemsSource="{Binding}"
+                            ItemClick="StoreListView_ItemClick"
+                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
+                        SelectionMode="None"          
+                        IsSwipeEnabled="false"
+                        IsItemClickEnabled="True"
+                       
+                        ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Visibility="Visible"
+                      >
+                        </GridView>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Text="Tours" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
+                <Grid Background="#292929">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.9*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Button x:Name="SearchButton2"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton2_Click">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                        </Button>
+                        <GridView         
+                     Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        x:Name="TourView"
+                            ItemClick="StoreListView_ItemClick"
+                        VerticalAlignment="Stretch"
+                        ItemsSource="{Binding}"                       
+                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
+                        SelectionMode="None"          
+                        IsSwipeEnabled="false"
+                        IsItemClickEnabled="True"
+                     
+                        ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Visibility="Visible"
+                      >
+                        </GridView>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Text="Scrapes" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </PivotItem.Header>
+                <Grid Background="#292929">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.9*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="SearchButton3"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton3_Click">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
+                        </Button>
+
+                        <GridView         
+                     Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        x:Name="ScarpeView"
+                        VerticalAlignment="Stretch"
+                        ItemsSource="{Binding}"              
+                            ItemClick="StoreListView_ItemClick"
+                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
+                        SelectionMode="None"          
+                        IsSwipeEnabled="false"
+                        IsItemClickEnabled="True"
+                     
+                        ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Visibility="Visible"
+                      >
+                        </GridView>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
 
     </Grid>
 </Page>

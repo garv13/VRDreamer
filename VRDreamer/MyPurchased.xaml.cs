@@ -24,7 +24,7 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public string userid = " ";
+        public string userid = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
         private IMobileServiceTable<User> Table = App.MobileService.GetTable<User>();
         private MobileServiceCollection<User, User> items;
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
@@ -65,7 +65,7 @@ namespace VRDreamer
 
                     m.Id = items1[0].Id;
                     m.Title = items1[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
+                 //   m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
                     m.Type = "S";
                     Slist.Add(m);
                 }
@@ -73,12 +73,12 @@ namespace VRDreamer
                 foreach (string id in Tour_Purchases)
                 {
                     m = new Purchsed();
-                    items2 = await Table2.Where(Scrap
-                           => Scrap.Id == id).ToCollectionAsync();
+                    items2 = await Table2.Where(Tour
+                           =>Tour.Id == id).ToCollectionAsync();
 
                     m.Id = items2[0].Id;
                     m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url)); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
                     m.Type = "T";
                     Tlist.Add(m);
                 }
@@ -90,10 +90,52 @@ namespace VRDreamer
 
                     m.Id = items3[0].Id;
                     m.Title = items3[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); 
                     m.Type = "D";
                     Dlist.Add(m);
                 }
+
+                items1 = await Table1.Where(Scrap
+                           => Scrap.UserId == userid).ToCollectionAsync();
+
+                foreach(Scrap sr in items1)
+                {
+                    m = new Purchsed();
+
+                    m.Id = sr.Id;
+                    m.Title = sr.Title;
+                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("some static image")); // some static iage for scrap
+                    m.Type = "S";
+                    Slist.Add(m);
+                }
+
+                items2 = await Table2.Where(Tour
+                   => Tour.UserId == userid).ToCollectionAsync();
+                foreach (Tour sr in items2)
+                {
+                    m = new Purchsed();
+
+                    m.Id = sr.Id;
+                    m.Title = sr.Title;
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(sr.Cover_Url)); // some static iage for scrap
+                    m.Type = "T";
+                    Tlist.Add(m);
+                }
+
+                items3 = await Table3.Where(Diary
+                => Diary.UserId == userid).ToCollectionAsync();
+                foreach (Diary sr in items3)
+                {
+                    m = new Purchsed();
+
+                    m.Id = sr.Id;
+                    m.Title = sr.Title;
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(sr.Cover_Url)); // some static iage for scrap
+                    m.Type = "D";
+                    Dlist.Add(m);
+                }
+
+
                 DiaryView.DataContext = Dlist;
                 TourView.DataContext = Tlist;
                 ScarpeView.DataContext = Slist;
@@ -102,11 +144,6 @@ namespace VRDreamer
             {
 
             }
-        }
-
-        private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-           
         }
 
         private void NextBar_Click(object sender, RoutedEventArgs e)
@@ -123,35 +160,33 @@ namespace VRDreamer
         {
             Grid g = new Grid();
             g = sender as Grid;
-            FrameworkElement type = null;
-            FrameworkElement id = null;
+            string type = null;
+            string id = null;
             foreach (FrameworkElement child in g.Children)
             {
                 if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
                 {
-                    Border b = child as Border;
+                    TextBlock b = child as TextBlock;
+                    
 
-                    id = b.Child as FrameworkElement;
+                    id = b.Text;
                 }
 
 
                 if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
                 {
-                    Border b = child as Border;
+                   TextBlock b = child as TextBlock;
 
-                    type = b.Child as FrameworkElement;
+                    type = b.Text;
                 }
             }
 
-            TextBlock t = id as TextBlock;
-            TextBlock t2 = type as TextBlock;
-
-            if (t2.Text == "S")
-                Frame.Navigate(typeof(ViewScrape), t.Text);
-            else if (t2.Text == "D")
-                Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
-            else if (t2.Text == "T")
-                Frame.Navigate(typeof(TourViewer_Page), t.Text);
+            if (type == "S")
+                Frame.Navigate(typeof(ViewScrape), id);
+            else if (type == "D")
+                Frame.Navigate(typeof(DiaryViewer_Page), id);
+            else if (type == "T")
+                Frame.Navigate(typeof(TourViewer_Page), id);
         }
     }
 }

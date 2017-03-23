@@ -8,7 +8,7 @@ namespace VRDreamer
 {
     class Diary
     {
-        public List<Tour> Tour_List { get; set; }
+        public string Tour_List { get; set; }
 
         public string Id { get; set; }
 

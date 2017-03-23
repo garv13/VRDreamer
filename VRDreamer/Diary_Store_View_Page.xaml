@@ -1,0 +1,137 @@
+﻿<Page
+    x:Class="VRDreamer.Diary_Store_View_Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VRDreamer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SplitViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image x:Name="img" Source="{Binding Image}" Height="200" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="150" >
+        <SplitView.Pane>
+            <StackPanel >
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+
+                <RadioButton x:Name="MainPage_Button" Tag="" Style="{StaticResource SplitViewNavButtonStyle}" Content="Main Page"
+                        Click="MainPage_Button_Click"/>
+
+                <RadioButton x:Name="Canvas_Button" IsChecked="True" Tag="" Content="Canvas" Style="{StaticResource SplitViewNavButtonStyle}"
+                        Click="Canvas_Button_Click"/>
+
+                <RadioButton x:Name="Store_Button" Tag="" Content="Store"
+                         Style="{StaticResource SplitViewNavButtonStyle}" Click="Store_Button_Click"/>
+
+                <RadioButton x:Name="Notes_Botton" Tag="" Content="My Notes"  Style="{StaticResource SplitViewNavButtonStyle}"
+                Click="Notes_Botton_Click"/>
+
+                <RadioButton x:Name="About_Button" Tag="" Content="About" Style="{StaticResource SplitViewNavButtonStyle}"
+                         Click="About_Button_Click"/>
+
+                <RadioButton x:Name="SignOut_Button" Tag="" Content="SignOut"
+                        Style="{StaticResource SplitViewNavButtonStyle}" Click="SignOut_Button_Click"/>
+
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+
+            <Grid Background="#292929">
+
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="679*"/>
+                </Grid.RowDefinitions>
+                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" x:Name="LoadingBar"/>
+                <TextBlock Text="Diary Details" Foreground="#CCCCCC" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,7" Grid.RowSpan="2"/>
+                <Grid x:Name="descBoxGrid" Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.6*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.01*"/>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.01*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="Title" Text="Title" FontFamily="Bodoni Regular" Foreground="White" TextWrapping="WrapWholeWords" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1"/>
+                            <!--<TextBlock x:Name="Author" Text="Author" FontFamily="Bodoni Regular" TextWrapping="WrapWholeWords" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Grid.Row="2"/>-->
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="FullCost" TextWrapping="WrapWholeWords" IsTextScaleFactorEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Bodoni Regular" Text="Diary Cost:" Foreground="White" FontSize="20"/>
+                                <Button Click="Button_Click" IsTextScaleFactorEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Stretch" UseSystemFocusVisuals="True" Grid.Column="1" Foreground="#F9FFD2" Background="Transparent" Content="Buy Diary" FontSize="20"/>
+                            </Grid>
+
+                        </Grid>
+                        <Image x:Name="Cover" VerticalAlignment="Stretch" Stretch="Uniform"  HorizontalAlignment="Stretch" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <ListView         
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        x:Name="StoreListView"
+                        VerticalAlignment="Stretch"
+                        ItemsSource="{Binding}"                       
+                        ItemTemplate="{StaticResource Standard3100x260ItemTemplate}"
+                        SelectionMode="None"          
+                        IsSwipeEnabled="True"
+                        IsItemClickEnabled="False"                
+                        ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Visibility="Visible"
+                      >
+                    </ListView>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.7*"/>
+                            <RowDefinition Height="0.2*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                        </Grid.ColumnDefinitions>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
+</Page>

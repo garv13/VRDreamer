@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,75 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class DiaryViewer_Page : Page
     {
+        private IMobileServiceTable<Tour> Table2 = App.MobileService.GetTable<Tour>();
+        private MobileServiceCollection<Tour, Tour> items2;
+        private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
+        private MobileServiceCollection<Diary, Diary> items3;
+
+        Purchsed m = new Purchsed();
+        List<Purchsed> Tlist = new List<Purchsed>();
+
         public DiaryViewer_Page()
         {
             this.InitializeComponent();
+        }
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string id = e.Parameter as string;
+
+            try
+            {
+                items3 = await Table3.Where(Diary
+                         => Diary.Id == id).ToCollectionAsync();
+                string[] ids = items3[0].Tour_List.Split(',');
+                foreach (string nid in ids)
+                {
+                    if (nid != "")
+                    {
+                        items2 = await Table2.Where(Tour
+                       => Tour.Id == nid).ToCollectionAsync();
+                        m = new Purchsed();
+                        m.Id = items2[0].Id;
+                        m.Title = items2[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
+                        m.Type = "T";
+                        Tlist.Add(m);
+                    }
+                }
+                DiaryView.DataContext = Tlist;
+            }
+
+            catch(Exception)
+            {
+
+            }
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Grid g = new Grid();
+            g = sender as Grid;
+            string type = null;
+            string id = null;
+            foreach (FrameworkElement child in g.Children)
+            {
+                if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
+                {
+                    TextBlock b = child as TextBlock;
+
+                    id = b.Text;
+                }
+
+
+                if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
+                {
+                    TextBlock b = child as TextBlock;
+
+                    type = b.Text;
+                }
+            }
+
+            Frame.Navigate(typeof(TourViewer_Page), id);
         }
     }
 }
