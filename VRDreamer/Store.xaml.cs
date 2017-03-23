@@ -98,39 +98,52 @@ namespace VRDreamer
 
         }
 
-        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+
+        private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Grid g = new Grid();
-            g = sender as Grid;
-            FrameworkElement type = null;
-            FrameworkElement id = null;
-            foreach (FrameworkElement child in g.Children)
-            {
-                if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
-                {
-                    Border b = child as Border;
-
-                    id = b.Child as FrameworkElement;
-                }
-
-
-                if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
-                {
-                    Border b = child as Border;
-
-                    type = b.Child as FrameworkElement;
-                }
-            }
-
-            TextBlock t = id as TextBlock;
-            TextBlock t2 = type as TextBlock;
-
-            if (t2.Text == "S")
-                Frame.Navigate(typeof(ViewScrape), t.Text);
-            else if (t2.Text == "D")
-                Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
-            else if (t2.Text == "T")
-                Frame.Navigate(typeof(TourViewer_Page), t.Text);
+            StoreListing sent = e.ClickedItem as StoreListing;
+            if (sent.Type == "S")
+                Frame.Navigate(typeof(ViewScrape), sent.Id);
+            else if (sent.Type == "D")
+                Frame.Navigate(typeof(Diary_Store_View_Page), sent.Type);
+            else if (sent.Type == "T")
+                Frame.Navigate(typeof(Tour_Store_View_Page), sent.Type);
         }
+
+
+        //private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+        //    Grid g = new Grid();
+        //    g = sender as Grid;
+        //    FrameworkElement type = null;
+        //    FrameworkElement id = null;
+        //    foreach (FrameworkElement child in g.Children)
+        //    {
+        //        if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
+        //        {
+        //            Border b = child as Border;
+
+        //            id = b.Child as FrameworkElement;
+        //        }
+
+
+        //        if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
+        //        {
+        //            Border b = child as Border;
+
+        //            type = b.Child as FrameworkElement;
+        //        }
+        //    }
+
+        //    TextBlock t = id as TextBlock;
+        //    TextBlock t2 = type as TextBlock;
+
+        //    if (t2.Text == "S")
+        //        Frame.Navigate(typeof(ViewScrape), t.Text);
+        //    else if (t2.Text == "D")
+        //        Frame.Navigate(typeof(DiaryViewer_Page), t.Text);
+        //    else if (t2.Text == "T")
+        //        Frame.Navigate(typeof(TourViewer_Page), t.Text);
+        //}
     }
 }

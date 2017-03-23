@@ -100,6 +100,9 @@
     <Compile Include="DiaryViewer_Page.xaml.cs">
       <DependentUpon>DiaryViewer_Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Diary_Store_View_Page.xaml.cs">
+      <DependentUpon>Diary_Store_View_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyPurchased.xaml.cs">
       <DependentUpon>MyPurchased.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,9 @@
     <Compile Include="Tour.cs" />
     <Compile Include="TourViewer_Page.xaml.cs">
       <DependentUpon>TourViewer_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tour_Store_View_Page.xaml.cs">
+      <DependentUpon>Tour_Store_View_Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="ViewScrape.xaml.cs">
@@ -153,6 +159,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Diary_Store_View_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyPurchased.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,11 +175,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SplitViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Store.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TourViewer_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tour_Store_View_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
