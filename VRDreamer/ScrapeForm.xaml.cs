@@ -70,6 +70,7 @@ namespace VRDreamer
                 PointerView po = new PointerView();
                 po.Serial = i.ToString();
                 li.Add(po);
+                i++;
             }
             ListPointer.ItemsSource = li;
         }
@@ -95,7 +96,7 @@ namespace VRDreamer
             int i = 0;
             Scrap s = new Scrap();
             s.Title = scrapeName.Text;
-            s.UserId = "1052550e-42f6-4096-b4fb-1b648af1bab6";
+            s.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
             s.store = true;
             s.Point_List = "";
             foreach (Pointer p in list)
@@ -106,18 +107,17 @@ namespace VRDreamer
                 var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
                 var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
                 var container = client.GetContainerReference("first");
-                await container.CreateIfNotExistsAsync();
+              //  await container.CreateIfNotExistsAsync();
 
-                var perm = new BlobContainerPermissions();
-                perm.PublicAccess = BlobContainerPublicAccessType.Blob;
-                await container.SetPermissionsAsync(perm);
+                //var perm = new BlobContainerPermissions();
+                //perm.PublicAccess = BlobContainerPublicAccessType.Blob;
+                //await container.SetPermissionsAsync(perm);
                 var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".png");
-                using (var fileStream = await li[i].File.OpenSequentialReadAsync())
-                {
+               
 
                     //await blockBlob.UploadFromStreamAsync(fileStream);
                     await blockBlob.UploadFromFileAsync(li[i].File);
-                }
+                
                 p.Media_Url = blockBlob.StorageUri.PrimaryUri.ToString();
                 p.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
                 p.Title = li[i].Title;
@@ -127,7 +127,7 @@ namespace VRDreamer
             }
             s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
             await App.MobileService.GetTable<Scrap>().InsertAsync(s);
-            Frame.Navigate(typeof(Purchsed));
+            Frame.Navigate(typeof(MainPage));
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)

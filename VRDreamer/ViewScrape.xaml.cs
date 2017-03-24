@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -118,7 +119,7 @@ namespace VRDreamer
                         yaw += 360;
                     if (pitch < 0)
                         pitch += 360;
-                    // Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
+                    Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
 
 
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -136,8 +137,8 @@ namespace VRDreamer
                             img.Source = n.Media;
                             TranslateTransform t = new TranslateTransform();
 
-                            t.X = (Math.Abs(n.Yaw - yaw)) * stepW;
-                            t.Y = (Math.Abs(n.Pitch - pitch)) * stepH;
+                            t.X =(n.Yaw - yaw) * stepW;
+                            t.Y = (pitch-n.Pitch) * stepH;
 
                             img.RenderTransform = t;
                             lol.Children.Add(img);
