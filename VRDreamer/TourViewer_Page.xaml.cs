@@ -53,7 +53,7 @@ namespace VRDreamer
                         m = new Purchsed();
                         m.Id = items2[0].Id;
                         m.Title = items2[0].Title;
-                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("C:\\Users\\garvj\\documents\visual studio 2015\\Projects\\VRDreamer\\VRDreamer\\Assets\\augmented-reality-for-blog.jpg")); // static image
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // static image
                         m.Type = "S";
                         Tlist.Add(m);
                     }
@@ -92,6 +92,36 @@ namespace VRDreamer
             }
 
             Frame.Navigate(typeof(ViewScrape), id);
+        }
+
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Create_Diary_Tour));
+        }
+
+        private void About_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
+        }
+
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
     }
 }
