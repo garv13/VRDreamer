@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace VRDreamer
         DisplayRequest _displayRequest;
         List<Pointer> li;
         Geoposition pos;
+        private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
+        private MobileServiceCollection<Scrap, Scrap> items1;
+        private IMobileServiceTable<Pointer> Table2 = App.MobileService.GetTable<Pointer>();
+        private MobileServiceCollection<Pointer, Pointer> items2;
         public ViewScrape()
         {
             li = new List<Pointer>();
@@ -57,8 +62,7 @@ namespace VRDreamer
             this.InitializeComponent();
         }
 
-       
-
+     
         private void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
         {
             throw new NotImplementedException();
@@ -70,6 +74,21 @@ namespace VRDreamer
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            string id = e.Parameter as string;
+            items1 = await Table1.Where(s => s.Id == id).ToCollectionAsync();
+            if (items1 != null)
+            {
+                Scrap s = items1[0];
+                string[] str = s.Point_List.Split(',');
+                for (int i = 0; i < str.Length; i++)
+                {
+                    string po = str[i];
+                    items2 = await Table2.Where(t => t.Id == po).ToCollectionAsync();
+                    Pointer p = new Pointer();
+                    p = items2[0];
+                    li.Add(p);
+                }
+            }
             await StartPreviewAsync();
         }
 
