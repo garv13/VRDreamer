@@ -107,6 +107,37 @@ namespace VRDreamer
                 // yaw (z-axis rotation)
 
 
+
+            //    double pitch;
+            //double sqw = q1.W * q1.W;
+            //double sqx = q1.X * q1.X;
+            //double sqy = q1.Y * q1.Y;
+            //double sqz = q1.Z * q1.Z;
+            //double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+            //double test = q1.X * q1.Y + q1.Z * q1.W;
+            //if (test > 0.499 * unit)
+            //{ // singularity at north pole
+
+            //        pitch = Math.PI / 2;
+               
+               
+            //}
+            //if (test < -0.499 * unit)
+            //{ // singularity at south pole
+
+            //        pitch = -Math.PI / 2;
+                
+               
+            //}
+            //    // heading = atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
+            //    pitch = Math.Asin(2 * test / unit);
+            //    //   bank = atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
+
+
+
+
+
+            //    pitch = pitch * 180 / Math.PI;
                 yaw5 += yaw;
                 pitch5 += pitch;
                 cou++;
@@ -117,8 +148,8 @@ namespace VRDreamer
                     yaw5 = pitch5 = cou = 0;
                     if (yaw < 0)
                         yaw += 360;
-                    if (pitch < 0)
-                        pitch += 360;
+                    //if (pitch < 0)
+                    //    pitch += 360;
                     Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
 
 
@@ -154,6 +185,7 @@ namespace VRDreamer
         {
             CompassReading reading = args.Reading;
             yaw = reading.HeadingTrueNorth.Value;
+            
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
