@@ -88,7 +88,7 @@ namespace VRDreamer
                     s.Type = "D";
                     Dlist.Add(s);
                 }
-
+                LoadingBar2.IsIndeterminate = false;
                 LoadingBar2.Visibility = Visibility.Collapsed;
                 DiaryView.DataContext = Dlist;
                 TourView.DataContext = Tlist;

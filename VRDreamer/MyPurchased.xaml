@@ -59,7 +59,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
-               CompactPaneLength="50" OpenPaneLength="150" >
+               CompactPaneLength="50" OpenPaneLength="200" >
         <SplitView.Pane>
             <StackPanel >
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
@@ -94,7 +94,6 @@
                     <PivotItem VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <PivotItem.Header>
                             <TextBlock Text="Diaries" Foreground="#CCCCCC" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-
                         </PivotItem.Header>
                         <Grid Background="#292929">
                             <Grid.RowDefinitions>
@@ -111,6 +110,7 @@
                                     <ColumnDefinition Width="0.9*"/>
                                     <ColumnDefinition Width="0.1*"/>
                                 </Grid.ColumnDefinitions>
+                                <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
                                 <GridView         
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -143,7 +143,6 @@
                                 <RowDefinition Height="0.06*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.05*"/>

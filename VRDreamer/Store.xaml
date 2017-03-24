@@ -61,7 +61,7 @@
     </Page.Resources>
 
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
-               CompactPaneLength="50" OpenPaneLength="150" >
+               CompactPaneLength="50" OpenPaneLength="200" >
         <SplitView.Pane>
             <StackPanel >
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
@@ -113,8 +113,9 @@
                                     <ColumnDefinition Width="0.9*"/>
                                     <ColumnDefinition Width="0.2*"/>
                                 </Grid.ColumnDefinitions>
-
-
+                                <TextBox VerticalAlignment="Stretch" Background="#B5B5B5" HorizontalAlignment="Stretch"
+                                      x:Name="Box"/>
+                                <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
                                 <Button x:Name="SearchButton" HorizontalAlignment="Stretch" Grid.Column="1" Background="#0D4FB5"  VerticalAlignment="Stretch" Click="SearchButton_Click">
                                     <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
                                 </Button>
@@ -150,7 +151,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <ProgressBar Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LoadingBar2"/>
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.1*"/>
@@ -161,7 +161,8 @@
                                     <ColumnDefinition Width="0.2*"/>
                                 </Grid.ColumnDefinitions>
 
-
+                                <TextBox VerticalAlignment="Stretch" Background="#B5B5B5" HorizontalAlignment="Stretch"
+                                      x:Name="Box2"/>
                                 <Button x:Name="SearchButton2"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton2_Click">
                                     <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
                                 </Button>
@@ -207,7 +208,8 @@
                                     <ColumnDefinition Width="0.9*"/>
                                     <ColumnDefinition Width="0.2*"/>
                                 </Grid.ColumnDefinitions>
-
+                                <TextBox VerticalAlignment="Stretch" Background="#B5B5B5" HorizontalAlignment="Stretch"
+                                      x:Name="Box3"/>
                                 <Button x:Name="SearchButton3"   Grid.Column="1" Background="#0D4FB5" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="SearchButton3_Click">
                                     <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/search-icon-hi.png"/>
                                 </Button>

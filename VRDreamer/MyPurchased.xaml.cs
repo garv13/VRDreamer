@@ -139,7 +139,7 @@ namespace VRDreamer
                     Dlist.Add(m);
                 }
 
-                LoadingBar2.Visibility = Visibility.Visible;
+                LoadingBar2.Visibility = Visibility.Collapsed;
                 DiaryView.DataContext = Dlist;
                 TourView.DataContext = Tlist;
                 ScarpeView.DataContext = Slist;

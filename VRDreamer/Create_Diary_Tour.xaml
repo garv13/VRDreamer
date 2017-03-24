@@ -15,7 +15,7 @@
     </Page.Resources>
 
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
-               CompactPaneLength="50" OpenPaneLength="150" >
+               CompactPaneLength="50" OpenPaneLength="200" >
         <SplitView.Pane>
             <StackPanel >
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
