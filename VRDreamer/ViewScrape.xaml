@@ -41,7 +41,7 @@
         <SplitView.Content>
 
             <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="lol">
-                <ProgressBar x:Name="Loading" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed"/>
+               
                 <CaptureElement Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </SplitView.Content>

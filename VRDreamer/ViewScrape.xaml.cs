@@ -148,8 +148,8 @@ namespace VRDreamer
                     yaw5 = pitch5 = cou = 0;
                     if (yaw < 0)
                         yaw += 360;
-                    //if (pitch < 0)
-                    //    pitch += 360;
+                    if (pitch < 0)
+                        pitch += 360;
                     Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
 
 
@@ -189,8 +189,8 @@ namespace VRDreamer
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Loading.Visibility = Visibility.Visible;
-            Loading.IsIndeterminate = true;
+            //Loading.Visibility = Visibility.Visible;
+          
 
             string id = e.Parameter as string;
             items1 = await Table1.Where(s => s.Id == id).ToCollectionAsync();
@@ -224,7 +224,7 @@ namespace VRDreamer
                 p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
                 li2.Add(p);
             }
-            Loading.Visibility = Visibility.Collapsed;
+            
             myBool = true;
 
         }
