@@ -37,15 +37,26 @@ namespace VRDreamer
         Compass c;
         DisplayRequest _displayRequest;
         List<Pointer> li;
+        List<PointerViewAR> li2;
         Geoposition pos;
+        bool myBool;
+        int cou;
+        double yaw;
+        double wid, h, stepW, stepH, temppitch, tempyaw;
+        double yaw5, pitch5;
+
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
         private MobileServiceCollection<Scrap, Scrap> items1;
         private IMobileServiceTable<Pointer> Table2 = App.MobileService.GetTable<Pointer>();
         private MobileServiceCollection<Pointer, Pointer> items2;
         public ViewScrape()
         {
+            cou = 0;
             li = new List<Pointer>();
+            li2 = new List<PointerViewAR>();
             or = OrientationSensor.GetDefault();
+            myBool = false;
+            yaw5 = 0; pitch5 = 0;
             c = Compass.GetDefault();
             try
             {
@@ -60,17 +71,88 @@ namespace VRDreamer
             Application.Current.Suspending += Application_Suspending;
             
             this.InitializeComponent();
+            PreviewControl.Loaded += PreviewControl_Loaded;
         }
 
-     
-        private void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
+        private void PreviewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            wid = PreviewControl.ActualWidth;
+            h = PreviewControl.ActualHeight;
+            stepH = h / 90;
+            stepW = wid / 90;
+        }
+
+        private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
+        {
+            if (myBool)
+            {
+                OrientationSensorReading reading = args.Reading;
+
+                // Quaternion values
+                SensorQuaternion q = reading.Quaternion;   // get a reference to the object to avoid re-creating it for each access
+                double ysqr = q.Y * q.Y;
+                // roll (x-axis rotation)
+                double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
+                double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
+                double roll = Math.Atan2(t0, t1);
+                roll = roll * 180 / Math.PI;
+
+                // pitch (y-axis rotati)
+                double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
+                t2 = t2 > 1.0 ? 1.0 : t2;
+                t2 = t2 < -1.0 ? -1.0 : t2;
+                double pitch = Math.Asin(t2);
+                pitch = pitch * 180 / Math.PI;
+                // yaw (z-axis rotation)
+
+
+                yaw5 += yaw;
+                pitch5 += pitch;
+                cou++;
+                if (cou == 14)
+                {
+                    yaw = yaw5 / 15;
+                    pitch = pitch5 / 15;
+                    yaw5 = pitch5 = cou = 0;
+                    if (yaw < 0)
+                        yaw += 360;
+                    if (pitch < 0)
+                        pitch += 360;
+                    // Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
+
+
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        for (; lol.Children.Count > 1;)
+                        {
+                            lol.Children.RemoveAt(1);
+                        }
+
+                        foreach (PointerViewAR n in li2)
+                        {
+                            Image img = new Image();
+                            img.Width = 250;
+                            img.Height = 250;
+                            img.Source = n.Media;
+                            TranslateTransform t = new TranslateTransform();
+
+                            t.X = (Math.Abs(n.Yaw - yaw)) * stepW;
+                            t.Y = (Math.Abs(n.Pitch - pitch)) * stepH;
+
+                            img.RenderTransform = t;
+                            lol.Children.Add(img);
+                        }
+
+
+                    });
+                }
+            }
         }
 
         private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
         {
-            throw new NotImplementedException();
+            CompassReading reading = args.Reading;
+            yaw = reading.HeadingTrueNorth.Value;
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -85,11 +167,29 @@ namespace VRDreamer
                     string po = str[i];
                     items2 = await Table2.Where(t => t.Id == po).ToCollectionAsync();
                     Pointer p = new Pointer();
-                    p = items2[0];
-                    li.Add(p);
+                    if (items2.Count>0)
+                    {
+                        p = items2[0];
+                        li.Add(p);
+                    }
                 }
             }
             await StartPreviewAsync();
+            for (int i = 0; i < li.Count; i++)
+            {
+                PointerViewAR p = new PointerViewAR();
+                p.Id = li[i].Id;
+                p.lat = li[i].lat;
+                p.lon = li[i].lon;
+                p.Pitch = li[i].Pitch;
+                p.Title = li[i].Title;
+                p.Yaw = li[i].Yaw;
+                p.Desc = li[i].Desc;
+                p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
+                li2.Add(p);
+            }
+            myBool = true;
+
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)

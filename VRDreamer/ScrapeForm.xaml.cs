@@ -100,8 +100,9 @@ namespace VRDreamer
             s.Point_List = "";
             foreach (Pointer p in list)
             {
+                
                 p.Desc = li[i].Desc;
-                p.Media_Type = "Imaage";
+                p.Media_Type = "Image";
                 var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
                 var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
                 var container = client.GetContainerReference("first");
@@ -118,13 +119,15 @@ namespace VRDreamer
                     await blockBlob.UploadFromFileAsync(li[i].File);
                 }
                 p.Media_Url = blockBlob.StorageUri.PrimaryUri.ToString();
-                p.UserId = "1052550e-42f6-4096-b4fb-1b648af1bab6";
+                p.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
                 p.Title = li[i].Title;
-               await App.MobileService.GetTable<Pointer>().InsertAsync(p);
+                await App.MobileService.GetTable<Pointer>().InsertAsync(p);
                 s.Point_List += p.Id + ",";
+                i++;
             }
             s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
             await App.MobileService.GetTable<Scrap>().InsertAsync(s);
+            Frame.Navigate(typeof(Purchsed));
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
