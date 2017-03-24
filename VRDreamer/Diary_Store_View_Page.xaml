@@ -23,7 +23,7 @@
     </Page.Resources>
 
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
-               CompactPaneLength="50" OpenPaneLength="150" >
+               CompactPaneLength="50" OpenPaneLength="200" >
         <SplitView.Pane>
             <StackPanel >
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
@@ -52,13 +52,12 @@
 
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="19*"/>
-                    <RowDefinition Height="22*"/>
-                    <RowDefinition Height="679*"/>
+                    <RowDefinition Height="0.06*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" x:Name="LoadingBar"/>
-                <TextBlock Text="Diary Details" Foreground="#CCCCCC" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,7" Grid.RowSpan="2"/>
-                <Grid x:Name="descBoxGrid" Grid.Row="2">
+                <TextBlock Text="Diary Details" Foreground="#CCCCCC" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Grid x:Name="descBoxGrid" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.4*"/>
                         <RowDefinition Height="0.6*"/>
@@ -81,7 +80,7 @@
                                 <RowDefinition Height="0.3*"/>
                                 <RowDefinition Height="0.01*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="Title" Text="Title" FontFamily="Bodoni Regular" Foreground="White" TextWrapping="WrapWholeWords" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1"/>
+                            <TextBlock x:Name="Title" Text="Title" FontFamily="Bodoni Regular" Foreground="White" TextWrapping="WrapWholeWords" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Stretch" Grid.Row="1"/>
                             <!--<TextBlock x:Name="Author" Text="Author" FontFamily="Bodoni Regular" TextWrapping="WrapWholeWords" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Grid.Row="2"/>-->
                             <Grid Grid.Row="3">
                                 <Grid.ColumnDefinitions>
@@ -89,12 +88,12 @@
                                     <ColumnDefinition Width="0.5*"/>
 
                                 </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="FullCost" TextWrapping="WrapWholeWords" IsTextScaleFactorEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Bodoni Regular" Text="Diary Cost:" Foreground="White" FontSize="20"/>
+                                <TextBlock x:Name="FullCost" TextWrapping="WrapWholeWords" IsTextScaleFactorEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Bodoni Regular" Margin="10,0,0,0" Text="Diary Cost:" Foreground="White" FontSize="20" SelectionChanged="FullCost_SelectionChanged"/>
                                 <Button Click="Button_Click" IsTextScaleFactorEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Stretch" UseSystemFocusVisuals="True" Grid.Column="1" Foreground="#F9FFD2" Background="Transparent" Content="Buy Diary" FontSize="20"/>
                             </Grid>
 
                         </Grid>
-                        <Image x:Name="Cover" VerticalAlignment="Stretch" Stretch="Uniform"  HorizontalAlignment="Stretch" Grid.ColumnSpan="2"/>
+                        <Image x:Name="Cover" VerticalAlignment="Stretch" Stretch="Uniform" Margin="10,10,0,0" HorizontalAlignment="Stretch" Grid.ColumnSpan="2"/>
                     </Grid>
                     <ListView         
                         Grid.Row="1"

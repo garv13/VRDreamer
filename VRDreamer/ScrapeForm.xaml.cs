@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -93,41 +94,54 @@ namespace VRDreamer
 
         private async void NextBar_Click(object sender, RoutedEventArgs e)
         {
+            LoadingBar.Visibility = Visibility.Visible;
+            LoadingBar.IsIndeterminate = true;
+
             int i = 0;
             Scrap s = new Scrap();
             s.Title = scrapeName.Text;
             s.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
             s.store = true;
             s.Point_List = "";
-            foreach (Pointer p in list)
+            try
             {
-                
-                p.Desc = li[i].Desc;
-                p.Media_Type = "Image";
-                var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
-                var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
-                var container = client.GetContainerReference("first");
-              //  await container.CreateIfNotExistsAsync();
+                foreach (Pointer p in list)
+                {
 
-                //var perm = new BlobContainerPermissions();
-                //perm.PublicAccess = BlobContainerPublicAccessType.Blob;
-                //await container.SetPermissionsAsync(perm);
-                var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".png");
-               
+                    p.Desc = li[i].Desc;
+                    p.Media_Type = "Image";
+                    var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
+                    var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
+                    var container = client.GetContainerReference("first");
+                    //  await container.CreateIfNotExistsAsync();
+
+                    //var perm = new BlobContainerPermissions();
+                    //perm.PublicAccess = BlobContainerPublicAccessType.Blob;
+                    //await container.SetPermissionsAsync(perm);
+                    var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".png");
+
 
                     //await blockBlob.UploadFromStreamAsync(fileStream);
                     await blockBlob.UploadFromFileAsync(li[i].File);
-                
-                p.Media_Url = blockBlob.StorageUri.PrimaryUri.ToString();
-                p.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
-                p.Title = li[i].Title;
-                await App.MobileService.GetTable<Pointer>().InsertAsync(p);
-                s.Point_List += p.Id + ",";
-                i++;
+
+                    p.Media_Url = blockBlob.StorageUri.PrimaryUri.ToString();
+                    p.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
+                    p.Title = li[i].Title;
+                    await App.MobileService.GetTable<Pointer>().InsertAsync(p);
+                    s.Point_List += p.Id + ",";
+                    i++;
+                }
+                s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
+                await App.MobileService.GetTable<Scrap>().InsertAsync(s);
+                LoadingBar.Visibility = Visibility.Collapsed;
+                Frame.Navigate(typeof(MainPage));
             }
-            s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
-            await App.MobileService.GetTable<Scrap>().InsertAsync(s);
-            Frame.Navigate(typeof(MainPage));
+            catch(Exception)
+            {
+                MessageDialog msgbox = new MessageDialog("Sorry can't upload now");
+                await msgbox.ShowAsync();
+                LoadingBar.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)

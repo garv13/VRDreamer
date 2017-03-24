@@ -59,6 +59,9 @@ namespace VRDreamer
 
         private async void NewScrape_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadingBar.Visibility = Visibility.Visible;
+            LoadingBar.IsIndeterminate = true;
+
             var accessStatus = await Geolocator.RequestAccessAsync();
             switch (accessStatus)
             {
@@ -76,6 +79,8 @@ namespace VRDreamer
                     Tags.Text = "0 Point(s) Tagged";
                     break;
             }
+            LoadingBar.Visibility = Visibility.Collapsed;
+
         }
 
         private void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)

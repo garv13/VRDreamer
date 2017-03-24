@@ -189,6 +189,9 @@ namespace VRDreamer
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Loading.Visibility = Visibility.Visible;
+            Loading.IsIndeterminate = true;
+
             string id = e.Parameter as string;
             items1 = await Table1.Where(s => s.Id == id).ToCollectionAsync();
             if (items1 != null)
@@ -221,6 +224,7 @@ namespace VRDreamer
                 p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
                 li2.Add(p);
             }
+            Loading.Visibility = Visibility.Collapsed;
             myBool = true;
 
         }
@@ -287,6 +291,36 @@ namespace VRDreamer
                 });
             }
 
+        }
+
+        private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Create_Diary_Tour));
+        }
+
+        private void About_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void Store_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Store));
+        }
+
+        private void Scrap_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewScrape));
+        }
+
+        private void Purchase_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
     }

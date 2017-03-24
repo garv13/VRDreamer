@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,7 +41,8 @@ namespace VRDreamer
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             rec = new StoreListing();
-
+            LoadingBar.Visibility = Visibility.Visible;
+            LoadingBar.IsIndeterminate = true;
             rec = e.Parameter as StoreListing;
             Title.Text = rec.Title;
             Cover.Source = rec.Image;
@@ -61,9 +63,14 @@ namespace VRDreamer
                     }
                 }
                 StoreListView.DataContext = sl;
+                LoadingBar.Visibility = Visibility.Collapsed;
+
             }
             catch (Exception)
             {
+                MessageDialog msgbox = new MessageDialog("Sorry can't update now");
+                await msgbox.ShowAsync();
+                LoadingBar.Visibility = Visibility.Collapsed;
 
             }
         }
@@ -102,5 +109,9 @@ namespace VRDreamer
 
         }
 
+        private void FullCost_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

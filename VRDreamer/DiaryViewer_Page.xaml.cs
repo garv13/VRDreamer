@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,6 +40,8 @@ namespace VRDreamer
         {
             string id = e.Parameter as string;
 
+            LoadingBar.Visibility = Visibility.Visible;
+            LoadingBar.IsIndeterminate = true;
             try
             {
                 items3 = await Table3.Where(Diary
@@ -59,10 +62,14 @@ namespace VRDreamer
                     }
                 }
                 DiaryView.DataContext = Tlist;
+                LoadingBar.Visibility = Visibility.Collapsed;
             }
 
             catch(Exception)
             {
+                MessageDialog msgbox = new MessageDialog("Sorry can't update now");
+                await msgbox.ShowAsync();
+                LoadingBar.Visibility = Visibility.Collapsed;
 
             }
         }

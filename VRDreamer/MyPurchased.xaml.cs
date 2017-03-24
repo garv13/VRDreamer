@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -53,6 +54,9 @@ namespace VRDreamer
         {
             try
             {
+                LoadingBar2.Visibility = Visibility.Visible;
+                LoadingBar2.IsIndeterminate = true;
+
                 items = await Table.Where(User
                             => User.Id == userid).ToCollectionAsync(); // get the username from login page
                 purchases = items[0].Purchases;// split the string to get all the ids
@@ -135,7 +139,7 @@ namespace VRDreamer
                     Dlist.Add(m);
                 }
 
-
+                LoadingBar2.Visibility = Visibility.Visible;
                 DiaryView.DataContext = Dlist;
                 TourView.DataContext = Tlist;
                 ScarpeView.DataContext = Slist;
@@ -143,6 +147,9 @@ namespace VRDreamer
             catch (Exception)
             {
 
+                MessageDialog msgbox = new MessageDialog("Sorry can't update now");
+                await msgbox.ShowAsync();
+                LoadingBar2.Visibility = Visibility.Collapsed;
             }
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -41,49 +42,64 @@ namespace VRDreamer
 
         private async void Store_Loaded(object sender, RoutedEventArgs e)
         {
-            items1 = await Table1.ToCollectionAsync();
-            items2 = await Table2.ToCollectionAsync();
-            items3 = await Table3.ToCollectionAsync();
+            LoadingBar2.Visibility = Visibility.Visible;
+            LoadingBar2.IsIndeterminate = true;
 
-            foreach(Scrap si in items1)
+            try
             {
-                s = new StoreListing();
-                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
-                s.Price = "Price: " + "Free";
-                s.Title = si.Title;
-                s.Id = si.Id;
-                s.MyId = si.Point_List;
-                s.Type = "S";
-                Slist.Add(s);
-            }
 
-            foreach (Tour si in items2)
+
+                items1 = await Table1.ToCollectionAsync();
+                items2 = await Table2.ToCollectionAsync();
+                items3 = await Table3.ToCollectionAsync();
+
+                foreach (Scrap si in items1)
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
+                    s.Price = "Price: " + "Free";
+                    s.Title = si.Title;
+                    s.Id = si.Id;
+                    s.MyId = si.Point_List;
+                    s.Type = "S";
+                    Slist.Add(s);
+                }
+
+                foreach (Tour si in items2)
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.MyId = si.Scrap_List;
+                    s.Id = si.Id;
+                    s.Type = "T";
+                    Tlist.Add(s);
+                }
+
+                foreach (Diary si in items3)
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.Id = si.Id;
+                    s.MyId = si.Tour_List;
+                    s.Type = "D";
+                    Dlist.Add(s);
+                }
+
+                LoadingBar2.Visibility = Visibility.Collapsed;
+                DiaryView.DataContext = Dlist;
+                TourView.DataContext = Tlist;
+                ScarpeView.DataContext = Slist;
+            }
+            catch(Exception)
             {
-                s = new StoreListing();
-                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                s.Price = "Price: " + si.Price.ToString();
-                s.Title = si.Title;
-                s.MyId = si.Scrap_List;
-                s.Id = si.Id;
-                s.Type = "T";
-                Tlist.Add(s);
+                MessageDialog msgbox = new MessageDialog("Sorry can't update now");
+                await msgbox.ShowAsync();
+                LoadingBar2.Visibility = Visibility.Collapsed;
             }
-
-            foreach (Diary si in items3)
-            {
-                s = new StoreListing();
-                s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                s.Price = "Price: " + si.Price.ToString();
-                s.Title = si.Title;
-                s.Id = si.Id;
-                s.MyId = si.Tour_List;
-                s.Type = "D";
-                Dlist.Add(s);
-            }
-
-            DiaryView.DataContext = Dlist;
-            TourView.DataContext = Tlist;
-            ScarpeView.DataContext = Slist;
         }
 
         private void SearchButton3_Click(object sender, RoutedEventArgs e)

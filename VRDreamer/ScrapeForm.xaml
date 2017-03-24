@@ -53,6 +53,7 @@
                     <ColumnDefinition Width="1*"/>
 
                 </Grid.ColumnDefinitions>
+                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="4" Grid.ColumnSpan="2" x:Name="LoadingBar"/>
                 <TextBlock Text="Scrape name" Foreground="White" Grid.Row="1" TextAlignment="Center" />
                 <TextBox Grid.Row="1" Foreground="White" Grid.Column="1" MinWidth="100" x:Name="scrapeName" PlaceholderText="Enter Name here"/>
 

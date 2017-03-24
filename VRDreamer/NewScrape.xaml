@@ -51,7 +51,7 @@
                 <Border Background="#FF1F1F1F" >
                     <TextBlock Foreground="White" Text="Finding your location... Please Wait" x:Name="Tags" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center"/>
                 </Border>
-
+                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" x:Name="LoadingBar"/>
                 <CaptureElement Tapped="PreviewControl_Tapped" Grid.Row="1"  Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
 

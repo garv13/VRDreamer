@@ -6,8 +6,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SplitViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="lol">
-        <CaptureElement Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-    </Grid>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="200" >
+        <SplitView.Pane>
+            <StackPanel >
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+
+                <RadioButton x:Name="Purchase_Button" Tag="" Style="{StaticResource SplitViewNavButtonStyle}" Content="My Purchases"
+                        Click="Purchase_Button_Click"/>
+
+                <RadioButton x:Name="Scrap_Button" Tag="" Content="Create Scrape" Style="{StaticResource SplitViewNavButtonStyle}"
+                        Click="Scrap_Button_Click"/>
+
+                <RadioButton x:Name="Store_Button" Tag="" Content="Store" IsChecked="True"
+                         Style="{StaticResource SplitViewNavButtonStyle}" Click="Store_Button_Click"/>
+
+                <RadioButton x:Name="Create_Diary_Botton" Tag="" Content="Create Diary/Tour"  Style="{StaticResource SplitViewNavButtonStyle}"
+                Click="Create_Diary_Botton_Click"/>
+
+                <RadioButton x:Name="About_Button" Tag="" Content="About" Style="{StaticResource SplitViewNavButtonStyle}"
+                         Click="About_Button_Click"/>
+
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="lol">
+                <ProgressBar x:Name="Loading" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed"/>
+                <CaptureElement Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
