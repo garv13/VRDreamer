@@ -12,7 +12,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="SplitViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
             <DataTemplate x:Key="Standard3100x260ItemTemplate" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Margin="10,10" Tapped="Grid_Tapped">
                     <Grid.RowDefinitions>

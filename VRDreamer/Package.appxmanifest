@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="ba0c8463-633b-4930-aaf3-cd34364ed97e" Publisher="CN=aksha" Version="1.0.0.0" />
+  <Identity Name="ba0c8463-633b-4930-aaf3-cd34364ed97e" Publisher="CN=garvj" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="ba0c8463-633b-4930-aaf3-cd34364ed97e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>VRDreamer</DisplayName>
+    <DisplayName>Social Vision</DisplayName>
     <PublisherDisplayName>garvj</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="VRDreamer.App">
-      <uap:VisualElements DisplayName="VRDreamer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="VRDreamer" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Social Vision" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="VRDreamer" BackgroundColor="white">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
