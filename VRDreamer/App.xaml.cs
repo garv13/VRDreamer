@@ -33,6 +33,7 @@ namespace VRDreamer
             this.Suspending += OnSuspending;
         }
         public static MobileServiceClient MobileService = new MobileServiceClient("http://vrdreamer.azurewebsites.net");
+        public static string userId;
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -74,7 +75,7 @@ namespace VRDreamer
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Login_Page), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
