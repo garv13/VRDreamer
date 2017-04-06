@@ -103,6 +103,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Created_upload_Page.xaml.cs">
+      <DependentUpon>Created_upload_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Create_Diary_Tour.xaml.cs">
       <DependentUpon>Create_Diary_Tour.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Created_upload_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
