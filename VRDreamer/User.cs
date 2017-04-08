@@ -20,7 +20,11 @@ namespace VRDreamer
 
         public float wallet { get; set; }
 
-        public string Purchases { get; set; }
+        public string TourPurchases { get; set; }
+
+        public string DiaryPurchases { get; set; }
+
+        public string ScrapePurchase { get; set; }
 
     }
 }

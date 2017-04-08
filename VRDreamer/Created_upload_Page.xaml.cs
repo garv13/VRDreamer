@@ -90,7 +90,7 @@ namespace VRDreamer
                 var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
                 var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
                 var container = client.GetContainerReference("second");
-                var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".jpg");]
+                var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".jpg");
                 await blockBlob.UploadFromFileAsync(media2);
 
                 if (p[0].Type == "T")

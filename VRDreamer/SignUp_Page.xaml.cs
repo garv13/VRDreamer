@@ -119,7 +119,9 @@ namespace VRDreamer
                     a.Password = Password.Password;
                     a.UserName = UserName.Text;
                     a.wallet = 0;
-                    a.Purchases = "";
+                    a.TourPurchases = "";
+                    a.DiaryPurchases = "";
+                    a.ScrapePurchase = "";
                     await App.MobileService.GetTable<User>().InsertAsync(a);
                     MessageDialog msgbox = new MessageDialog("Register Successful:):)");
                     await msgbox.ShowAsync();

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,9 +28,11 @@ namespace VRDreamer
         List<StoreListing> sl = new List<StoreListing>();
 
         private StoreListing rec;
-       // private Tour n;
+        // private Tour n;
         private IMobileServiceTable<Scrap> Table = App.MobileService.GetTable<Scrap>();
-        private MobileServiceCollection<Scrap,Scrap> items;
+        private MobileServiceCollection<Scrap, Scrap> items;
+        private IMobileServiceTable<User> Table2 = App.MobileService.GetTable<User>();
+        private MobileServiceCollection<User, User> items2;
         public Tour_Store_View_Page()
         {
             this.InitializeComponent();
@@ -97,9 +100,31 @@ namespace VRDreamer
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            // buy button
+            try
+            {
+                items2 = await Table2.Where(User
+                    => User.Id == App.userId).ToCollectionAsync();
+                User a = items2[0];
+                if (!a.TourPurchases.Contains(rec.Id))
+                {
+                    if (a.wallet > int.Parse(rec.Price))
+                    {
+                        a.TourPurchases += "," + rec.Id;
+                        a.wallet = a.wallet - int.Parse(rec.Price);
+                        await Table2.UpdateAsync(a);
+                    }
+                    MessageDialog mess = new MessageDialog("Purchased successful");
+                    await mess.ShowAsync();
+                }
+                // buy button
+            }
+            catch (Exception)
+            {
+                MessageDialog mess = new MessageDialog("Can't purchase");
+                await mess.ShowAsync();
+            }
         }
     }
 }

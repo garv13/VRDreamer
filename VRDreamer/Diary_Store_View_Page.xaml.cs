@@ -27,7 +27,8 @@ namespace VRDreamer
 
 
         List<StoreListing> sl = new List<StoreListing>();
-
+        private IMobileServiceTable<User> Table2 = App.MobileService.GetTable<User>();
+        private MobileServiceCollection<User, User> items2;
         private StoreListing rec;
         private Tour n;
         private IMobileServiceTable<Tour> Table = App.MobileService.GetTable<Tour>();
@@ -104,9 +105,31 @@ namespace VRDreamer
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                items2 = await Table2.Where(User
+                    => User.Id == App.userId).ToCollectionAsync();
+                User a = items2[0];
+                if (!a.DiaryPurchases.Contains(rec.Id))
+                {
+                    if (a.wallet > int.Parse(rec.Price))
+                    {
+                        a.DiaryPurchases += "," + rec.Id;
+                        a.wallet = a.wallet - int.Parse(rec.Price);
+                        await Table2.UpdateAsync(a);
+                    }
+                    MessageDialog mess = new MessageDialog("Purchased successful");
+                    await mess.ShowAsync();
+                }
+                // buy button
+            }
+            catch (Exception)
+            {
+                MessageDialog mess = new MessageDialog("Can't purchase");
+                await mess.ShowAsync();
+            }
         }
 
         private void FullCost_SelectionChanged(object sender, RoutedEventArgs e)
