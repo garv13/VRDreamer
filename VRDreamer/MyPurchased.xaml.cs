@@ -59,46 +59,46 @@ namespace VRDreamer
 
                 items = await Table.Where(User
                             => User.Id == userid).ToCollectionAsync(); // get the username from login page
-                Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
-                Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
-                Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
-                foreach (string id in Scrap_Purchases)
-                {
-                    m = new Purchsed();
-                    items1 = await Table1.Where(Scrap
-                           => Scrap.Id == id).ToCollectionAsync();
+                //Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
+                //Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
+                //Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
+                //foreach (string id in Scrap_Purchases)
+                //{
+                //    m = new Purchsed();
+                //    items1 = await Table1.Where(Scrap
+                //           => Scrap.Id == id).ToCollectionAsync();
 
-                    m.Id = items1[0].Id;
-                    m.Title = items1[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
-                    m.Type = "S";
-                    Slist.Add(m);
-                }
+                //    m.Id = items1[0].Id;
+                //    m.Title = items1[0].Title;
+                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
+                //    m.Type = "S";
+                //    Slist.Add(m);
+                //}
 
-                foreach (string id in Tour_Purchases)
-                {
-                    m = new Purchsed();
-                    items2 = await Table2.Where(Tour
-                           =>Tour.Id == id).ToCollectionAsync();
+                //foreach (string id in Tour_Purchases)
+                //{
+                //    m = new Purchsed();
+                //    items2 = await Table2.Where(Tour
+                //           =>Tour.Id == id).ToCollectionAsync();
 
-                    m.Id = items2[0].Id;
-                    m.Title = items2[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
-                    m.Type = "T";
-                    Tlist.Add(m);
-                }
-                foreach (string id in Diary_Purchases)
-                {
-                    m = new Purchsed();
-                    items3 = await Table3.Where(Diary
-                           => Diary.Id == id).ToCollectionAsync();
+                //    m.Id = items2[0].Id;
+                //    m.Title = items2[0].Title;
+                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
+                //    m.Type = "T";
+                //    Tlist.Add(m);
+                //}
+                //foreach (string id in Diary_Purchases)
+                //{
+                //    m = new Purchsed();
+                //    items3 = await Table3.Where(Diary
+                //           => Diary.Id == id).ToCollectionAsync();
 
-                    m.Id = items3[0].Id;
-                    m.Title = items3[0].Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); 
-                    m.Type = "D";
-                    Dlist.Add(m);
-                }
+                //    m.Id = items3[0].Id;
+                //    m.Title = items3[0].Title;
+                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); 
+                //    m.Type = "D";
+                //    Dlist.Add(m);
+                //}
 
                 items1 = await Table1.Where(Scrap
                            => Scrap.UserId == userid).ToCollectionAsync();

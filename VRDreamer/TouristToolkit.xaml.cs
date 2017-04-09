@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,6 +27,8 @@ namespace VRDreamer
     public sealed partial class TouristToolkit : Page
     {
         OrientationSensor or;
+        private IMobileServiceTable<Pointer> Table2 = App.MobileService.GetTable<Pointer>();
+        private MobileServiceCollection<Pointer, Pointer> items2;
         public TouristToolkit()
         {
             this.InitializeComponent();
@@ -39,77 +42,12 @@ namespace VRDreamer
             catch
             { }
 
+           
         }
 
-        private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
+        private void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
         {
-            OrientationSensorReading reading = args.Reading;
-
-            //double r31 = reading.RotationMatrix.M31;
-            //double r32 = reading.RotationMatrix.M32;
-            //double r33 = reading.RotationMatrix.M33;
-            //r32 = r32 * r32;
-            //r33 = r33 * r33;
-            //double denomintor = r32 + r33;
-            //denomintor = Math.Sqrt(denomintor);
-            //double numerator = -1 * r31;
-            //double angle = 0;
-            //if (denomintor > 0)
-            //{
-            //     angle = Math.Atan(numerator/denomintor);
-            //    angle = angle * 180 / Math.PI;
-
-            //}
-            //if (numerator >= 0 && denomintor < 0)
-            //{
-            //     angle = Math.Atan(numerator/denomintor);
-            //    angle = angle * 180 / Math.PI;
-            //    angle = angle + 180;
-            //}
-            //if (numerator < 0 && denomintor < 0)
-            //{
-
-            //     angle = Math.Atan(numerator / denomintor);
-            //    angle = angle * 180 / Math.PI;
-            //    angle = angle - 180;
-            //}
-            //if (numerator > 0 && denomintor == 0)
-            //{
-
-            //     angle = 90;
-            //}
-            //if (numerator < 0 && denomintor == 0)
-            //{
-
-            //     angle = -90;
-            //}
-            //if (angle < 0)
-            //    angle += 360;
-
-
-
-
-
-            //char sign, sign2;
-            //if (numerator > 0)
-            //    sign = '+';
-            //else
-            //    sign = '-';
-
-            //if (denomintor > 0)
-            //    sign2 = '+';
-            //else
-            //    sign2 = '-';
-            double y = args.Reading.Quaternion.Y;
-            if (y < 0)
-                y = y + 2;
-            Debug.WriteLine("Angle is " +y);
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                textBox.Text = "Angle is " + y.ToString();
-            });
-
-            
+           
         }
 
         private async void button_Click(object sender, RoutedEventArgs e)
@@ -118,6 +56,12 @@ namespace VRDreamer
 
             var httpRequestMessage = new Windows.Web.Http.HttpRequestMessage(Windows.Web.Http.HttpMethod.Get, new Uri("http://www.google.com/searchbyimage?site=search&sa=X&image_url=https://vrdreamer.blob.core.windows.net/first/pp2.jpg"));
             httpRequestMessage.Headers.Add("User-Agent", add);
+            items2 = await Table2.ToCollectionAsync();
+            //foreach (Pointer s in items2)
+            //{
+            //    s.Pitch = s.Pitch / 180;
+            //    await Table2.UpdateAsync(s);
+            //}
 
             web.NavigateWithHttpRequestMessage(httpRequestMessage);
             web.DOMContentLoaded += Web_DOMContentLoaded;

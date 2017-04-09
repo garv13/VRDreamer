@@ -79,7 +79,7 @@ namespace VRDreamer
         {
             wid = PreviewControl.ActualWidth;
             h = PreviewControl.ActualHeight;
-            stepH = h / 90;
+            stepH = h / 0.5;
             stepW = wid / 90;
         }
 
@@ -91,53 +91,56 @@ namespace VRDreamer
 
                 // Quaternion values
                 SensorQuaternion q = reading.Quaternion;   // get a reference to the object to avoid re-creating it for each access
-                double ysqr = q.Y * q.Y;
-                // roll (x-axis rotation)
-                double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
-                double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
-                double roll = Math.Atan2(t0, t1);
-                roll = roll * 180 / Math.PI;
+                                                           //double ysqr = q.Y * q.Y;
+                                                           //// roll (x-axis rotation)
+                                                           //double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
+                                                           //double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
+                                                           //double roll = Math.Atan2(t0, t1);
+                                                           //roll = roll * 180 / Math.PI;
 
-                // pitch (y-axis rotati)
-                double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
-                t2 = t2 > 1.0 ? 1.0 : t2;
-                t2 = t2 < -1.0 ? -1.0 : t2;
-                double pitch = Math.Asin(t2);
-                pitch = pitch * 180 / Math.PI;
-                // yaw (z-axis rotation)
-
-
-
-            //    double pitch;
-            //double sqw = q1.W * q1.W;
-            //double sqx = q1.X * q1.X;
-            //double sqy = q1.Y * q1.Y;
-            //double sqz = q1.Z * q1.Z;
-            //double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-            //double test = q1.X * q1.Y + q1.Z * q1.W;
-            //if (test > 0.499 * unit)
-            //{ // singularity at north pole
-
-            //        pitch = Math.PI / 2;
-               
-               
-            //}
-            //if (test < -0.499 * unit)
-            //{ // singularity at south pole
-
-            //        pitch = -Math.PI / 2;
-                
-               
-            //}
-            //    // heading = atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
-            //    pitch = Math.Asin(2 * test / unit);
-            //    //   bank = atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
+                //// pitch (y-axis rotati)
+                //double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
+                //t2 = t2 > 1.0 ? 1.0 : t2;
+                //t2 = t2 < -1.0 ? -1.0 : t2;
+                //double pitch = Math.Asin(t2);
+                //pitch = pitch * 180 / Math.PI;
+                //// yaw (z-axis rotation)
 
 
 
+                //    double pitch;
+                //double sqw = q1.W * q1.W;
+                //double sqx = q1.X * q1.X;
+                //double sqy = q1.Y * q1.Y;
+                //double sqz = q1.Z * q1.Z;
+                //double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+                //double test = q1.X * q1.Y + q1.Z * q1.W;
+                //if (test > 0.499 * unit)
+                //{ // singularity at north pole
+
+                //        pitch = Math.PI / 2;
 
 
-            //    pitch = pitch * 180 / Math.PI;
+                //}
+                //if (test < -0.499 * unit)
+                //{ // singularity at south pole
+
+                //        pitch = -Math.PI / 2;
+
+
+                //}
+                //    // heading = atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
+                //    pitch = Math.Asin(2 * test / unit);
+                //    //   bank = atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
+
+
+
+                double y = args.Reading.Quaternion.Y;
+                if (y < 0)
+                    y = y + 2;
+
+                double pitch = y;
+                //    pitch = pitch * 180 / Math.PI;
                 yaw5 += yaw;
                 pitch5 += pitch;
                 cou++;
@@ -169,7 +172,7 @@ namespace VRDreamer
                             TranslateTransform t = new TranslateTransform();
 
                             t.X =(n.Yaw - yaw) * stepW;
-                            t.Y = (pitch-n.Pitch) * stepH;
+                            t.Y = (n.Pitch-pitch) * stepH;
 
                             img.RenderTransform = t;
                             lol.Children.Add(img);
