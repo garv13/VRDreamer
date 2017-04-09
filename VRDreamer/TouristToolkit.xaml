@@ -9,7 +9,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="button" Click="button_Click" Content="Button" HorizontalAlignment="Left" Margin="264,163,0,0" VerticalAlignment="Top"/>
-        <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="150,207,0,0" VerticalAlignment="Top" Width="338"/>
+        <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="15000,207,0,0" VerticalAlignment="Top" Width="338"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="143,256,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>
