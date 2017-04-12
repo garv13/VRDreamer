@@ -175,18 +175,8 @@ namespace VRDreamer
                 po.Yaw = c.GetCurrentReading().HeadingMagneticNorth;
                
                 OrientationSensorReading reading2 = or.GetCurrentReading();
-                SensorQuaternion q = reading2.Quaternion;   // get a reference to the object to avoid re-creating it for each access
-                                                            //double ysqr = q.Y * q.Y;
-                                                            //// roll (x-axis rotation)
-                                                            //double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
-                                                            //double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
-
-                //// pitch (y-axis rotati)
-                //double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
-                //t2 = t2 > 1.0 ? 1.0 : t2;
-                //t2 = t2 < -1.0 ? -1.0 : t2;
-                //double pitch = Math.Asin(t2);
-                //pitch = pitch * 180 / Math.PI;
+                SensorQuaternion q = reading2.Quaternion;   
+                // get a reference to the object to avoid re-creating it for each access
                 double y = reading2.Quaternion.Y;
                 if (y < 0)
                     y = y + 2;

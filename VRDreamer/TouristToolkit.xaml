@@ -7,10 +7,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Click="button_Click" Content="Button" HorizontalAlignment="Left" Margin="264,163,0,0" VerticalAlignment="Top"/>
-        <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="15000,207,0,0" VerticalAlignment="Top" Width="338"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="143,256,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SplitViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
-    </Grid>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="200" >
+        <SplitView.Pane>
+            <StackPanel >
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+
+                <RadioButton x:Name="Purchase_Button" Tag="" Style="{StaticResource SplitViewNavButtonStyle}" Content="My Purchases"
+                        Click="Purchase_Button_Click"/>
+
+                <RadioButton x:Name="Scrap_Button" Tag="" Content="Create Scrape" Style="{StaticResource SplitViewNavButtonStyle}"
+                        Click="Scrap_Button_Click"/>
+
+                <RadioButton x:Name="Store_Button" Tag="" Content="Store" IsChecked="True"
+                         Style="{StaticResource SplitViewNavButtonStyle}" Click="Store_Button_Click"/>
+
+                <RadioButton x:Name="Create_Diary_Botton" Tag="" Content="Create Diary/Tour"  Style="{StaticResource SplitViewNavButtonStyle}"
+                Click="Create_Diary_Botton_Click"/>
+
+                <RadioButton x:Name="About_Button" Tag="" Content="About" Style="{StaticResource SplitViewNavButtonStyle}"
+                         Click="About_Button_Click"/>
+
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="lol">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.9*"/>
+
+                </Grid.RowDefinitions>
+                <Button x:Name="button" Click="button_Click" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="15000,207,0,0" VerticalAlignment="Top" Width="338"/>
+                <TextBlock x:Name="textBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Searching for GPS" VerticalAlignment="Top"/>
+
+                <CaptureElement Grid.Row="1" Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
