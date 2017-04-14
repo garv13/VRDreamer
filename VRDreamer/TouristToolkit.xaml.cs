@@ -239,7 +239,6 @@ namespace VRDreamer
 
             await focusControl.FocusAsync();
         }
-
         public Rect GetPreviewStreamRectInControl()
         {
             var result = new Rect();
@@ -283,7 +282,6 @@ namespace VRDreamer
 
             return result;
         }
-
         private Rect ConvertUiTapToPreviewRect(Point tap, Size size, Rect previewRect)
         {
             // Adjust for the resulting focus rectangle to be centered around the position
@@ -320,8 +318,6 @@ namespace VRDreamer
             // Create and return resulting rectangle
             return new Rect(left, top, width, height);
         }
-
-
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             await CleanupCameraAsync();

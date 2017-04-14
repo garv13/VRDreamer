@@ -159,7 +159,6 @@
     <Compile Include="ViewScrape.xaml.cs">
       <DependentUpon>ViewScrape.xaml</DependentUpon>
     </Compile>
-    <Compile Include="visionApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
