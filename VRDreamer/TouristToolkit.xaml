@@ -51,7 +51,7 @@
                 <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="15000,207,0,0" VerticalAlignment="Top" Width="338"/>
                 <TextBlock x:Name="textBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Searching for GPS" VerticalAlignment="Top"/>
 
-                <CaptureElement Grid.Row="1" Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CaptureElement Tapped="PreviewControl_Tapped" Grid.Row="1" Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

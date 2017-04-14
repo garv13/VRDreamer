@@ -116,6 +116,7 @@
     <Compile Include="Diary_Store_View_Page.xaml.cs">
       <DependentUpon>Diary_Store_View_Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="googlePlaceApi.cs" />
     <Compile Include="Login_Page.xaml.cs">
       <DependentUpon>Login_Page.xaml</DependentUpon>
     </Compile>
@@ -158,6 +159,7 @@
     <Compile Include="ViewScrape.xaml.cs">
       <DependentUpon>ViewScrape.xaml</DependentUpon>
     </Compile>
+    <Compile Include="visionApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
