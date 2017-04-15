@@ -43,27 +43,27 @@ namespace VRDreamer
         private async void Store_Loaded(object sender, RoutedEventArgs e)
         {
             LoadingBar2.Visibility = Visibility.Visible;
-            LoadingBar2.IsIndeterminate = true;
+            LoadingBar2.IsActive = true;
 
             try
             {
 
 
-                items1 = await Table1.ToCollectionAsync();
+                //items1 = await Table1.ToCollectionAsync();
                 items2 = await Table2.ToCollectionAsync();
                 items3 = await Table3.ToCollectionAsync();
 
-                foreach (Scrap si in items1)
-                {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
-                    s.Price = "Price: " + "Free";
-                    s.Title = si.Title;
-                    s.Id = si.Id;
-                    s.MyId = si.Point_List;
-                    s.Type = "S";
-                    Slist.Add(s);
-                }
+                //foreach (Scrap si in items1)
+                //{
+                //    s = new StoreListing();
+                //    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
+                //    s.Price = "Price: " + "Free";
+                //    s.Title = si.Title;
+                //    s.Id = si.Id;
+                //    s.MyId = si.Point_List;
+                //    s.Type = "S";
+                //    Slist.Add(s);
+                //}
 
                 foreach (Tour si in items2)
                 {
@@ -88,11 +88,11 @@ namespace VRDreamer
                     s.Type = "D";
                     Dlist.Add(s);
                 }
-                LoadingBar2.IsIndeterminate = false;
+                LoadingBar2.IsActive = false;
                 LoadingBar2.Visibility = Visibility.Collapsed;
                 DiaryView.DataContext = Dlist;
                 TourView.DataContext = Tlist;
-                ScarpeView.DataContext = Slist;
+                //ScarpeView.DataContext = Slist;
             }
             catch(Exception)
             {

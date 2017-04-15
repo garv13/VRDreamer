@@ -55,8 +55,10 @@ namespace VRDreamer
                 items = await Table.Where(User
                             => User.Id == userid).ToCollectionAsync(); // get the username from login page
 
-                Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
-                Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
+                if(Scrap_Purchases.Count != 0)
+                       Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
+                if(Tour_Purchases.Count != 0)
+                       Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
                 
                 foreach (string id in Scrap_Purchases)
                 {

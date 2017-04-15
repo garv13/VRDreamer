@@ -14,7 +14,7 @@ namespace VRDreamer
         public string Id { get; set; }
         public string UserId { get; set; }
         public string Title { get; set; }
-
+        public string Tags { get; set; }
         public string Cover_Url { get; set; }
 
 

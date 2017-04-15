@@ -97,6 +97,7 @@ namespace VRDreamer
                 {
                     d.Cover_Url = blockBlob.StorageUri.PrimaryUri.ToString();
                     d.Title = Name.Text;
+                    d.Tags = Tags.Text;
                     d.Tour_List = str;
                     d.UserId = App.userId;
                     d.Price = Convert.ToInt32(Price.Text);
@@ -104,20 +105,21 @@ namespace VRDreamer
                     LoadingBar.Visibility = Visibility.Collapsed;
                     MessageDialog msgbox = new MessageDialog("Diary Created :):)");
                     await msgbox.ShowAsync();
-                    Frame.Navigate(typeof(Purchsed));
+                    Frame.Navigate(typeof(MainPage));
                 }
                 if (p[0].Type == "S")
                 {
                     t.Cover_Url = blockBlob.StorageUri.PrimaryUri.ToString();
                     t.Title = Name.Text;
                     t.Scrap_List = str;
+                    t.Tags = Tags.Text;
                     t.UserId = App.userId;
                     t.Price = Convert.ToInt32(Price.Text);
                     await App.MobileService.GetTable<Tour>().InsertAsync(t);
                     LoadingBar.Visibility = Visibility.Collapsed;
                     MessageDialog msgbox = new MessageDialog("Tour Created :):)");
                     await msgbox.ShowAsync();
-                    Frame.Navigate(typeof(Purchsed));
+                    Frame.Navigate(typeof(MainPage));
 
                 }
             }

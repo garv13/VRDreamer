@@ -59,6 +59,8 @@ namespace VRDreamer
                         items = await Table.Where(Tour
                              => Tour.Id == nid).ToCollectionAsync();
                         rec.Id = items[0].Id;
+                        rec.Title = items[0].Title;
+                        rec.MyId = items[0].Scrap_List;
                         rec.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items[0].Cover_Url)); // image fromasset store
                         sl.Add(rec);
                     }
