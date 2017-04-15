@@ -155,10 +155,10 @@ namespace VRDreamer
 
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    for (; lol.Children.Count > 1;)
-                    {
-                        lol.Children.RemoveAt(1);
-                    }
+                    //for (; lol.Children.Count > 1;)
+                    //{
+                    //    lol.Children.RemoveAt(1);
+                    //}
 
                     foreach (PointerViewAR n in li2)
                     {
@@ -172,7 +172,7 @@ namespace VRDreamer
                         t.Y = (n.Pitch - pitch) * stepH;
 
                         img.RenderTransform = t;
-                        lol.Children.Add(img);
+                        //lol.Children.Add(img);
                     }
 
 
@@ -277,19 +277,19 @@ namespace VRDreamer
         private async void loadPoint()
         {
 
-            //for (int i = 0; i < li.Count; i++)
-            //{
-            //    PointerViewAR p = new PointerViewAR();
-            //    p.Id = li[i].Id;
-            //    p.lat = li[i].lat;
-            //    p.lon = li[i].lon;
-            //    p.Pitch = li[i].Pitch;
-            //    p.Title = li[i].Title;
-            //    p.Yaw = li[i].Yaw;
-            //    p.Desc = li[i].Desc;
-            //    p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
-            //    li2.Add(p);
-            //}
+            for (int i = 0; i < li.Count; i++)
+            {
+                //PointerViewAR p = new PointerViewAR();
+                //p.Id = li[i].Id;
+                //p.lat = li[i].lat;
+                //p.lon = li[i].lon;
+                //p.Pitch = li[i].Pitch;
+                //p.Title = li[i].Title;
+                //p.Yaw = li[i].Yaw;
+                //p.Desc = li[i].Desc;
+                //p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
+                //li2.Add(p);
+            }
 
 
         }

@@ -55,7 +55,7 @@
                 <Button Content="Next point" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Button_Click"/>
 
                 <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" x:Name="LoadingBar"/>
-                <CaptureElement Tapped="PreviewControl_Tapped" Grid.Row="1"  Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CaptureElement  Grid.Row="1"  Name="PreviewControl" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
 
             </Grid>
