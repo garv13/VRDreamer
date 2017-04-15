@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -22,8 +24,18 @@ namespace VRDreamer
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    public static class Extensions
+    {
+        public static bool CaseInsensitiveContains(this string text, string value,
+            StringComparison stringComparison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            return text.IndexOf(value, stringComparison) >= 0;
+        }
+    }
     public sealed partial class Store : Page
     {
+
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
         private MobileServiceCollection<Scrap, Scrap> items1;
         private IMobileServiceTable<Tour> Table2 = App.MobileService.GetTable<Tour>();
@@ -31,24 +43,31 @@ namespace VRDreamer
         private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
         private MobileServiceCollection<Diary, Diary> items3;
         StoreListing s = new StoreListing();
-        List<StoreListing> Slist = new List<StoreListing>();
-        List<StoreListing> Tlist = new List<StoreListing>();
-        List<StoreListing> Dlist = new List<StoreListing>();
+        
+        ObservableCollection<StoreListing> Slist = new ObservableCollection<StoreListing>();
+        ObservableCollection<StoreListing> Tlist = new ObservableCollection<StoreListing>();
+        ObservableCollection<StoreListing> Dlist = new ObservableCollection<StoreListing>();
         public Store()
         {
             this.InitializeComponent();
             Loaded += Store_Loaded;
         }
-
+      
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string search = e.Parameter as string;
+            if(search != null)
+                  await search_Func(search);
+        }
         private async void Store_Loaded(object sender, RoutedEventArgs e)
         {
+            Tlist.Clear();
+            Dlist.Clear();
             LoadingBar2.Visibility = Visibility.Visible;
             LoadingBar2.IsActive = true;
 
             try
             {
-
-
                 //items1 = await Table1.ToCollectionAsync();
                 items2 = await Table2.ToCollectionAsync();
                 items3 = await Table3.ToCollectionAsync();
@@ -105,22 +124,115 @@ namespace VRDreamer
             }
         }
 
-        private void SearchButton3_Click(object sender, RoutedEventArgs e)
+        //private void SearchButton3_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        private async void SearchButton2_Click(object sender, RoutedEventArgs e)
         {
+            await search_Func(Box2.Text);
 
         }
 
-        private void SearchButton2_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-
+            await search_Func(Box.Text);
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async Task search_Func(string str)
         {
+            LoadingBar2.Visibility = Visibility.Visible;
+            LoadingBar2.IsActive = true;
+            Tlist.Clear();
+            Dlist.Clear();
+            items2 = await Table2.ToCollectionAsync();
+            items3 = await Table3.ToCollectionAsync();
+            foreach(Tour si in items2)
+            {
+                if(si.Title.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.MyId = si.Scrap_List;
+                    s.UserId = si.UserId;
+                    s.Id = si.Id;
+                    s.Type = "T";
+                    Tlist.Add(s);
+                }
+                else if(si.Tags != null && si.Tags.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.MyId = si.Scrap_List;
+                    s.UserId = si.UserId;
+                    s.Id = si.Id;
+                    s.Type = "T";
+                    Tlist.Add(s);
+                }
+                else if(si.Desc != null && si.Desc.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.MyId = si.Scrap_List;
+                    s.UserId = si.UserId;
+                    s.Id = si.Id;
+                    s.Type = "T";
+                    Tlist.Add(s);
+                }
+            }
 
+            foreach (Diary si in items3)
+            {
+                if (si.Title.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.Id = si.Id;
+                    s.UserId = si.UserId;
+                    s.MyId = si.Tour_List;
+                    s.Type = "D";
+                    Dlist.Add(s);
+                }
+                else if (si.Tags != null && si.Tags.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.Id = si.Id;
+                    s.UserId = si.UserId;
+                    s.MyId = si.Tour_List;
+                    s.Type = "D";
+                    Dlist.Add(s);
+                }
+
+                else if (si.Desc != null && si.Desc.CaseInsensitiveContains(str))
+                {
+                    s = new StoreListing();
+                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                    s.Price = "Price: " + si.Price.ToString();
+                    s.Title = si.Title;
+                    s.Id = si.Id;
+                    s.UserId = si.UserId;
+                    s.MyId = si.Tour_List;
+                    s.Type = "D";
+                    Dlist.Add(s);
+                }
+            }
+            LoadingBar2.IsActive = false;
+            LoadingBar2.Visibility = Visibility.Collapsed;
+            DiaryView.DataContext = Dlist;
+            TourView.DataContext = Tlist;
         }
-
-
         private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             StoreListing sent = e.ClickedItem as StoreListing;
@@ -131,8 +243,6 @@ namespace VRDreamer
             else if (sent.Type == "T")
                 Frame.Navigate(typeof(Tour_Store_View_Page), sent);
         }
-
-
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
         //    Grid g = new Grid();
