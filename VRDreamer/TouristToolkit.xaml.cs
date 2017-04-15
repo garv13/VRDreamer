@@ -103,6 +103,7 @@ namespace VRDreamer
 
         private async void Web_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {
+            bool con = false;
             s = await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
 
@@ -112,12 +113,15 @@ namespace VRDreamer
                 int j = s.IndexOf(">", i);
                 i = s.IndexOf("<", j);
                 s = s.Substring(j + 1, i - j - 1);
+                s = Check_File(s);
+                if (s != null)
+                    con = true;
                 //load file and get exact name and put it in s
             }
             catch
             { }
             //if match found
-            if (false)
+            if (con)
             {
                 HttpClient cl = new HttpClient();
                 s = Uri.EscapeDataString(s);
@@ -380,6 +384,27 @@ namespace VRDreamer
                 });
             }
 
+        }
+
+        private string Check_File(string str)
+        {
+            string ans = null;
+            bool check = true;
+            string[] values = File.ReadAllText(@"Assets/list_monument.txt").Split(',');
+            string[] names = str.Split(' ');
+            foreach (string nam in names)
+            {
+                foreach (string item in values)
+                {
+                    if (item.CaseInsensitiveContains(nam) && check)
+                    {
+                        ans = item;
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            return ans;
         }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {

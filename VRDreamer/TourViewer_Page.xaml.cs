@@ -91,7 +91,7 @@ namespace VRDreamer
                 }
             }
 
-            Frame.Navigate(typeof(ViewScrape), id);
+            Frame.Navigate(typeof(TouristLens), id);
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)

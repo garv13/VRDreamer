@@ -20,13 +20,15 @@ namespace VRDreamer
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+
     public sealed partial class ToolKit_Page : Page
     {
+
         public ToolKit_Page()
         {
             this.InitializeComponent();
         }
-
         private void toolkit_Select_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));

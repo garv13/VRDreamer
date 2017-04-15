@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\augmented-reality-for-blog.jpg" />
+    <Content Include="Assets\list_monument.txt" />
     <Content Include="Assets\LoginIcon.png" />
     <Content Include="Assets\search-icon-hi.png" />
     <Content Include="Properties\Default.rd.xml" />
