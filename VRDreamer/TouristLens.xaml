@@ -41,7 +41,7 @@
         </SplitView.Pane>
         <SplitView.Content>
 
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid x:Name="lol" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.1*"/>

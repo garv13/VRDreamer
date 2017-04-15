@@ -135,7 +135,6 @@ namespace VRDreamer
             myBool = true;
 
         }
-
         private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
         {
             if (myBool)
@@ -147,18 +146,14 @@ namespace VRDreamer
                 double y = args.Reading.Quaternion.Y;
                 if (y < 0)
                     y = y + 2;
-
                 pitch = y;
                 //    pitch = pitch * 180 / Math.PI;
-
-
-
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    //for (; lol.Children.Count > 1;)
-                    //{
-                    //    lol.Children.RemoveAt(1);
-                    //}
+                    for (; lol.Children.Count > 1;)
+                    {
+                        lol.Children.RemoveAt(1);
+                    }
 
                     foreach (PointerViewAR n in li2)
                     {
@@ -167,12 +162,15 @@ namespace VRDreamer
                         img.Height = 250;
                         img.Source = n.Media;
                         TranslateTransform t = new TranslateTransform();
-
-                        t.X = (n.Yaw - yaw) * stepW;
-                        t.Y = (n.Pitch - pitch) * stepH;
-
-                        img.RenderTransform = t;
-                        //lol.Children.Add(img);
+                        double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
+                        if (dis < 8)
+                        {
+                           // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
+                            t.X = (n.Yaw - yaw) * stepW;
+                            t.Y = (n.Pitch - pitch) * stepH;
+                            img.RenderTransform = t;
+                            lol.Children.Add(img);
+                        }
                     }
 
 
@@ -180,7 +178,6 @@ namespace VRDreamer
 
             }
         }
-
         private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
         {
             CompassReading reading = args.Reading;
@@ -272,11 +269,10 @@ namespace VRDreamer
             await loadPoint();
 
         }
-
         private async Task loadPoint()
         {
             Tags.Text = "Loading Tour";
-
+            myBool = false;
             Scrap s = li[i];
             string[] str = s.Point_List.Split(',');
             for (int i = 0; i < str.Length; i++)
@@ -305,10 +301,9 @@ namespace VRDreamer
             }
             //all images loaded
             Tags.Text = "Destination is " + li[i].Title;
-
+            myBool = true;
 
         }
-
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (i > 0)
@@ -348,6 +343,29 @@ namespace VRDreamer
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+        //returns distance in meters
+        private double getDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            double rlat1 = Math.PI * lat1 / 180;
+            double rlat2 = Math.PI * lat2 / 180;
+            double theta = lon1 - lon2;
+            double rtheta = Math.PI * theta / 180;
+            double dist =
+                Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+                Math.Cos(rlat2) * Math.Cos(rtheta);
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+            return dist * 1.609344*1000;
+        }
+        //returns angle
+        private double getangle(double lat1, double lon1, double lat2, double lon2)
+        {
+            lon1 = lon2 - lon1;
+            lat1 = lat2 - lat1;
+            double ans = 180 / Math.PI * (Math.Atan2(lon1, lat1));
+            return ans + 180;
         }
 
     }
