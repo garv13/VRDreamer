@@ -33,33 +33,6 @@ namespace VRDreamer
         {
             this.InitializeComponent();
             li = new List<PointerView>();
-            //PointerView p = new PointerView();
-            //p.Desc = "";
-            //p.Serial = "1";
-            //p.Title = "";
-            //li.Add(p);
-            // p = new PointerView();
-            //p.Desc = "";
-            //p.Serial = "2";
-            //p.Title = "";
-            //li.Add(p);
-            // p = new PointerView();
-            //p.Desc = "";
-            //p.Serial = "3";
-            //p.Title = "";
-            //li.Add(p);
-            // p = new PointerView();
-            //p.Desc = "";
-            //p.Serial = "4";
-            //p.Title = "";
-            //li.Add(p);
-            // p = new PointerView();
-            //p.Desc = "";
-            //p.Serial = "5";
-            //p.Title = "";
-            //li.Add(p);
-
-            //ListPointer.ItemsSource = li;
 
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -81,12 +54,12 @@ namespace VRDreamer
             var lol2 = lol.Parent as Grid;
             var lol3 = lol2.Children[4] as TextBlock;
             int i = int.Parse(lol3.Text);
-            
-            
+
+
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
             openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-    
+
             openPicker.FileTypeFilter.Add(".png");
             StorageFile file = await openPicker.PickSingleFileAsync();
             li[i].File = file;
@@ -107,7 +80,8 @@ namespace VRDreamer
             {
                 foreach (Pointer p in list)
                 {
-
+                    double lat = p.lat;
+                    double lon = p.lon;
                     p.Desc = li[i].Desc;
                     p.Media_Type = "Image";
                     var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
@@ -130,13 +104,15 @@ namespace VRDreamer
                     await App.MobileService.GetTable<Pointer>().InsertAsync(p);
                     s.Point_List += p.Id + ",";
                     i++;
+                    s.lon = lon;
+                    s.lat = lat;
                 }
                 s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
                 await App.MobileService.GetTable<Scrap>().InsertAsync(s);
                 LoadingBar.Visibility = Visibility.Collapsed;
                 Frame.Navigate(typeof(MainPage));
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageDialog msgbox = new MessageDialog("Sorry can't upload now");
                 await msgbox.ShowAsync();
