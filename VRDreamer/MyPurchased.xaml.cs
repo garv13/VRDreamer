@@ -59,46 +59,60 @@ namespace VRDreamer
 
                 items = await Table.Where(User
                             => User.Id == userid).ToCollectionAsync(); // get the username from login page
-                //Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
-                //Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
-                //Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
-                //foreach (string id in Scrap_Purchases)
-                //{
-                //    m = new Purchsed();
-                //    items1 = await Table1.Where(Scrap
-                //           => Scrap.Id == id).ToCollectionAsync();
+                if(items[0].ScrapePurchase != null)
+                       Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
+                if(items[0].TourPurchases != null)
+                      Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
+                if(items[0].DiaryPurchases != null)
+                      Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
+                foreach (string id in Scrap_Purchases)
+                {
+                    if (id != "")
+                    {
+                        m = new Purchsed();
+                        items1 = await Table1.Where(Scrap
+                               => Scrap.Id == id).ToCollectionAsync();
 
-                //    m.Id = items1[0].Id;
-                //    m.Title = items1[0].Title;
-                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
-                //    m.Type = "S";
-                //    Slist.Add(m);
-                //}
+                        m.Id = items1[0].Id;
+                        m.Title = items1[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
+                        m.Type = "S";
+                        Slist.Add(m);
+                    }
+                }
 
-                //foreach (string id in Tour_Purchases)
-                //{
-                //    m = new Purchsed();
-                //    items2 = await Table2.Where(Tour
-                //           =>Tour.Id == id).ToCollectionAsync();
+                foreach (string id in Tour_Purchases)
+                {
+                    if (id != "")
+                    {
 
-                //    m.Id = items2[0].Id;
-                //    m.Title = items2[0].Title;
-                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
-                //    m.Type = "T";
-                //    Tlist.Add(m);
-                //}
-                //foreach (string id in Diary_Purchases)
-                //{
-                //    m = new Purchsed();
-                //    items3 = await Table3.Where(Diary
-                //           => Diary.Id == id).ToCollectionAsync();
 
-                //    m.Id = items3[0].Id;
-                //    m.Title = items3[0].Title;
-                //    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url)); 
-                //    m.Type = "D";
-                //    Dlist.Add(m);
-                //}
+                        m = new Purchsed();
+                        items2 = await Table2.Where(Tour
+                               => Tour.Id == id).ToCollectionAsync();
+
+                        m.Id = items2[0].Id;
+                        m.Title = items2[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));
+                        m.Type = "T";
+                        Tlist.Add(m);
+                    }
+                }
+                foreach (string id in Diary_Purchases)
+                {
+                    if (id != "")
+                    {
+                        m = new Purchsed();
+                        items3 = await Table3.Where(Diary
+                               => Diary.Id == id).ToCollectionAsync();
+
+                        m.Id = items3[0].Id;
+                        m.Title = items3[0].Title;
+                        m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items3[0].Cover_Url));
+                        m.Type = "D";
+                        Dlist.Add(m);
+                    }
+                }
 
                 items1 = await Table1.Where(Scrap
                            => Scrap.UserId == userid).ToCollectionAsync();
@@ -106,7 +120,6 @@ namespace VRDreamer
                 foreach(Scrap sr in items1)
                 {
                     m = new Purchsed();
-
                     m.Id = sr.Id;
                     m.Title = sr.Title;
                     m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
@@ -132,7 +145,6 @@ namespace VRDreamer
                 foreach (Diary sr in items3)
                 {
                     m = new Purchsed();
-
                     m.Id = sr.Id;
                     m.Title = sr.Title;
                     m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(sr.Cover_Url)); // some static iage for scrap
