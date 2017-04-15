@@ -41,7 +41,7 @@ namespace VRDreamer
         Compass c;
         DisplayRequest _displayRequest;
         List<Scrap> li;
-        List<Point> li3;
+        List<Pointer> li3;
         List<PointerViewAR> li2;
         Geoposition pos;
         bool myBool;
@@ -66,7 +66,7 @@ namespace VRDreamer
             cou = 0;
             li = new List<Scrap>();
             li2 = new List<PointerViewAR>();
-            li3 = new List<Point>();
+            li3 = new List<Pointer>();
             or = OrientationSensor.GetDefault();
             myBool = false;
 
@@ -125,7 +125,7 @@ namespace VRDreamer
 
                     // Carry out the operation.
                     pos = await geolocator.GetGeopositionAsync();
-                    Tags.Text = "Destination is " + li[i].Title;
+                    await loadPoint();
                     geolocator.PositionChanged += Geolocator_PositionChanged;
                     break;
             }
@@ -264,42 +264,56 @@ namespace VRDreamer
         {
             Frame.Navigate(typeof(Create_Diary_Tour));
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (i < li.Count - 1)
                 i++;
+
+            await loadPoint();
+
+        }
+
+        private async Task loadPoint()
+        {
+            Tags.Text = "Loading Tour";
+
+            Scrap s = li[i];
+            string[] str = s.Point_List.Split(',');
+            for (int i = 0; i < str.Length; i++)
+            {
+                string po = str[i];
+                items2 = await Table2.Where(t => t.Id == po).ToCollectionAsync();
+                Pointer p = new Pointer();
+                if (items2.Count > 0)
+                {
+                    p = items2[0];
+                    li3.Add(p);
+                }
+            }//all pointers loaded for one scrap
+            for (int i = 0; i < li3.Count; i++)
+            {
+                PointerViewAR p = new PointerViewAR();
+                p.Id = li3[i].Id;
+                p.lat = li3[i].lat;
+                p.lon = li3[i].lon;
+                p.Pitch = li3[i].Pitch;
+                p.Title = li3[i].Title;
+                p.Yaw = li3[i].Yaw;
+                p.Desc = li3[i].Desc;
+                p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li3[i].Media_Url));
+                li2.Add(p);
+            }
+            //all images loaded
             Tags.Text = "Destination is " + li[i].Title;
 
-            loadPoint();
 
         }
 
-        private async void loadPoint()
-        {
-
-            for (int i = 0; i < li.Count; i++)
-            {
-                //PointerViewAR p = new PointerViewAR();
-                //p.Id = li[i].Id;
-                //p.lat = li[i].lat;
-                //p.lon = li[i].lon;
-                //p.Pitch = li[i].Pitch;
-                //p.Title = li[i].Title;
-                //p.Yaw = li[i].Yaw;
-                //p.Desc = li[i].Desc;
-                //p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li[i].Media_Url));
-                //li2.Add(p);
-            }
-
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (i > 0)
                 i--;
-            Tags.Text = "Destination is " + li[i].Title;
-            loadPoint();
+            await loadPoint();
 
         }
         private async void NextBar_Click(object sender, RoutedEventArgs e)
