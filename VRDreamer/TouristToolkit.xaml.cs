@@ -60,9 +60,9 @@ namespace VRDreamer
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             //Loading.Visibility = Visibility.Visible;
-            await StartPreviewAsync();        
+            await StartPreviewAsync();
         }
-      
+
 
 
         private async void button_Click(object sender, RoutedEventArgs e)
@@ -90,7 +90,7 @@ namespace VRDreamer
                     ////await blockBlob.UploadFromFileAsync(captureStream);
                     blobUrl = blockBlob.StorageUri.PrimaryUri.ToString();
                     var add = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
-                    var httpRequestMessage = new Windows.Web.Http.HttpRequestMessage(Windows.Web.Http.HttpMethod.Get, new Uri("http://www.google.com/searchbyimage?site=search&sa=X&image_url=" + blockBlob.StorageUri.PrimaryUri.ToString()));                
+                    var httpRequestMessage = new Windows.Web.Http.HttpRequestMessage(Windows.Web.Http.HttpMethod.Get, new Uri("http://www.google.com/searchbyimage?site=search&sa=X&image_url=" + blockBlob.StorageUri.PrimaryUri.ToString()));
                     httpRequestMessage.Headers.Add("User-Agent", add);
                     //items2 = await Table2.ToCollectionAsync();
                     web.NavigateWithHttpRequestMessage(httpRequestMessage);
@@ -98,13 +98,12 @@ namespace VRDreamer
                 }
             }
 
-             
+
         }
 
         private async void Web_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
-        {        
-            // work here
-            s= await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
+        {
+            s = await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
 
             {
@@ -123,7 +122,7 @@ namespace VRDreamer
                 HttpClient cl = new HttpClient();
                 s = Uri.EscapeDataString(s);
                 string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-                // change the location in the url 
+
                 try
                 {
                     s = await cl.GetStringAsync(url);
@@ -138,7 +137,7 @@ namespace VRDreamer
             {
                 VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
 
-                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags};
+                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
                 AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
                 Tag[] f = ar.Tags;
                 int i = 0;
@@ -170,10 +169,10 @@ namespace VRDreamer
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     { }
                 }
-                
+
             }
 
 
@@ -257,7 +256,7 @@ namespace VRDreamer
             var streamHeight = previewResolution.Height;
 
             // For portrait orientations, the width and height need to be swapped
-           
+
 
             // Start by assuming the preview display area in the control spans the entire width and height both (this is corrected in the next if for the necessary dimension)
             result.Width = PreviewControl.ActualWidth;
@@ -293,9 +292,9 @@ namespace VRDreamer
             double previewLeft = previewRect.Left, previewTop = previewRect.Top;
 
             // Transform the left and top of the tap to account for rotation
-            
+
             // For portrait orientations, the information about the active preview area needs to be rotated
-           
+
             // Normalize width and height of the focus rectangle
             var width = size.Width / previewWidth;
             var height = size.Height / previewHeight;
@@ -347,7 +346,7 @@ namespace VRDreamer
 
                 _displayRequest.RequestActive();
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
-                
+
             }
             catch (UnauthorizedAccessException)
             {
@@ -405,42 +404,6 @@ namespace VRDreamer
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
-
-        public static int Compute(string s, string t)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                if (string.IsNullOrEmpty(t))
-                    return 0;
-                return t.Length;
-            }
-
-            if (string.IsNullOrEmpty(t))
-            {
-                return s.Length;
-            }
-
-            int n = s.Length;
-            int m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
-
-            // initialize the top and right of the table to 0, 1, 2, ...
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 1; j <= m; d[0, j] = j++) ;
-
-            for (int i = 1; i <= n; i++)
-            {
-                for (int j = 1; j <= m; j++)
-                {
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
-                    int min1 = d[i - 1, j] + 1;
-                    int min2 = d[i, j - 1] + 1;
-                    int min3 = d[i - 1, j - 1] + cost;
-                    d[i, j] = Math.Min(Math.Min(min1, min2), min3);
-                }
-            }
-            return d[n, m];
         }
 
 
