@@ -103,6 +103,7 @@ namespace VRDreamer
 
         private async void Web_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {        
+            // work here
             s= await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
 
@@ -122,7 +123,7 @@ namespace VRDreamer
                 HttpClient cl = new HttpClient();
                 s = Uri.EscapeDataString(s);
                 string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-
+                // change the location in the url 
                 try
                 {
                     s = await cl.GetStringAsync(url);
@@ -406,6 +407,42 @@ namespace VRDreamer
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        
+        public static int Compute(string s, string t)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                if (string.IsNullOrEmpty(t))
+                    return 0;
+                return t.Length;
+            }
+
+            if (string.IsNullOrEmpty(t))
+            {
+                return s.Length;
+            }
+
+            int n = s.Length;
+            int m = t.Length;
+            int[,] d = new int[n + 1, m + 1];
+
+            // initialize the top and right of the table to 0, 1, 2, ...
+            for (int i = 0; i <= n; d[i, 0] = i++) ;
+            for (int j = 1; j <= m; d[0, j] = j++) ;
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+                    int min1 = d[i - 1, j] + 1;
+                    int min2 = d[i, j - 1] + 1;
+                    int min3 = d[i - 1, j - 1] + cost;
+                    d[i, j] = Math.Min(Math.Min(min1, min2), min3);
+                }
+            }
+            return d[n, m];
+        }
+
+
     }
 }
