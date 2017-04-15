@@ -43,7 +43,7 @@ namespace VRDreamer
         private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
         private MobileServiceCollection<Diary, Diary> items3;
         StoreListing s = new StoreListing();
-        
+        string[] words;
         ObservableCollection<StoreListing> Slist = new ObservableCollection<StoreListing>();
         ObservableCollection<StoreListing> Tlist = new ObservableCollection<StoreListing>();
         ObservableCollection<StoreListing> Dlist = new ObservableCollection<StoreListing>();
@@ -56,8 +56,10 @@ namespace VRDreamer
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             string search = e.Parameter as string;
-            if(search != null)
-                  await search_Func(search);
+            if (search != null)
+            {
+                await search_Func(search);
+            }       
         }
         private async void Store_Loaded(object sender, RoutedEventArgs e)
         {
@@ -140,98 +142,113 @@ namespace VRDreamer
             await search_Func(Box.Text);
         }
 
-        private async Task search_Func(string str)
+        private async Task search_Func(string str1)
         {
-            LoadingBar2.Visibility = Visibility.Visible;
-            LoadingBar2.IsActive = true;
-            Tlist.Clear();
-            Dlist.Clear();
-            items2 = await Table2.ToCollectionAsync();
-            items3 = await Table3.ToCollectionAsync();
-            foreach(Tour si in items2)
+            try
             {
-                if(si.Title.CaseInsensitiveContains(str))
+                words = str1.Split(' ');
+                LoadingBar2.Visibility = Visibility.Visible;
+                LoadingBar2.IsActive = true;
+                Tlist.Clear();
+                Dlist.Clear();
+                items2 = await Table2.ToCollectionAsync();
+                items3 = await Table3.ToCollectionAsync();
+                foreach (Tour si in items2)
                 {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.MyId = si.Scrap_List;
-                    s.UserId = si.UserId;
-                    s.Id = si.Id;
-                    s.Type = "T";
-                    Tlist.Add(s);
+                    foreach (string str in words)
+                    {
+                        if (si.Title.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.MyId = si.Scrap_List;
+                            s.UserId = si.UserId;
+                            s.Id = si.Id;
+                            s.Type = "T";
+                            Tlist.Add(s);
+                        }
+                        else if (si.Tags != null && si.Tags.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.MyId = si.Scrap_List;
+                            s.UserId = si.UserId;
+                            s.Id = si.Id;
+                            s.Type = "T";
+                            Tlist.Add(s);
+                        }
+                        else if (si.Desc != null && si.Desc.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.MyId = si.Scrap_List;
+                            s.UserId = si.UserId;
+                            s.Id = si.Id;
+                            s.Type = "T";
+                            Tlist.Add(s);
+                        }
+                    }
                 }
-                else if(si.Tags != null && si.Tags.CaseInsensitiveContains(str))
+                foreach (Diary si in items3)
                 {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.MyId = si.Scrap_List;
-                    s.UserId = si.UserId;
-                    s.Id = si.Id;
-                    s.Type = "T";
-                    Tlist.Add(s);
-                }
-                else if(si.Desc != null && si.Desc.CaseInsensitiveContains(str))
-                {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.MyId = si.Scrap_List;
-                    s.UserId = si.UserId;
-                    s.Id = si.Id;
-                    s.Type = "T";
-                    Tlist.Add(s);
-                }
-            }
+                    foreach (string str in words)
+                    {
+                        if (si.Title.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.Id = si.Id;
+                            s.UserId = si.UserId;
+                            s.MyId = si.Tour_List;
+                            s.Type = "D";
+                            Dlist.Add(s);
+                        }
+                        else if (si.Tags != null && si.Tags.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.Id = si.Id;
+                            s.UserId = si.UserId;
+                            s.MyId = si.Tour_List;
+                            s.Type = "D";
+                            Dlist.Add(s);
+                        }
 
-            foreach (Diary si in items3)
+                        else if (si.Desc != null && si.Desc.CaseInsensitiveContains(str))
+                        {
+                            s = new StoreListing();
+                            s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
+                            s.Price = "Price: " + si.Price.ToString();
+                            s.Title = si.Title;
+                            s.Id = si.Id;
+                            s.UserId = si.UserId;
+                            s.MyId = si.Tour_List;
+                            s.Type = "D";
+                            Dlist.Add(s);
+                        }
+                    }
+                }            
+                LoadingBar2.IsActive = false;
+                LoadingBar2.Visibility = Visibility.Collapsed;
+                DiaryView.DataContext = Dlist;
+                TourView.DataContext = Tlist;
+            }
+            catch(Exception)
             {
-                if (si.Title.CaseInsensitiveContains(str))
-                {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.Id = si.Id;
-                    s.UserId = si.UserId;
-                    s.MyId = si.Tour_List;
-                    s.Type = "D";
-                    Dlist.Add(s);
-                }
-                else if (si.Tags != null && si.Tags.CaseInsensitiveContains(str))
-                {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.Id = si.Id;
-                    s.UserId = si.UserId;
-                    s.MyId = si.Tour_List;
-                    s.Type = "D";
-                    Dlist.Add(s);
-                }
-
-                else if (si.Desc != null && si.Desc.CaseInsensitiveContains(str))
-                {
-                    s = new StoreListing();
-                    s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
-                    s.Price = "Price: " + si.Price.ToString();
-                    s.Title = si.Title;
-                    s.Id = si.Id;
-                    s.UserId = si.UserId;
-                    s.MyId = si.Tour_List;
-                    s.Type = "D";
-                    Dlist.Add(s);
-                }
+                MessageDialog msgbox = new MessageDialog("Sorry can't update now");
+                await msgbox.ShowAsync();
+                LoadingBar2.Visibility = Visibility.Collapsed;
             }
-            LoadingBar2.IsActive = false;
-            LoadingBar2.Visibility = Visibility.Collapsed;
-            DiaryView.DataContext = Dlist;
-            TourView.DataContext = Tlist;
         }
         private void StoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
