@@ -29,6 +29,7 @@
                     <TextBlock x:Name="authName" Text="{Binding Name}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
                     <TextBlock x:Name="price" Text="{Binding Price}" FontSize="15" Foreground="White" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,5,0,0"/>
                     <TextBlock x:Name="id" Visibility="Collapsed" Text="{Binding Id}" FontSize="15" Foreground="White" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Userid" Visibility="Collapsed" Text="{Binding UserId}" FontSize="15" Foreground="White" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
                     <TextBlock x:Name="Type" Visibility="Collapsed" Text="{Binding Type}" FontSize="15" Foreground="White" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0"/>
 
                 </Grid>

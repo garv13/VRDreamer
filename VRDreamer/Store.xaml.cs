@@ -72,6 +72,7 @@ namespace VRDreamer
                     s.Price = "Price: " + si.Price.ToString();
                     s.Title = si.Title;
                     s.MyId = si.Scrap_List;
+                    s.UserId = si.UserId;
                     s.Id = si.Id;
                     s.Type = "T";
                     Tlist.Add(s);
@@ -79,11 +80,13 @@ namespace VRDreamer
 
                 foreach (Diary si in items3)
                 {
+                    
                     s = new StoreListing();
                     s.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(si.Cover_Url)); // some static iage for scrap
                     s.Price = "Price: " + si.Price.ToString();
                     s.Title = si.Title;
                     s.Id = si.Id;
+                    s.UserId = si.UserId;
                     s.MyId = si.Tour_List;
                     s.Type = "D";
                     Dlist.Add(s);
