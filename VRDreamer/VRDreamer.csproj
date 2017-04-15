@@ -146,6 +146,9 @@
       <DependentUpon>ToolKit_Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tour.cs" />
+    <Compile Include="TouristLens.xaml.cs">
+      <DependentUpon>TouristLens.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TouristToolkit.xaml.cs">
       <DependentUpon>TouristToolkit.xaml</DependentUpon>
     </Compile>
@@ -234,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToolKit_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TouristLens.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
