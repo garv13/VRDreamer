@@ -22,37 +22,34 @@ namespace VRDreamer
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Ocr_Detail : Page
+    public sealed partial class Activity_Detail : Page
     {
-        public Ocr_Detail()
+        public Activity_Detail()
         {
             this.InitializeComponent();
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             Monument_Detail_View m = new Monument_Detail_View();
-            string  blobUrl = e.Parameter as string;
-            try
-
-            {
-                string text = "";
-                VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-                OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
-                foreach (Region r in ocr.Regions)
-                {
-                    foreach (Line l in r.Lines)
-                    {
-                        foreach (Word w in l.Words)
-                        {
-                            text = text + " " + w.Text;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            { }
+            string blobUrl = e.Parameter as string;
             text.Text = m.Desc;
             img.Source = m.Image;
+
+            VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
+
+            VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
+            AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
+            Tag[] f = ar.Tags;
+            int i = 0;
+            foreach (Tag t in f)
+            {
+                if (t.Name.Contains("text"))
+                {
+                    Frame.Navigate(typeof(Ocr_Detail),blobUrl);
+                }
+            }
+
         }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {

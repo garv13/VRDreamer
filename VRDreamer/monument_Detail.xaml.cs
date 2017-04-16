@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -30,13 +31,26 @@ namespace VRDreamer
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             Monument_Detail_View m = new Monument_Detail_View();
-            m = e.Parameter as Monument_Detail_View;
-            name.Text = m.Title;
-            desc.Text = m.Desc;
-            img.Source = m.Image;
+            string s = e.Parameter as string;
+
+            HttpClient cl = new HttpClient();
+            s = Uri.EscapeDataString(s);
+            string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
+
+            try
+            {
+                s = await cl.GetStringAsync(url);
+                // parse the string in json and get the details
+            }
+            catch (Exception ex)
+            {
+
+
+                
+            }
         }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {

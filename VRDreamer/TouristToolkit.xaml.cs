@@ -123,59 +123,61 @@ namespace VRDreamer
             //if match found
             if (con)
             {
-                HttpClient cl = new HttpClient();
-                s = Uri.EscapeDataString(s);
-                string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
+                Frame.Navigate(typeof(monument_Detail), s);
+                //HttpClient cl = new HttpClient();
+                //s = Uri.EscapeDataString(s);
+                //string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
 
-                try
-                {
-                    s = await cl.GetStringAsync(url);
-                }
-                catch (Exception ex)
-                {
+                //try
+                //{
+                //    s = await cl.GetStringAsync(url);
+                //}
+                //catch (Exception ex)
+                //{
 
-                }
+                //}
                 //match not found so it not a monument
             }
             else
             {
-                VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
+                Frame.Navigate(typeof(Activity_Detail), blobUrl);
+                //VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
 
-                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
-                AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
-                Tag[] f = ar.Tags;
-                int i = 0;
-                bool tex = false;
-                foreach (Tag t in f)
-                {
-                    if (t.Name.Contains("text"))
-                    {
-                        tex = true;
-                        break;
-                    }
-                }
-                if (tex)
-                {
-                    try
+                //VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
+                //AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
+                //Tag[] f = ar.Tags;
+                //int i = 0;
+                //bool tex = false;
+                //foreach (Tag t in f)
+                //{
+                //    if (t.Name.Contains("text"))
+                //    {
+                //        tex = true;
+                //        break;
+                //    }
+                //}
+                //if (tex)
+                //{
+                //    try
 
-                    {
-                        string text = "";
-                        cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-                        OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
-                        foreach (Region r in ocr.Regions)
-                        {
-                            foreach (Line l in r.Lines)
-                            {
-                                foreach (Word w in l.Words)
-                                {
-                                    text = text + " " + w.Text;
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    { }
-                }
+                //    {
+                //        string text = "";
+                //        cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
+                //        OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
+                //        foreach (Region r in ocr.Regions)
+                //        {
+                //            foreach (Line l in r.Lines)
+                //            {
+                //                foreach (Word w in l.Words)
+                //                {
+                //                    text = text + " " + w.Text;
+                //                }
+                //            }
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    { }
+                //}
 
             }
 
