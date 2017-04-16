@@ -67,6 +67,7 @@ namespace VRDreamer
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
+            
             using (var captureStream = new InMemoryRandomAccessStream())
             {
 
@@ -78,11 +79,7 @@ namespace VRDreamer
                     var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
                     var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
                     var container = client.GetContainerReference("datasetimages");
-                    //  await container.CreateIfNotExistsAsync();
-
-                    //var perm = new BlobContainerPermissions();
-                    //perm.PublicAccess = BlobContainerPublicAccessType.Blob;
-                    //await container.SetPermissionsAsync(perm);
+                    
                     var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".jpeg");
                     s.Position = 0;
 
@@ -123,34 +120,27 @@ namespace VRDreamer
             if (con)
             {
                 Frame.Navigate(typeof(monument_Detail), s);
-                //HttpClient cl = new HttpClient();
-                //s = Uri.EscapeDataString(s);
-                //string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-
-                //try
-                //{
-                //    s = await cl.GetStringAsync(url);
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-                //match not found so it not a monument
             }
             else
             {
-                //Frame.Navigate(typeof(Activity_Detail), blobUrl);
                 VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-
-                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
+                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags,VisualFeature.Categories };
                 AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
                 Tag[] f = ar.Tags;
-                Frame.Navigate(typeof(Activity_Detail), f);
+                Category[] c = ar.Categories;
                 int i = 0;
                 bool tex = false;
                 foreach (Tag t in f)
                 {
                     if (t.Name.Contains("text"))
+                    {
+                        tex = true;
+                        break;
+                    }
+                }
+                foreach (Category ct in c)
+                {
+                    if (ct.Name.Contains("text"))
                     {
                         tex = true;
                         break;
@@ -178,6 +168,10 @@ namespace VRDreamer
                     }
                     catch (Exception ex)
                     { }
+                }
+                else
+                {
+                    Frame.Navigate(typeof(Activity_Detail), f);
                 }
 
             }
