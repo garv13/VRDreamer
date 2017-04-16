@@ -127,6 +127,9 @@
     <Compile Include="NewScrape.xaml.cs">
       <DependentUpon>NewScrape.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ocr_Detail.xaml.cs">
+      <DependentUpon>Ocr_Detail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pointer.cs" />
     <Compile Include="PointerView.cs" />
     <Compile Include="PointerViewAR.cs" />
@@ -218,6 +221,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="NewScrape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ocr_Detail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
