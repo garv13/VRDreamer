@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -50,17 +51,151 @@ namespace VRDreamer
         bool _isPreviewing;
         DisplayRequest _displayRequest;
         string s;
+        OrientationSensor or;
+        Compass c;
+        List<Scrap> li;
+        List<Pointer> li3;
+        List<PointerViewAR> li2;
+        Geoposition pos;
+        bool myBool;
+        
+        double yaw;
+        double wid, h, stepW, stepH;
+        double pitch;
+        int i;
+        private IMobileServiceTable<Scrap> Table3 = App.MobileService.GetTable<Scrap>();
+        private MobileServiceCollection<Scrap, Scrap> items3;
+
+
+
         public TouristToolkit()
         {
             blobUrl = "";
             this.InitializeComponent();
-            Application.Current.Suspending += Application_Suspending;
+            i = 0;
+            li = new List<Scrap>();
+            li2 = new List<PointerViewAR>();
+            li3 = new List<Pointer>();
+            or = OrientationSensor.GetDefault();
+            myBool = false;
+            c = Compass.GetDefault();
+            try
+            {
+                c.ReportInterval = 4;
+                c.ReadingChanged += C_ReadingChanged;
+                or.ReportInterval = 4;
+                or.ReadingChanged += Or_ReadingChanged;
+            }
+            catch
+            { }           
+            this.InitializeComponent();
+            PreviewControl.Loaded += PreviewControl_Loaded;
+        
+        Application.Current.Suspending += Application_Suspending;
+        }
+
+        private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
+        {
+            if (myBool)
+            {
+                OrientationSensorReading reading = args.Reading;
+
+                // Quaternion values
+                SensorQuaternion q = reading.Quaternion;
+                double y = args.Reading.Quaternion.Y;
+                if (y < 0)
+                    y = y + 2;
+                pitch = y;
+                //    pitch = pitch * 180 / Math.PI;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    for (; lol.Children.Count > 1;)
+                    {
+                        lol.Children.RemoveAt(1);
+                    }
+
+                    foreach (PointerViewAR n in li2)
+                    {
+                        Image img = new Image();
+                        img.Width = 250;
+                        img.Height = 250;
+                        img.Source = n.Media;
+                        TranslateTransform t = new TranslateTransform();
+                        double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
+                        if (dis < 8)
+                        {
+                            // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
+                            t.X = (n.Yaw - yaw) * stepW;
+                            t.Y = (n.Pitch - pitch) * stepH;
+                            img.RenderTransform = t;
+                            lol.Children.Add(img);
+                        }
+                    }
+
+
+                });
+
+            }
+
+
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+            var accessStatus = await Geolocator.RequestAccessAsync();
+            switch (accessStatus)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    // _rootPage.NotifyUser("Waiting for update...", NotifyType.StatusMessage);
+
+                    // If DesiredAccuracy or DesiredAccuracyInMeters are not set (or value is 0), DesiredAccuracy.Default is used.
+                    Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 2, MovementThreshold = 6 };
+
+                    // Subscribe to the StatusChanged event to get updates of location status changes.
+
+
+                    // Carry out the operation.
+                    pos = await geolocator.GetGeopositionAsync();                  
+                    geolocator.PositionChanged += Geolocator_PositionChanged;
+                    break;
+            }
             await StartPreviewAsync();
+        }
+        private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
+        {
+            CompassReading reading = args.Reading;
+            yaw = reading.HeadingTrueNorth.Value;
+
+        }
+        private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
+        {
+            pos = args.Position;
+            try
+            {
+                items3 = await Table3.Where(t =>
+                (t.lat - pos.Coordinate.Latitude < 0.0018018018
+                && t.lat - pos.Coordinate.Latitude > -0.0018018018
+                && t.lon - pos.Coordinate.Longitude < 0.0018018020
+                && t.lon - pos.Coordinate.Longitude > -0.0018018020)
+                ).ToCollectionAsync();
+
+                //TODO : add logic to get only those he has bought or created
+                if (items2.Count != 0)
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        private void PreviewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            wid = PreviewControl.ActualWidth;
+            h = PreviewControl.ActualHeight;
+            stepH = h / 0.5;
+            stepW = wid / 90;
         }
         private async void button_Click(object sender, RoutedEventArgs e)
         {
@@ -419,7 +554,21 @@ namespace VRDreamer
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
-
+        private double getDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            double rlat1 = Math.PI * lat1 / 180;
+            double rlat2 = Math.PI * lat2 / 180;
+            double theta = lon1 - lon2;
+            double rtheta = Math.PI * theta / 180;
+            double dist =
+                Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+                Math.Cos(rlat2) * Math.Cos(rtheta);
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+            dist *= 1.609344 * 1000;
+            return dist;
+        }
 
     }
 }
