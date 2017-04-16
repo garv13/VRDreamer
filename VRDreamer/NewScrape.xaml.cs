@@ -171,7 +171,7 @@ namespace VRDreamer
             {
                 i++;
                 po.lat = pos.Coordinate.Latitude;
-                po.lon = pos.Coordinate.Latitude;
+                po.lon = pos.Coordinate.Longitude;
                 po.Yaw = c.GetCurrentReading().HeadingMagneticNorth;
                
                 OrientationSensorReading reading2 = or.GetCurrentReading();

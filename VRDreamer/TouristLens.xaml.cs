@@ -45,7 +45,7 @@ namespace VRDreamer
         List<PointerViewAR> li2;
         Geoposition pos;
         bool myBool;
-        int cou;
+       
         double yaw;
         double wid, h, stepW, stepH, temppitch, tempyaw;
         double pitch;
@@ -63,7 +63,7 @@ namespace VRDreamer
         {
             i = 0;
 
-            cou = 0;
+            
             li = new List<Scrap>();
             li2 = new List<PointerViewAR>();
             li3 = new List<Pointer>();
@@ -132,7 +132,7 @@ namespace VRDreamer
 
 
             await StartPreviewAsync();
-            myBool = true;
+            
 
         }
         private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
