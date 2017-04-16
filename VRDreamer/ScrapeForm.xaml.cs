@@ -73,8 +73,7 @@ namespace VRDreamer
             int i = 0;
             Scrap s = new Scrap();
             s.Title = scrapeName.Text;
-            //TODO replcae with id
-            s.UserId = "ccb753d1-3bdb-4cb6-a375-3635237a9de7";
+            s.UserId = App.userId;
             s.store = true;
             s.Point_List = "";
             try

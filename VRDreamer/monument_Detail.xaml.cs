@@ -53,7 +53,6 @@ namespace VRDreamer
                 {
                     await stream.CopyToAsync(memStream);
                     memStream.Position = 0;
-
                     Image.SetSource(memStream.AsRandomAccessStream());
                 }
                 img.Source = Image;

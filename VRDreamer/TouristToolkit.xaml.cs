@@ -327,6 +327,9 @@ namespace VRDreamer
         }
         private async void Web_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {
+            Monument_Detail_View m = new Monument_Detail_View();
+            m.MyLat = pos.Coordinate.Latitude;
+            m.MyLon = pos.Coordinate.Longitude;
             bool con = false;
             s = await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
@@ -345,7 +348,9 @@ namespace VRDreamer
             //if match found
             if (con)
             {
-                Frame.Navigate(typeof(monument_Detail), s);
+                m.Title = s;
+                Frame.Navigate(typeof(monument_Detail), m);
+                
             }
             else
             {

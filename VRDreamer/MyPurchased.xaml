@@ -226,10 +226,11 @@
         </SplitView.Content>
     </SplitView>
     <Page.BottomAppBar>
-        <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
+        <AppBar x:Name="Appbar" ClosedDisplayMode="Compact" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
             <StackPanel Orientation="Horizontal">
                 <AppBarButton Name="NextBar" Icon="Add" Label="Add new Scrap" Click="NextBar_Click"   />
                 <AppBarButton Name="ColorSelect" Icon="Find" Label="Search in Store" Click="ColorSelect_Click"/>
+                <AppBarButton Name="TouristLink" Icon="Globe" Label="Explore" Click="TouristLink_Click"/>
             </StackPanel>
         </AppBar>
     </Page.BottomAppBar>

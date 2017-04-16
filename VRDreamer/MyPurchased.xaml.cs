@@ -238,5 +238,10 @@ namespace VRDreamer
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
+
+        private void TouristLink_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TouristToolkit));
+        }
     }
 }
