@@ -33,6 +33,7 @@ namespace VRDreamer
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            
             Monument_Detail_View m = new Monument_Detail_View();
             string s = e.Parameter as string;
 

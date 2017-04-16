@@ -24,32 +24,27 @@ namespace VRDreamer
     /// </summary>
     public sealed partial class Activity_Detail : Page
     {
+        List<Monument_Detail_View> MList = new List<Monument_Detail_View>();
         public Activity_Detail()
         {
             this.InitializeComponent();
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        }     
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Monument_Detail_View m = new Monument_Detail_View();
-            string blobUrl = e.Parameter as string;
-            text.Text = m.Desc;
-            img.Source = m.Image;
-
-            VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-
-            VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
-            AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
-            Tag[] f = ar.Tags;
-            int i = 0;
+            Tag[] f = e.Parameter as Tag[];
             foreach (Tag t in f)
             {
-                if (t.Name.Contains("text"))
+                if (t.Name != null || t.Name != "")
                 {
-                    Frame.Navigate(typeof(Ocr_Detail),blobUrl);
+                    m = new Monument_Detail_View();
+                    m.Title = t.Name;
+                    m.Image = null;
+                    m.Desc = null;
                 }
+                MList.Add(m);
             }
-
+            DiaryView.DataContext = MList;
         }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {
@@ -79,6 +74,12 @@ namespace VRDreamer
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+        private void DiaryView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Monument_Detail_View m = e.ClickedItem as Monument_Detail_View;
+            Frame.Navigate(typeof(Store), m.Title);
         }
     }
 }
