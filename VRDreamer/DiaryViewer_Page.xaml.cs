@@ -65,7 +65,7 @@ namespace VRDreamer
                 LoadingBar.Visibility = Visibility.Collapsed;
             }
 
-            catch(Exception)
+            catch (Exception)
             {
                 MessageDialog msgbox = new MessageDialog("Sorry can't update now");
                 await msgbox.ShowAsync();
@@ -98,7 +98,7 @@ namespace VRDreamer
                 }
             }
 
-            Frame.Navigate(typeof(TourViewer_Page), id);
+            Frame.Navigate(typeof(TouristLens), id);
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
