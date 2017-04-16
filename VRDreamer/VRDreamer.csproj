@@ -120,6 +120,7 @@
     <Compile Include="Login_Page.xaml.cs">
       <DependentUpon>Login_Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Monument_Detail_View.cs" />
     <Compile Include="MyPurchased.xaml.cs">
       <DependentUpon>MyPurchased.xaml</DependentUpon>
     </Compile>
@@ -142,8 +143,8 @@
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
     <Compile Include="StoreListing.cs" />
-    <Compile Include="ToolKit_Page.xaml.cs">
-      <DependentUpon>ToolKit_Page.xaml</DependentUpon>
+    <Compile Include="monument_Detail.xaml.cs">
+      <DependentUpon>monument_Detail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tour.cs" />
     <Compile Include="TouristLens.xaml.cs">
@@ -237,7 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ToolKit_Page.xaml">
+    <Page Include="monument_Detail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

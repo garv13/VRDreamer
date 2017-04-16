@@ -22,18 +22,22 @@ namespace VRDreamer
     /// </summary>
     /// 
 
-    public sealed partial class ToolKit_Page : Page
+    public sealed partial class monument_Detail : Page
     {
 
-        public ToolKit_Page()
+        public monument_Detail()
         {
             this.InitializeComponent();
         }
-        private void toolkit_Select_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Monument_Detail_View m = new Monument_Detail_View();
+            m = e.Parameter as Monument_Detail_View;
+            name.Text = m.Title;
+            desc.Text = m.Desc;
+            img.Source = m.Image;
+        }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Create_Diary_Tour));
