@@ -29,11 +29,11 @@ namespace VRDreamer
         private IMobileServiceTable<User> Table = App.MobileService.GetTable<User>();
         private MobileServiceCollection<User, User> items;
         private IMobileServiceTable<Scrap> Table1 = App.MobileService.GetTable<Scrap>();
-        private MobileServiceCollection<Scrap,Scrap> items1;
+        private MobileServiceCollection<Scrap, Scrap> items1;
         private IMobileServiceTable<Tour> Table2 = App.MobileService.GetTable<Tour>();
-        private MobileServiceCollection<Tour,Tour> items2;
+        private MobileServiceCollection<Tour, Tour> items2;
         private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
-        private MobileServiceCollection<Diary,Diary> items3;
+        private MobileServiceCollection<Diary, Diary> items3;
         Purchsed m = new Purchsed();
         User u = new User();
         string purchases = " ";
@@ -59,12 +59,12 @@ namespace VRDreamer
 
                 items = await Table.Where(User
                             => User.Id == userid).ToCollectionAsync(); // get the username from login page
-                if(items[0].ScrapePurchase != null)
-                       Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
-                if(items[0].TourPurchases != null)
-                      Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
-                if(items[0].DiaryPurchases != null)
-                      Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
+                if (items[0].ScrapePurchase != null)
+                    Scrap_Purchases = items[0].ScrapePurchase.Split(',').ToList<string>();
+                if (items[0].TourPurchases != null)
+                    Tour_Purchases = items[0].TourPurchases.Split(',').ToList<string>();
+                if (items[0].DiaryPurchases != null)
+                    Diary_Purchases = items[0].DiaryPurchases.Split(',').ToList<string>();
                 foreach (string id in Scrap_Purchases)
                 {
                     if (id != "")
@@ -117,12 +117,12 @@ namespace VRDreamer
                 items1 = await Table1.Where(Scrap
                            => Scrap.UserId == userid).ToCollectionAsync();
 
-                foreach(Scrap sr in items1)
+                foreach (Scrap sr in items1)
                 {
                     m = new Purchsed();
                     m.Id = sr.Id;
                     m.Title = sr.Title;
-                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri , "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
+                    m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(this.BaseUri, "Assets/augmented-reality-for-blog.jpg")); // some static iage for scrap
                     m.Type = "S";
                     Slist.Add(m);
                 }
@@ -187,7 +187,7 @@ namespace VRDreamer
                 if ((Grid.GetRow(child) == 2) && (Grid.GetColumn(child) == 1))
                 {
                     TextBlock b = child as TextBlock;
-                    
+
 
                     id = b.Text;
                 }
@@ -195,7 +195,7 @@ namespace VRDreamer
 
                 if ((Grid.GetRow(child) == 1) && (Grid.GetColumn(child) == 0))
                 {
-                   TextBlock b = child as TextBlock;
+                    TextBlock b = child as TextBlock;
 
                     type = b.Text;
                 }
@@ -206,7 +206,7 @@ namespace VRDreamer
             else if (type == "D")
                 Frame.Navigate(typeof(DiaryViewer_Page), id);
             else if (type == "T")
-                Frame.Navigate(typeof(TourViewer_Page), id);
+                Frame.Navigate(typeof(TouristLens), id);
         }
 
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
