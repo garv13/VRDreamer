@@ -48,10 +48,10 @@
                     <ColumnDefinition Width="0.1*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Image Clicked" TextWrapping="WrapWholeWords" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <Image x:Name="img" Source="{Binding Image}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="Orignal Text" TextWrapping="WrapWholeWords" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+                <TextBox x:Name="textBox" Text="{Binding textTranslate}" Grid.Row="0" Grid.Column="1" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
                 <TextBlock Text="Translated Text" TextWrapping="WrapWholeWords" Grid.Row="2" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBox x:Name="text" Text="{Binding text}" Grid.Row="3" Grid.Column="1" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
+                <TextBox x:Name="textTranslate" Text="{Binding text}" Grid.Row="3" Grid.Column="1" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

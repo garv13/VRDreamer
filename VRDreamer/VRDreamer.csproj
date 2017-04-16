@@ -165,6 +165,7 @@
     <Compile Include="Tour_Store_View_Page.xaml.cs">
       <DependentUpon>Tour_Store_View_Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="translateClass.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ViewScrape.xaml.cs">
       <DependentUpon>ViewScrape.xaml</DependentUpon>

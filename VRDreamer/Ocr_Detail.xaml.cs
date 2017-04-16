@@ -1,9 +1,12 @@
 ﻿using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -28,32 +31,38 @@ namespace VRDreamer
         {
             this.InitializeComponent();
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Monument_Detail_View m = new Monument_Detail_View();
-            string  blobUrl = e.Parameter as string;
-            try
 
+            string text = e.Parameter as string;
+            try
             {
-                string text = "";
-                VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-                OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
-                foreach (Region r in ocr.Regions)
+                WebRequest request = WebRequest.Create("https://www.googleapis.com/language/translate/v2?q=" + text + "&target=hi&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM");
+                request.Method = "GET";
+                string token = null;
+                using (WebResponse response = await request.GetResponseAsync())
                 {
-                    foreach (Line l in r.Lines)
+                    using (Stream stream = response.GetResponseStream())
                     {
-                        foreach (Word w in l.Words)
+                        using (StreamReader sr99 = new StreamReader(stream))
                         {
-                            text = text + " " + w.Text;
+                            token = sr99.ReadToEnd();
                         }
                     }
                 }
+                RootObject tmp = new RootObject();
+                tmp = JsonConvert.DeserializeObject<RootObject>(token);
+                textTranslate.Text = tmp.data.translations[0].translatedText;
+                textBox.Text = text;
             }
             catch (Exception ex)
-            { }
-            text.Text = m.Desc;
-            img.Source = m.Image;
+            {
+
+            }
         }
+
+        
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Create_Diary_Tour));
