@@ -13,6 +13,9 @@ namespace VRDreamer
 
         public string Desc { get; set; }
 
+        public double MyLat { get; set; }
+
+        public double MyLon { get; set; }
         public BitmapImage Image { get; set; }
     }
 }

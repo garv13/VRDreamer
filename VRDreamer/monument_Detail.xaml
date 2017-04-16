@@ -41,7 +41,7 @@
             <Grid Background="#292929" Padding="5,5,5,5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.1*"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="300"/>
                     <RowDefinition Height="0.1*"/>
                     <RowDefinition Height="0.6*"/>
                 </Grid.RowDefinitions>
@@ -50,12 +50,20 @@
                     <ColumnDefinition Width="0.75*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Details" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <Image x:Name="img" Source="{Binding Image}" Height="100" Width="100" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image x:Name="img" Source="{Binding Image}" Height="300" Grid.ColumnSpan="2" Width="300" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="Name" Grid.Row="2" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBlock Text="Description" Grid.Row="3" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBox x:Name="name" Text="{Binding Title}" Grid.Row="2" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
-                <TextBox x:Name="desc" Text="{Binding Desc}" Grid.Row="3" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
+                <TextBlock Text="Vicinity" Grid.Row="3" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+                <TextBlock x:Name="name" Text="{Binding Title}" Grid.Row="2" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
+                <TextBlock x:Name="desc" Text="{Binding Desc}" Grid.Row="3" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5,5,0,0"/>
             </Grid>
         </SplitView.Content>
     </SplitView>
+    <Page.BottomAppBar>
+        <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton Name="Navigate" HorizontalAlignment="Right" Icon="MapDrive" Label="Navigate to Place" Click="Navigate_Click"   />
+                <AppBarButton Name="Search" HorizontalAlignment="Right" Icon="Find" Label="Search in Store" Click="Search_Click"/>
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
 </Page>

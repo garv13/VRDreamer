@@ -50,7 +50,7 @@ namespace VRDreamer
         public Store()
         {
             this.InitializeComponent();
-            Loaded += Store_Loaded;
+          
         }
       
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -60,6 +60,8 @@ namespace VRDreamer
             {
                 await search_Func(search);
             }       
+            else
+                Loaded += Store_Loaded;
         }
         private async void Store_Loaded(object sender, RoutedEventArgs e)
         {
