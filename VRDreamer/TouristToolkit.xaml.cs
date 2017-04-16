@@ -106,7 +106,6 @@ namespace VRDreamer
             bool con = false;
             s = await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
-
             {
 
                 int i = s.IndexOf("<a class=\"_gUb");
@@ -140,44 +139,46 @@ namespace VRDreamer
             }
             else
             {
-                Frame.Navigate(typeof(Activity_Detail), blobUrl);
-                //VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
+                //Frame.Navigate(typeof(Activity_Detail), blobUrl);
+                VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
 
-                //VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
-                //AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
-                //Tag[] f = ar.Tags;
-                //int i = 0;
-                //bool tex = false;
-                //foreach (Tag t in f)
-                //{
-                //    if (t.Name.Contains("text"))
-                //    {
-                //        tex = true;
-                //        break;
-                //    }
-                //}
-                //if (tex)
-                //{
-                //    try
+                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags };
+                AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
+                Tag[] f = ar.Tags;
+                Frame.Navigate(typeof(Activity_Detail), f);
+                int i = 0;
+                bool tex = false;
+                foreach (Tag t in f)
+                {
+                    if (t.Name.Contains("text"))
+                    {
+                        tex = true;
+                        break;
+                    }
+                }
+                if (tex)
+                {
+                    try
 
-                //    {
-                //        string text = "";
-                //        cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-                //        OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
-                //        foreach (Region r in ocr.Regions)
-                //        {
-                //            foreach (Line l in r.Lines)
-                //            {
-                //                foreach (Word w in l.Words)
-                //                {
-                //                    text = text + " " + w.Text;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    { }
-                //}
+                    {
+                        string text = "";
+                        cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
+                        OcrResults ocr = await cl.RecognizeTextAsync(blobUrl);
+                        foreach (Region r in ocr.Regions)
+                        {
+                            foreach (Line l in r.Lines)
+                            {
+                                foreach (Word w in l.Words)
+                                {
+                                    text = text + " " + w.Text;
+                                }
+                            }
+                        }
+                        Frame.Navigate(typeof(Ocr_Detail), text);
+                    }
+                    catch (Exception ex)
+                    { }
+                }
 
             }
 
@@ -203,7 +204,6 @@ namespace VRDreamer
                 await TapUnfocus();
             }
         }
-
         private async Task TapUnfocus()
         {
             _isFocused = false;
@@ -214,7 +214,6 @@ namespace VRDreamer
             var focusControl = _mediaCapture.VideoDeviceController.FocusControl;
             await focusControl.FocusAsync();
         }
-
         public async Task TapToFocus(Point position, Size size)
         {
             _isFocused = true;
@@ -387,7 +386,6 @@ namespace VRDreamer
             }
 
         }
-
         private string Check_File(string str)
         {
             string ans = null;
