@@ -59,12 +59,9 @@ namespace VRDreamer
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //Loading.Visibility = Visibility.Visible;
+            
             await StartPreviewAsync();
         }
-
-
-
         private async void button_Click(object sender, RoutedEventArgs e)
         {
             
@@ -97,14 +94,12 @@ namespace VRDreamer
 
 
         }
-
         private async void Web_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {
             bool con = false;
             s = await web.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
             try
             {
-
                 int i = s.IndexOf("<a class=\"_gUb");
                 int j = s.IndexOf(">", i);
                 i = s.IndexOf("<", j);
