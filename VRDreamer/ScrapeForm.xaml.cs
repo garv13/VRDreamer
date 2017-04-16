@@ -111,7 +111,7 @@ namespace VRDreamer
                 s.Point_List = s.Point_List.Substring(0, s.Point_List.Length - 1);
                 await App.MobileService.GetTable<Scrap>().InsertAsync(s);
                 LoadingBar.Visibility = Visibility.Collapsed;
-                Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(TouristToolkit));
             }
             catch (Exception)
             {

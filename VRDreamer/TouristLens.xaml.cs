@@ -45,7 +45,7 @@ namespace VRDreamer
         List<PointerViewAR> li2;
         Geoposition pos;
         bool myBool;
-       
+
         double yaw;
         double wid, h, stepW, stepH, temppitch, tempyaw;
         double pitch;
@@ -63,7 +63,7 @@ namespace VRDreamer
         {
             i = 0;
 
-            
+
             li = new List<Scrap>();
             li2 = new List<PointerViewAR>();
             li3 = new List<Pointer>();
@@ -92,6 +92,7 @@ namespace VRDreamer
         {
             //Loading.Visibility = Visibility.Visible;
 
+            await StartPreviewAsync();
 
             string id = e.Parameter as string;
             items1 = await Table1.Where(s => s.Id == id).ToCollectionAsync();
@@ -131,8 +132,7 @@ namespace VRDreamer
             }
 
 
-            await StartPreviewAsync();
-            
+
 
         }
         private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
@@ -150,9 +150,9 @@ namespace VRDreamer
                 //    pitch = pitch * 180 / Math.PI;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    for (; lol.Children.Count > 1;)
+                    for (; lol.Children.Count > 5;)
                     {
-                        lol.Children.RemoveAt(1);
+                        lol.Children.RemoveAt(5);
                     }
 
                     foreach (PointerViewAR n in li2)
@@ -163,9 +163,9 @@ namespace VRDreamer
                         img.Source = n.Media;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (dis < 8)
+                        if (true)
                         {
-                           // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
+                            // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                             t.X = (n.Yaw - yaw) * stepW;
                             t.Y = (n.Pitch - pitch) * stepH;
                             img.RenderTransform = t;
@@ -288,19 +288,26 @@ namespace VRDreamer
             }//all pointers loaded for one scrap
             for (int i = 0; i < li3.Count; i++)
             {
-                PointerViewAR p = new PointerViewAR();
-                p.Id = li3[i].Id;
-                p.lat = li3[i].lat;
-                p.lon = li3[i].lon;
-                p.Pitch = li3[i].Pitch;
-                p.Title = li3[i].Title;
-                p.Yaw = li3[i].Yaw;
-                p.Desc = li3[i].Desc;
-                p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li3[i].Media_Url));
-                li2.Add(p);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+
+                    PointerViewAR p = new PointerViewAR();
+                    p.Id = li3[i].Id;
+                    p.lat = li3[i].lat;
+                    p.lon = li3[i].lon;
+                    p.Pitch = li3[i].Pitch;
+                    p.Title = li3[i].Title;
+                    p.Yaw = li3[i].Yaw;
+                    p.Desc = li3[i].Desc;
+                    p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li3[i].Media_Url));
+                    li2.Add(p);
+                });
             }
             //all images loaded
-            Tags.Text = "Destination is " + li[i].Title;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Tags.Text = "Destination is " + li[i].Title;
+            });
             myBool = true;
 
         }
@@ -357,7 +364,7 @@ namespace VRDreamer
             dist = Math.Acos(dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
-            return dist * 1.609344*1000;
+            return dist * 1.609344 * 1000;
         }
         //returns angle
         private double getangle(double lat1, double lon1, double lat2, double lon2)
