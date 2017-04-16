@@ -54,11 +54,12 @@ namespace VRDreamer
         OrientationSensor or;
         Compass c;
         List<Scrap> li;
+        List<string> id;
         List<Pointer> li3;
         List<PointerViewAR> li2;
         Geoposition pos;
-        bool myBool;
-        
+        bool myBool, first;
+
         double yaw;
         double wid, h, stepW, stepH;
         double pitch;
@@ -76,6 +77,7 @@ namespace VRDreamer
             li = new List<Scrap>();
             li2 = new List<PointerViewAR>();
             li3 = new List<Pointer>();
+            id = new List<string>();
             or = OrientationSensor.GetDefault();
             myBool = false;
             c = Compass.GetDefault();
@@ -87,11 +89,11 @@ namespace VRDreamer
                 or.ReadingChanged += Or_ReadingChanged;
             }
             catch
-            { }           
+            { }
             this.InitializeComponent();
             PreviewControl.Loaded += PreviewControl_Loaded;
-        
-        Application.Current.Suspending += Application_Suspending;
+
+            Application.Current.Suspending += Application_Suspending;
         }
 
         private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
@@ -109,9 +111,9 @@ namespace VRDreamer
                 //    pitch = pitch * 180 / Math.PI;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    for (; lol.Children.Count > 1;)
+                    for (; lol.Children.Count > 5;)
                     {
-                        lol.Children.RemoveAt(1);
+                        lol.Children.RemoveAt(5);
                     }
 
                     foreach (PointerViewAR n in li2)
@@ -120,9 +122,10 @@ namespace VRDreamer
                         img.Width = 250;
                         img.Height = 250;
                         img.Source = n.Media;
+                        img.Stretch = Stretch.UniformToFill;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (dis < 8)
+                        if (true)
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                             t.X = (n.Yaw - yaw) * stepW;
@@ -143,6 +146,7 @@ namespace VRDreamer
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             var accessStatus = await Geolocator.RequestAccessAsync();
+            await StartPreviewAsync();
             switch (accessStatus)
             {
                 case GeolocationAccessStatus.Allowed:
@@ -155,11 +159,14 @@ namespace VRDreamer
 
 
                     // Carry out the operation.
-                    pos = await geolocator.GetGeopositionAsync();                  
+                    pos = await geolocator.GetGeopositionAsync();
+                    textBox.Text = "Ready";
+                    myBool = false;
+                    first = true;
                     geolocator.PositionChanged += Geolocator_PositionChanged;
                     break;
             }
-            await StartPreviewAsync();
+
         }
         private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
         {
@@ -169,26 +176,115 @@ namespace VRDreamer
         }
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            pos = args.Position;
-            try
+            if (myBool || first)
             {
-                items3 = await Table3.Where(t =>
-                (t.lat - pos.Coordinate.Latitude < 0.0018018018
-                && t.lat - pos.Coordinate.Latitude > -0.0018018018
-                && t.lon - pos.Coordinate.Longitude < 0.0018018020
-                && t.lon - pos.Coordinate.Longitude > -0.0018018020)
-                ).ToCollectionAsync();
-
-                //TODO : add logic to get only those he has bought or created
-                if (items2.Count != 0)
+                pos = args.Position;
+                try
                 {
+                    myBool = false;
+                    first = false;
+                    items3 = await Table3.Where(t =>
+                    (t.lat - pos.Coordinate.Latitude < 0.0018018018
+                    && t.lat - pos.Coordinate.Latitude > -0.0018018018
+                    && t.lon - pos.Coordinate.Longitude < 0.0018018020
+                    && t.lon - pos.Coordinate.Longitude > -0.0018018020)
+                    ).ToCollectionAsync();
+                    myBool = true;
+                    first = true;
+                    //TODO : add logic to get only those he has bought or created
+                    if (items3.Count != 0)
+                    {
+                        first = false;
+                        myBool = false;
+                        foreach (Scrap s in items3)
+                        {
+                            if (id.Contains(s.Id))
+                            { }
+                            else
+                            {
+                                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                {
+
+                                    textBox.Text = "Loading new Scrapes";
+                                });
+                                id.Add(s.Id);
+                                li.Add(s);
+                                string[] str = s.Point_List.Split(',');
+                                for (int i = 0; i < str.Length; i++)
+                                {
+                                    string po = str[i];
+                                    items2 = await Table2.Where(t => t.Id == po).ToCollectionAsync();
+                                    Pointer p = new Pointer();
+                                    if (items2.Count > 0)
+                                    {
+                                        p = items2[0];
+                                        li3.Add(p);
+                                    }
+                                }//all pointers loaded for one scrap
+
+                                for (int i = 0; i < li3.Count; i++)
+                                {
+                                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                    {
+                                        PointerViewAR p = new PointerViewAR();
+                                        p.Id = li3[i].Id;
+                                        p.lat = li3[i].lat;
+                                        p.lon = li3[i].lon;
+                                        p.Pitch = li3[i].Pitch;
+                                        p.Title = li3[i].Title;
+                                        p.Yaw = li3[i].Yaw;
+                                        p.Desc = li3[i].Desc;
+                                        p.Media = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(li3[i].Media_Url));
+                                        li2.Add(p);
+                                    });
+                                }
+                                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                {
+
+                                    textBox.Text = "Done";
+                                });
+                            }
+                        }
+                        foreach (Scrap s in li)
+                        {
+                            if (items3.Contains(s))
+                            { }
+                            else
+                            {
+                                myBool = false;
+                                li.Remove(s);
+                                id.Remove(s.Id);
+                                string[] str = s.Point_List.Split(',');
+                                for (int i = 0; i < str.Length; i++)
+                                {
+                                    string po = str[i];
+                                    //items2 = await Table2.Where(t => t.Id == po).ToCollectionAsync();
+                                    List<Pointer> p = new List<Pointer>();
+
+                                    p = li3.Where(tr => tr.Id == str[i]).ToList<Pointer>();
+                                    li3.Remove(p[0]);
+                                    List<PointerViewAR> pt = new List<PointerViewAR>();
+                                    pt = li2.Where(tr => tr.Id == str[i]).ToList<PointerViewAR>();
+                                    li2.Remove(pt[0]);
+
+
+                                }//all pointers removed for one scrap
+
+                            }
+                        }
+                        myBool = true;
+
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    myBool = true;
 
                 }
             }
-            catch (Exception)
-            {
 
-            }
         }
         private void PreviewControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -199,7 +295,7 @@ namespace VRDreamer
         }
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             using (var captureStream = new InMemoryRandomAccessStream())
             {
 
@@ -211,7 +307,7 @@ namespace VRDreamer
                     var credentials = new StorageCredentials("vrdreamer", "lTD5XmjEhvfUsC/vVTLsl01+8pJOlMdF/ri7W1cNOydXwSdb8KQpDbiveVciOqdIbuDu6gJW8g44YtVjuBzFkQ==");
                     var client = new CloudBlobClient(new Uri("https://vrdreamer.blob.core.windows.net/"), credentials);
                     var container = client.GetContainerReference("datasetimages");
-                    
+
                     var blockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString() + ".jpeg");
                     s.Position = 0;
 
@@ -254,7 +350,7 @@ namespace VRDreamer
             else
             {
                 VisionServiceClient cl = new VisionServiceClient("db82ef68dc95459fad7b46d7a50bb944");
-                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags,VisualFeature.Categories };
+                VisualFeature[] vf = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Categories };
                 AnalysisResult ar = await cl.AnalyzeImageAsync(blobUrl, vf);
                 Tag[] f = ar.Tags;
                 Category[] c = ar.Categories;
