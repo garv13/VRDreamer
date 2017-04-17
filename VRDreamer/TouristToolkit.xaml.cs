@@ -133,6 +133,7 @@ namespace VRDreamer
                             t.Y = (n.Pitch - pitch) * stepH;
                             img.RenderTransform = t;
                             lol.Children.Add(img);
+                            Grid.SetRow(img, 1);
                         }
                     }
 
