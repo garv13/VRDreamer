@@ -126,6 +126,7 @@ namespace VRDreamer
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                         if (true)
+                        //TODO: in prod write distance<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                             t.X = (n.Yaw - yaw) * stepW;

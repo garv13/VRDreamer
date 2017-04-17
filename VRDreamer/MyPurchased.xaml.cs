@@ -34,6 +34,8 @@ namespace VRDreamer
         private MobileServiceCollection<Tour, Tour> items2;
         private IMobileServiceTable<Diary> Table3 = App.MobileService.GetTable<Diary>();
         private MobileServiceCollection<Diary, Diary> items3;
+        private IMobileServiceTable<Pointer> Table4 = App.MobileService.GetTable<Pointer>();
+        private MobileServiceCollection<Pointer,Pointer> items4;
         Purchsed m = new Purchsed();
         User u = new User();
         string purchases = " ";
@@ -50,6 +52,21 @@ namespace VRDreamer
             Loaded += MainPage_Loaded;
         }
 
+        //private async void data_Update()
+        //{
+            
+        //    items1 = await Table1.ToCollectionAsync();
+
+        //    foreach(Scrap s in items1)
+        //    {
+        //        string[] po = s.Point_List.Split(',');
+        //        items4 = await Table4.Where(Pointer
+        //            => Pointer.Id == po[0]).ToCollectionAsync();
+        //        s.lat = items4[0].lat;
+        //        s.lon = items4[0].lon;
+        //        await Table1.UpdateAsync(s);
+        //    }
+        //}
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -85,12 +102,9 @@ namespace VRDreamer
                 {
                     if (id != "")
                     {
-
-
                         m = new Purchsed();
                         items2 = await Table2.Where(Tour
-                               => Tour.Id == id).ToCollectionAsync();
-
+                            => Tour.Id == id).ToCollectionAsync();
                         m.Id = items2[0].Id;
                         m.Title = items2[0].Title;
                         m.Image = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(items2[0].Cover_Url));

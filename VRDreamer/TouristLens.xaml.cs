@@ -160,16 +160,19 @@ namespace VRDreamer
                         Image img = new Image();
                         img.Width = 250;
                         img.Height = 250;
+                        
                         img.Source = n.Media;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                         if (true)
+                        // TODO: in prod write dist<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                             t.X = (n.Yaw - yaw) * stepW;
                             t.Y = (n.Pitch - pitch) * stepH;
                             img.RenderTransform = t;
                             lol.Children.Add(img);
+                            Grid.SetRow(img, 1);
                         }
                     }
 
