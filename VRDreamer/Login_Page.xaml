@@ -28,13 +28,13 @@
                 <SolidColorBrush Color="White" Opacity="0.8"/>
             </Grid.Background>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.33*"/>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.13*"/>
+                <RowDefinition Height="0.15*"/>
+                <RowDefinition Height="0.15*"/>
                 <RowDefinition Height="0.01*"/>
-                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.15*"/>
                 <RowDefinition Height="0.01*"/>
-                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.15*"/>
             </Grid.RowDefinitions>
             <TextBlock TextAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Social Vision" FontSize="24" FontFamily="Yu Gothic UI" />
             <TextBox  x:Name="UserName" PlaceholderText="Enter UserName" InputScope="AlphanumericFullWidth" HorizontalAlignment="Stretch" VerticalAlignment="Center" Opacity="50" Foreground="Black" Grid.Row="1" Background="Transparent" BorderBrush="#FF933729" BorderThickness="0,0,0,5" Padding="10,10,6,5" >

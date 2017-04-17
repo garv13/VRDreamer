@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VRDreamer
 {
-    class User
+     public class User
     {
         public string Id { get; set; }
 

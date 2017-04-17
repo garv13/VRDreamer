@@ -34,6 +34,7 @@ namespace VRDreamer
         }
         public static MobileServiceClient MobileService = new MobileServiceClient("http://vrdreamer.azurewebsites.net");
         public static string userId;
+        public static User u;
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

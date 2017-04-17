@@ -47,6 +47,7 @@ namespace VRDreamer
                         MessageDialog msgbox = new MessageDialog("Welcome " + UserName.Text);
                         await msgbox.ShowAsync();
                         App.userId = items[0].Id;
+                        App.u = items[0];
                         Frame.Navigate(typeof(MainPage));
                     }
                 }

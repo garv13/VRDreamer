@@ -187,11 +187,14 @@ namespace VRDreamer
                     (t.lat - pos.Coordinate.Latitude < 0.0018018018
                     && t.lat - pos.Coordinate.Latitude > -0.0018018018
                     && t.lon - pos.Coordinate.Longitude < 0.0018018020
-                    && t.lon - pos.Coordinate.Longitude > -0.0018018020)
+                    && t.lon - pos.Coordinate.Longitude > -0.0018018020
+                    && (t.UserId == App.userId
+                    || App.u.ScrapePurchase.Contains(t.Id))) 
                     ).ToCollectionAsync();
                     myBool = true;
                     first = true;
                     //TODO : add logic to get only those he has bought or created
+                    // query updated , testing left
                     if (items3.Count != 0)
                     {
                         first = false;
