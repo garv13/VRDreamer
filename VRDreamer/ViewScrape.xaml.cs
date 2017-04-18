@@ -166,6 +166,7 @@ namespace VRDreamer
                         foreach (PointerViewAR n in li2)
                         {
                             Image img = new Image();
+                            img.Name = n.Id;
                             img.Width = 250;
                             img.Height = 250;
                             img.Source = n.Media;
@@ -175,13 +176,20 @@ namespace VRDreamer
                             t.Y = (n.Pitch-pitch) * stepH;
 
                             img.RenderTransform = t;
-                            lol.Children.Add(img);
+                            img.IsTapEnabled = true;
+                            img.Tapped += Img_Tapped;
+                            lol.Children.Add(img);                       
                         }
-
-
                     });
                 }
             }
+        }
+
+        private void Img_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Image img = sender as Image;
+            string s = img.Name;
+            Frame.Navigate(typeof(Image_Tapped_Detail), s);
         }
 
         private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
