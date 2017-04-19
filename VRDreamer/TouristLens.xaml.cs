@@ -274,6 +274,7 @@ namespace VRDreamer
         }
         private async Task loadPoint()
         {
+            //TODO Flush older scrapes
             Tags.Text = "Loading Tour";
             myBool = false;
             Scrap s = li[i];
