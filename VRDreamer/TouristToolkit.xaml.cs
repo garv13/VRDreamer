@@ -119,19 +119,21 @@ namespace VRDreamer
                     foreach (PointerViewAR n in li2)
                     {
                         Image img = new Image();
+                        img.Name = n.Id;
                         img.Width = 250;
                         img.Height = 250;
                         img.Source = n.Media;
                         img.Stretch = Stretch.UniformToFill;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (true)
+                        if (dis<20)
                         //TODO: in prod write distance<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                             t.X = (n.Yaw - yaw) * stepW;
                             t.Y = (n.Pitch - pitch) * stepH;
                             img.RenderTransform = t;
+                            img.Tapped += Img_Tapped;
                             lol.Children.Add(img);
                             Grid.SetRow(img, 1);
                         }
@@ -143,6 +145,13 @@ namespace VRDreamer
             }
 
 
+        }
+
+        private void Img_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Image img = sender as Image;
+            string s = img.Name;
+            Frame.Navigate(typeof(Image_Tapped_Detail), s);
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -190,9 +199,7 @@ namespace VRDreamer
                     && t.lat - pos.Coordinate.Latitude > -0.0018018018
                     && t.lon - pos.Coordinate.Longitude < 0.0018018020
                     && t.lon - pos.Coordinate.Longitude > -0.0018018020
-                    && (t.UserId == App.userId
-                    || App.u.ScrapePurchase.Contains(t.Id))) 
-                    ).ToCollectionAsync();
+                    )).ToCollectionAsync();
                     myBool = true;
                     first = true;
                     //TODO : add logic to get only those he has bought or created
