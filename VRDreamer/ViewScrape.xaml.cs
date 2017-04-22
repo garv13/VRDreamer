@@ -99,7 +99,6 @@ namespace VRDreamer
                 //    pitch = pitch * 180 / Math.PI;
                    if (yaw < 0)
                         yaw += 360;
-                   Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
 
 
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -118,8 +117,10 @@ namespace VRDreamer
                             img.Source = n.Media;
                             TranslateTransform t = new TranslateTransform();
 
-                            t.X =(n.Yaw - yaw) * stepW;
-                            t.Y = (n.Pitch-pitch) * stepH;
+                            
+                            t.X =angleDiff(n.Yaw,yaw) * stepW*2;
+                            t.Y = (n.Pitch-pitch) * stepH*2;
+                            Debug.WriteLine((n.Yaw - yaw).ToString() + ",");
 
                             img.RenderTransform = t;
                             img.IsTapEnabled = true;
@@ -278,6 +279,21 @@ namespace VRDreamer
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+        private double angleDiff(double yaw, double yaw2)
+        {
+            double diff=0d;
+            double diff2 = 0d;
+            diff = yaw - yaw2;
+            if (yaw > yaw2)
+                diff2 = yaw - (yaw2 + 360);
+            else
+                diff2 = yaw2 - (yaw + 360);
+
+            if (Math.Abs(diff) < Math.Abs(diff2))
+                return diff;
+            else
+                return diff2;
         }
 
     }

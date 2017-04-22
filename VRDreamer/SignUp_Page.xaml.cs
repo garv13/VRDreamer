@@ -118,7 +118,7 @@ namespace VRDreamer
                     a.Email = Email.Text;
                     a.Password = Password.Password;
                     a.UserName = UserName.Text;
-                    a.wallet = 0;
+                    a.wallet = 3000;
                     a.TourPurchases = "";
                     a.DiaryPurchases = "";
                     a.ScrapePurchase = "";

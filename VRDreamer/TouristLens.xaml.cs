@@ -169,8 +169,8 @@ namespace VRDreamer
                         // TODO: in prod write dist<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                            t.X = (n.Yaw - yaw) * stepW;
-                            t.Y = (n.Pitch - pitch) * stepH;
+                            t.X = angleDiff(n.Yaw, yaw) * stepW * 2;
+                            t.Y = (n.Pitch - pitch) * stepH * 2;
                             img.RenderTransform = t;
                             img.Tapped += Img_Tapped;
                             lol.Children.Add(img);
@@ -190,7 +190,21 @@ namespace VRDreamer
             string s = img.Name;
             Frame.Navigate(typeof(Image_Tapped_Detail), s);
         }
+        private double angleDiff(double yaw, double yaw2)
+        {
+            double diff = 0d;
+            double diff2 = 0d;
+            diff = yaw - yaw2;
+            if (yaw > yaw2)
+                diff2 = yaw - (yaw2 + 360);
+            else
+                diff2 = yaw2 - (yaw + 360);
 
+            if (Math.Abs(diff) < Math.Abs(diff2))
+                return diff;
+            else
+                return diff2;
+        }
         private void C_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
         {
             CompassReading reading = args.Reading;
@@ -278,7 +292,7 @@ namespace VRDreamer
         {
             if (i < li.Count - 1)
                 i++;
-
+            deletePoints();
             await loadPoint();
 
         }
@@ -325,10 +339,16 @@ namespace VRDreamer
             myBool = true;
 
         }
+        private void deletePoints()
+        {
+            li3.Clear();
+            li2.Clear();
+        }
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (i > 0)
                 i--;
+            deletePoints();
             await loadPoint();
 
         }

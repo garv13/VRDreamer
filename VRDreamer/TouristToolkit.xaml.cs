@@ -124,16 +124,15 @@ namespace VRDreamer
                         img.Name = n.Id;
                         img.Width = 250;
                         img.Height = 250;
-                        img.Source = n.Media;
-                        img.Stretch = Stretch.UniformToFill;
+                        img.Source = n.Media;// img.Stretch = Stretch.UniformToFill;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (true)
+                        if (dis<50)
                         //TODO: in prod write distance<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                            t.X = (n.Yaw - yaw) * stepW;
-                            t.Y = (n.Pitch - pitch) * stepH;
+                            t.X = angleDiff(n.Yaw, yaw) * stepW * 2;
+                            t.Y = (n.Pitch - pitch) * stepH * 2;
                             img.RenderTransform = t;
                             img.Tapped += Img_Tapped;
                             lol.Children.Add(img);
@@ -187,6 +186,21 @@ namespace VRDreamer
             yaw = reading.HeadingTrueNorth.Value;
 
         }
+        private double angleDiff(double yaw, double yaw2)
+        {
+            double diff = 0d;
+            double diff2 = 0d;
+            diff = yaw - yaw2;
+            if (yaw > yaw2)
+                diff2 = yaw - (yaw2 + 360);
+            else
+                diff2 = yaw2 - (yaw + 360);
+
+            if (Math.Abs(diff) < Math.Abs(diff2))
+                return diff;
+            else
+                return diff2;
+        }
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             if (myBool || first)
@@ -195,17 +209,29 @@ namespace VRDreamer
                 try
                 {
                     string pur = App.u.TourPurchases;
+                    string[] purchases = pur.Split(',');
+
                     items4 = await Table4.Where(t =>
-                    t.UserId == App.userId).ToCollectionAsync();
-                    string[] check_purchase = items4[0].Scrap_List.Split(',');
+                    purchases.Contains(t.Id)).ToCollectionAsync();
+
+                    List<string> scrapeId = new List<string>();
+                    foreach (Tour t in items4)
+                    {
+                        string[] temp = t.Scrap_List.Split(',');
+                        for (int i = 0; i < temp.Length; i++)
+                        {
+                            scrapeId.Add(temp[i]);
+                        }
+                    }
                     myBool = false;
                     first = false;
+
                     items3 = await Table3.Where(t =>
                     (t.lat - pos.Coordinate.Latitude < 0.0018018018
                     && t.lat - pos.Coordinate.Latitude > -0.0018018018
                     && t.lon - pos.Coordinate.Longitude < 0.0018018020
                     && t.lon - pos.Coordinate.Longitude > -0.0018018020
-                    && (t.UserId == App.userId || check_purchase.Contains(t.Id))
+                    && (t.UserId == App.userId || scrapeId.Contains(t.Id))
                     )).ToCollectionAsync();
 
                     myBool = true;
