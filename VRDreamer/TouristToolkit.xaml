@@ -49,6 +49,7 @@
                 </Grid.RowDefinitions>
                 <Button x:Name="button" Click="button_Click" Content="Get Info" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Button x:Name="button2" Click="button_Click" Content="Get Info" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                <ProgressBar x:Name="PB" Grid.Row="0" IsIndeterminate="True" Visibility="Collapsed" Grid.RowSpan="2" HorizontalAlignment="Stretch" Height="10" Margin="19,37,0,0" VerticalAlignment="Stretch" Width="100"/>
 
                 <WebView x:Name="web" HorizontalAlignment="Left" Height="153" Margin="15000,207,0,0" VerticalAlignment="Top" Width="338"/>
                 <TextBlock x:Name="textBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Searching for GPS" VerticalAlignment="Top"/>

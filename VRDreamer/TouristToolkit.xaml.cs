@@ -113,9 +113,9 @@ namespace VRDreamer
                 //    pitch = pitch * 180 / Math.PI;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    for (; lol.Children.Count > 5;)
+                    for (; lol.Children.Count > 6;)
                     {
-                        lol.Children.RemoveAt(5);
+                        lol.Children.RemoveAt(6);
                     }
 
                     foreach (PointerViewAR n in li2)
@@ -341,7 +341,9 @@ namespace VRDreamer
         }
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-
+            button.IsEnabled = false;
+            button2.IsEnabled = false;
+            PB.Visibility = Visibility.Visible;
             using (var captureStream = new InMemoryRandomAccessStream())
             {
 
@@ -395,6 +397,10 @@ namespace VRDreamer
             if (con)
             {
                 m.Title = s;
+                button.IsEnabled = true;
+                button2.IsEnabled = true;
+                PB.Visibility = Visibility.Collapsed;
+
                 Frame.Navigate(typeof(monument_Detail), m);
                 
             }
@@ -441,6 +447,10 @@ namespace VRDreamer
                                 }
                             }
                         }
+                        button.IsEnabled = true;
+                        button2.IsEnabled = true;
+                        PB.Visibility = Visibility.Collapsed;
+
                         Frame.Navigate(typeof(Ocr_Detail), text);
                     }
                     catch (Exception ex)
@@ -448,6 +458,10 @@ namespace VRDreamer
                 }
                 else
                 {
+                    button.IsEnabled = true;
+                    button2.IsEnabled = true;
+                    PB.Visibility = Visibility.Collapsed;
+
                     Frame.Navigate(typeof(Activity_Detail), f);
                 }
 
@@ -663,15 +677,34 @@ namespace VRDreamer
             bool check = true;
             string[] values = File.ReadAllText(@"Assets/list_monument.txt").Split(',');
             string[] names = str.Split(' ');
-            foreach (string nam in names)
+            foreach (string item in values)
             {
-                foreach (string item in values)
-                {
-                    if (item.CaseInsensitiveContains(nam) && check)
+               
+              
+                    if (str.ToLower() == item.ToLower() && check)
                     {
                         ans = item;
                         check = false;
                         break;
+                    }
+                
+            }
+            if (!check)
+            {
+                foreach (string nam in names)
+                {
+                    foreach (string item in values)
+                    {
+                        string[] temp = item.Split(' ');
+                        foreach (string item2 in temp)
+                        {
+                            if (item2.ToLower() == nam.ToLower() && check)
+                            {
+                                ans = item;
+                                check = false;
+                                break;
+                            }
+                        }
                     }
                 }
             }
