@@ -90,70 +90,16 @@ namespace VRDreamer
                 OrientationSensorReading reading = args.Reading;
 
                 // Quaternion values
-                SensorQuaternion q = reading.Quaternion;   // get a reference to the object to avoid re-creating it for each access
-                                                           //double ysqr = q.Y * q.Y;
-                                                           //// roll (x-axis rotation)
-                                                           //double t0 = +2.0 * (q.W * q.X + q.Y * q.Z);
-                                                           //double t1 = +1.0 - 2.0 * (q.X * q.X + ysqr);
-                                                           //double roll = Math.Atan2(t0, t1);
-                                                           //roll = roll * 180 / Math.PI;
-
-                //// pitch (y-axis rotati)
-                //double t2 = +2.0 * (q.W * q.Y - q.Z * q.X);
-                //t2 = t2 > 1.0 ? 1.0 : t2;
-                //t2 = t2 < -1.0 ? -1.0 : t2;
-                //double pitch = Math.Asin(t2);
-                //pitch = pitch * 180 / Math.PI;
-                //// yaw (z-axis rotation)
-
-
-
-                //    double pitch;
-                //double sqw = q1.W * q1.W;
-                //double sqx = q1.X * q1.X;
-                //double sqy = q1.Y * q1.Y;
-                //double sqz = q1.Z * q1.Z;
-                //double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-                //double test = q1.X * q1.Y + q1.Z * q1.W;
-                //if (test > 0.499 * unit)
-                //{ // singularity at north pole
-
-                //        pitch = Math.PI / 2;
-
-
-                //}
-                //if (test < -0.499 * unit)
-                //{ // singularity at south pole
-
-                //        pitch = -Math.PI / 2;
-
-
-                //}
-                //    // heading = atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
-                //    pitch = Math.Asin(2 * test / unit);
-                //    //   bank = atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
-
-
-
+                SensorQuaternion q = reading.Quaternion;  
                 double y = args.Reading.Quaternion.Y;
                 if (y < 0)
                     y = y + 2;
 
                 double pitch = y;
                 //    pitch = pitch * 180 / Math.PI;
-                yaw5 += yaw;
-                pitch5 += pitch;
-                cou++;
-                if (cou == 14)
-                {
-                    yaw = yaw5 / 15;
-                    pitch = pitch5 / 15;
-                    yaw5 = pitch5 = cou = 0;
-                    if (yaw < 0)
+                   if (yaw < 0)
                         yaw += 360;
-                    if (pitch < 0)
-                        pitch += 360;
-                    Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
+                   Debug.WriteLine(yaw.ToString() + "," + pitch.ToString());
 
 
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -181,7 +127,7 @@ namespace VRDreamer
                             lol.Children.Add(img);                       
                         }
                     });
-                }
+                
             }
         }
 

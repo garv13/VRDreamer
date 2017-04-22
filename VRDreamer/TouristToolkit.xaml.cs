@@ -66,6 +66,8 @@ namespace VRDreamer
         int i;
         private IMobileServiceTable<Scrap> Table3 = App.MobileService.GetTable<Scrap>();
         private MobileServiceCollection<Scrap, Scrap> items3;
+        private IMobileServiceTable<Tour> Table4 = App.MobileService.GetTable<Tour>();
+        private MobileServiceCollection<Tour,Tour> items4;
 
 
 
@@ -126,7 +128,7 @@ namespace VRDreamer
                         img.Stretch = Stretch.UniformToFill;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (dis<20)
+                        if (true)
                         //TODO: in prod write distance<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
@@ -192,6 +194,10 @@ namespace VRDreamer
                 pos = args.Position;
                 try
                 {
+                    string pur = App.u.TourPurchases;
+                    items4 = await Table4.Where(t =>
+                    t.UserId == App.userId).ToCollectionAsync();
+                    string[] check_purchase = items4[0].Scrap_List.Split(',');
                     myBool = false;
                     first = false;
                     items3 = await Table3.Where(t =>
@@ -199,7 +205,9 @@ namespace VRDreamer
                     && t.lat - pos.Coordinate.Latitude > -0.0018018018
                     && t.lon - pos.Coordinate.Longitude < 0.0018018020
                     && t.lon - pos.Coordinate.Longitude > -0.0018018020
+                    && (t.UserId == App.userId || check_purchase.Contains(t.Id))
                     )).ToCollectionAsync();
+
                     myBool = true;
                     first = true;
                     //TODO : add logic to get only those he has bought or created

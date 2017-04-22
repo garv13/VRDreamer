@@ -165,7 +165,7 @@ namespace VRDreamer
                         img.Source = n.Media;
                         TranslateTransform t = new TranslateTransform();
                         double dis = getDistance(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
-                        if (dis<20)
+                        if (dis<50)
                         // TODO: in prod write dist<20
                         {
                             // double ang = getangle(n.lat, n.lon, pos.Coordinate.Latitude, pos.Coordinate.Longitude);
