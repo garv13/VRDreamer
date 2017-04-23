@@ -88,7 +88,7 @@ namespace VRDreamer
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(monument_Detail), e.Arguments);
+                    rootFrame.Navigate(typeof(Login_Page), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
