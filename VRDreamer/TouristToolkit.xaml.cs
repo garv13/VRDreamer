@@ -133,6 +133,7 @@ namespace VRDreamer
                             t.X = angleDiff(n.Yaw, yaw) * stepW * 2;
                             t.Y = (n.Pitch - pitch) * stepH * 2;
                             img.RenderTransform = t;
+                            img.IsTapEnabled = true;
                             img.Tapped += Img_Tapped;
                             lol.Children.Add(img);
                             Grid.SetRow(img, 1);
