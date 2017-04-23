@@ -70,7 +70,7 @@ namespace VRDreamer
         private MobileServiceCollection<Tour,Tour> items4;
 
 
-
+   
         public TouristToolkit()
         {
             blobUrl = "";
@@ -97,7 +97,6 @@ namespace VRDreamer
 
             Application.Current.Suspending += Application_Suspending;
         }
-
         private async void Or_ReadingChanged(OrientationSensor sender, OrientationSensorReadingChangedEventArgs args)
         {
             if (myBool)
@@ -147,16 +146,16 @@ namespace VRDreamer
 
 
         }
-
         private void Img_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Image img = sender as Image;
             string s = img.Name;
             Frame.Navigate(typeof(Image_Tapped_Detail), s);
         }
-
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            button.IsEnabled = false;
+            button2.IsEnabled = false;
             var accessStatus = await Geolocator.RequestAccessAsync();
             await StartPreviewAsync();
             switch (accessStatus)
@@ -172,6 +171,8 @@ namespace VRDreamer
 
                     // Carry out the operation.
                     pos = await geolocator.GetGeopositionAsync();
+                    button.IsEnabled = true;
+                    button2.IsEnabled = true;
                     textBox.Text = "Ready";
                     myBool = false;
                     first = true;

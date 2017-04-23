@@ -52,14 +52,14 @@
                 <TextBlock Text="Details" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <Image x:Name="img" Source="{Binding Image}" MaxHeight="300" Grid.ColumnSpan="2" MaxWidth="300" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="Name" Grid.Row="2" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Vicinity" Grid.Row="3" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <!--<TextBlock Text="Vicinity" Grid.Row="3" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
                 <TextBlock x:Name="name" Text="{Binding Title}" Grid.Row="2" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <TextBlock x:Name="desc" Text="{Binding Desc}" Grid.Row="3" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+                <!--<TextBlock x:Name="desc" Text="{Binding Desc}" Grid.Row="3" Grid.Column="1" Foreground="#CCCCCC" FontSize="26" VerticalAlignment="Stretch" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>-->
             </Grid>
         </SplitView.Content>
     </SplitView>
     <Page.BottomAppBar>
-        <AppBar x:Name="Appbar" IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
+        <AppBar x:Name="Appbar"  IsOpen="True" Visibility="Visible" IsSticky="True" RequestedTheme="Dark" >
             <StackPanel Orientation="Horizontal">
                 <AppBarButton Name="Navigate" HorizontalAlignment="Right" Icon="MapDrive" Label="Navigate to Place" Click="Navigate_Click"   />
                 <AppBarButton Name="Search" HorizontalAlignment="Right" Icon="Find" Label="Search in Store" Click="Search_Click"/>
