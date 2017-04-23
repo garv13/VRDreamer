@@ -36,58 +36,38 @@ namespace VRDreamer
         Monument_Detail_View m = new Monument_Detail_View();
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-           // m = e.Parameter as Monument_Detail_View;
-            string s = "jantar mantar";
+            m = e.Parameter as Monument_Detail_View;
+            string s = m.Title;
+           // string s = "Qutb complex";
             HttpClient cl = new HttpClient();
             s = Uri.EscapeDataString(s);
-            string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
+            string url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
+
+           // string url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.661904,77.2232688&radius=50000&type=point_of_interest&keyword=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
             string picUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=";
             try
             {
                 s = await cl.GetStringAsync(url);
                 gp = JsonConvert.DeserializeObject<googlePlaceApi>(s);
-                if (gp.results.Count != 0)
+                picUrl += gp.results[0].photos[0].photo_reference + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
+                var stream = await cl.GetStreamAsync(picUrl);
+                BitmapImage Image = new BitmapImage();
+                using (var memStream = new MemoryStream())
                 {
-                    picUrl += gp.results[0].photos[0].photo_reference + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-                    var stream = await cl.GetStreamAsync(picUrl);
-                    BitmapImage Image = new BitmapImage();
-                    using (var memStream = new MemoryStream())
-                    {
-                        await stream.CopyToAsync(memStream);
-                        memStream.Position = 0;
-                        Image.SetSource(memStream.AsRandomAccessStream());
-                    }
-                    img.Source = Image;
-                    name.Text = gp.results[0].name;
-                    //desc.Text = gp.results[0].vicinity;
-                    // parse the string in json and get the details
+                    await stream.CopyToAsync(memStream);
+                    memStream.Position = 0;
+                    Image.SetSource(memStream.AsRandomAccessStream());
                 }
-                else
-                {
-                     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + s + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-                    s = await cl.GetStringAsync(url);
-                    gp = JsonConvert.DeserializeObject<googlePlaceApi>(s);
-                        picUrl += gp.results[0].photos[0].photo_reference + "&key=AIzaSyBMzL7mptHo33PNsuKmT9xKppNgkXotBOM";
-                        var stream = await cl.GetStreamAsync(picUrl);
-                        BitmapImage Image = new BitmapImage();
-                        using (var memStream = new MemoryStream())
-                        {
-                            await stream.CopyToAsync(memStream);
-                            memStream.Position = 0;
-                            Image.SetSource(memStream.AsRandomAccessStream());
-                        }
-                        img.Source = Image;
-                        name.Text = gp.results[0].name;
-                        //desc.Text = gp.results[0].vicinity;
-                        // parse the string in json and get the details
-                    
-                }
+                img.Source = Image;
+                name.Text = gp.results[0].name;
+                //desc.Text = gp.results[0].vicinity;
+                // parse the string in json and get the details
             }
             catch (Exception ex)
             {
 
 
-
+                
             }
         }
         private void Create_Diary_Botton_Click(object sender, RoutedEventArgs e)
